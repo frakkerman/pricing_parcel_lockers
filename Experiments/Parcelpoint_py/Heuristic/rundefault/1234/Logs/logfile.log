@@ -1,0 +1,10 @@
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py
+Module path:  Src.Algorithms.Heuristic Heuristic
+Dynamically loaded from:  <class 'Src.Algorithms.Heuristic.Heuristic'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=1000, optim='sgd', log_output='term_file', debug=True, save_model=True, timestamp='6|8|9:55:55', folder_suffix='default', experiment='run', algo_name='Heuristic', env_name='Parcelpoint_py', n_actions=6, max_episodes=3000, max_steps=150, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=5.0, min_price=-5.0, n_vehicles=2, veh_capacity=20, parcelpoint_capacity=25, incentive_sens=-0.99, base_util=0.2, home_util=0.3, revenue=0.4, fuel_cost=0.1, truck_speed=40, del_time=5, driver_wage=25, reopt=50, grid_dim=50, k=1, saveRoutes=False, init_theta=1.0, cool_theta=True, offer_all=True, gamma=0.999, actor_lr=0.01, critic_lr=0.01, state_lr=0.001, gauss_variance=0.5, hiddenLayerSize=32, hiddenActorLayerSize=128, deepActor=False, actor_scaling_factor_mean=1, fourier_coupled=True, fourier_order=3, buffer_size=100, batch_size=1)
+Actions space: 1048576 :: State space: 4
+State Low: tensor([0., 0.]) :: State High: tensor([500., 500.])
+State features:  [('dummy_param', torch.Size([1]))]
