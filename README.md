@@ -5,7 +5,7 @@ This project contains code for the paper titled "Pricing and Offering of Out-of-
 
 ## Environment
 
-The code is written in Python 3.10. We use PyTorch 1.13.1 to model neural network architectures. A requirements.txt details further requirements of our project. We tested our project on a Windows 11 environment, and a high-performance cluster, whose details you find here:
+The code is written in Python 3.10. We use PyTorch 2.0.0 to model neural network architectures and hygese 0.0.0.8, the Python HGS implementation. A requirements.txt details further requirements of our project. We tested our project on a Windows 11 environment, and a high-performance cluster, whose details you find here:
 
 
 ## Folder Structure
@@ -48,6 +48,8 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
  * `run.py` Execute this file using the command line `python3 run.py`.
  
  * Note that you might have to adapt your root folder's name to `ooh_code`
+ 
+ * Note that `hygese.py` requires a slight change when running with `--load_data=True`, this change is indicated in the code
  
 ## License
 * [MIT license](https://opensource.org/license/mit/)
