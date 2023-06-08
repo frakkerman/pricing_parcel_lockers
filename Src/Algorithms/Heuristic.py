@@ -1,13 +1,9 @@
 import numpy as np
 import numpy.ma as ma
 from math import sqrt
-import torch
-from torch import tensor, float32, long
-import torch.nn.functional as F
-from Src.Utils.Utils import MemoryBuffer,Trajectory,NeuralNet,readCVRPLIB,load_demand_data,read_adjacency
+from Src.Utils.Utils import readCVRPLIB,load_demand_data,read_adjacency
 from Src.Algorithms.Agent import Agent
-from Src.Utils import Basis, Actor, Critic
-from os import name
+from Src.Utils import Basis
 from scipy.special import lambertw
 from math import exp, e
 

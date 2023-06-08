@@ -5,7 +5,7 @@ from torch import float32
 import torch.nn as nn
 import shutil
 import matplotlib.pyplot as plt
-from os import path, mkdir, listdir, fsync, name, stat
+from os import path, mkdir, listdir, fsync, name
 import importlib
 from time import time
 import sys

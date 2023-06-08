@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.distributions import Normal
-from Src.Utils.Utils import NeuralNet, pairwise_distances
+from Src.Utils.Utils import NeuralNet
 
 
 # This file implements all neural network functions required to construct the actor

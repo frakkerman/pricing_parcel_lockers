@@ -1,9 +1,6 @@
 import numpy as np
 import torch
 from torch import tensor, float32
-from torch.autograd import Variable
-import torch.nn as nn
-import torch.nn.functional as F
 from Src.Utils.Utils import NeuralNet
 import itertools
 

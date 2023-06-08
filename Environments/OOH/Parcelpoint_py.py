@@ -1,11 +1,8 @@
 from __future__ import print_function
 
-import time
-
 import numpy as np
 import numpy.ma as ma
-import matplotlib.pyplot  as plt
-from Src.Utils.Utils import Space, binaryEncoding
+from Src.Utils.Utils import Space
 from Environments.OOH.containers import Location,ParcelPoint,ParcelPoints,Vehicle,Fleet,Customer
 from Environments.OOH.env_utils import utils_env
 from Environments.OOH.customerchoice import customerchoicemodel
