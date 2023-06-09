@@ -49,18 +49,7 @@ class Logger(object):
         # WARNING: Time consuming process, Makes the code slow if too many writes
         self.log.flush()
         fsync(self.log.fileno())
-
-def save_plots(rewards,run_time, config):
-    np.save(config.paths['results'] + "rewards", rewards)
-    np.save(config.paths['results'] + "time", run_time)
-    if config.debug:
-        plt.figure()
-        plt.ylabel("Total return")
-        plt.xlabel("Episode")
-        plt.title("Performance")
-        plt.plot(rewards)
-        plt.savefig(config.paths['results'] + "performance.png")
-        plt.close()
+   
 
 def save_plots_test_runs(test_returns,test_std,step_time,config):
     np.save(config.paths['results'] + "test_returns_mean", test_returns)
@@ -76,8 +65,9 @@ def save_plots_test_runs(test_returns,test_std,step_time,config):
     plt.savefig(config.paths['results'] + "performance_test_runs.png")
     plt.close()
 
-def save_plots_stats(stats,actions,config,episode):
+def save_plots_stats(stats,costs,run_time,actions,config,episode):
     info = np.array(stats)
+    np.save(config.paths['results'] + "time", run_time)
     
     if config.pricing:
         #1 line chart of discounts over time
@@ -120,17 +110,15 @@ def save_plots_stats(stats,actions,config,episode):
     plt.close()
     
     #4 boxplot final hgs distance
-    total_costs = info[:,-1]
-    total_costs = total_costs[total_costs != 0]
     plt.figure()
     plt.ylabel("Total distance")
     plt.title("Performance")
-    plt.boxplot(total_costs)
+    plt.boxplot(costs)
     plt.savefig(config.paths['results'] + "box_hgs_distance.png")
     plt.close()
     
     #save data
-    np.save(config.paths['results'] + "hgs_costs", total_costs)
+    np.save(config.paths['results'] + "hgs_costs", costs)
     np.save(config.paths['results'] + "num_home_deliveries", count_home)
 
 class NeuralNet(nn.Module):
@@ -183,13 +171,6 @@ def binaryEncoding(num, size,level=1):
         num = num//(level+1)
         i -= 1
     return binary
-
-# def stablesoftmax(x):
-#     """Compute the softmax of vector x in a numerically stable way."""
-#     shiftx = x - np.max(x)
-#     exps = np.exp(shiftx)
-#     return exps / np.sum(exps)
-
 
 
 def pairwise_distances(x, y):
@@ -382,7 +363,7 @@ def load_demand_data(pathh,city,data_seed):
             for j,i in enumerate(file):
                 if not i.startswith('NODE'):
                     loc = i.strip().split('\t')
-                    loc = Location(float(loc[1]),float(loc[2]),j)
+                    loc = Location(float(loc[1]),float(loc[2]),j-1)
                     coords = np.append(coords,loc)
         f = pathh+"_dist_matrix.txt"
         dist_matrix = np.empty(shape=(0,len(coords)),dtype=int)
@@ -401,8 +382,30 @@ def load_demand_data(pathh,city,data_seed):
     if city=='Seattle':
         n_parcelpoints=299
     
-    return coords,dist_matrix,n_parcelpoints
+    adjacency = np.load(pathh+"_adjacency20.npy")#20 closest parcelpoints to each customers
+    
+    return coords,dist_matrix,n_parcelpoints,adjacency
 
+def get_dist_mat_HGS(dist_matrix,loc_ids):        
+    dist_mat = dist_matrix[loc_ids]
+    return dist_mat[:,loc_ids]
+
+def get_fleet(initRouteplan,num_vehicles,vehicleCapacity):
+    vehicles = np.empty(shape=(0,num_vehicles))
+    for v in range(num_vehicles):
+        vehicles = np.append(vehicles,Vehicle(initRouteplan.copy(),vehicleCapacity,v))
+    return Fleet(vehicles)
+
+def extract_route_HGS(route,data):
+    fleet = get_fleet([],data['num_vehicles'],data['vehicle_capacity'])#reset fleet and write to vehicles again
+    veh = 0
+    for r in route.routes:
+        for i in r:
+            loc = Location(data['x_coordinates'][i],data['y_coordinates'][i],data['id'][i])
+            idx = len(fleet["fleet"][veh]["routePlan"])-1
+            fleet["fleet"][veh]["routePlan"].insert(idx,loc)
+        veh+=1
+    return fleet
 def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,city,data_seed):
     """
     This function is used to generate the adjacency matrix, we stored them so we do not call this function
@@ -419,15 +422,6 @@ def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,city,data_seed):
             adjacency[i][j]=1
     pathh = pathh+sepa+'Environments'+sepa+'OOH'+sepa+'Amazon_data'+sepa+city+sepa
     np.save(pathh+city+"_700_"+str(data_seed)+"_adjacency20", adjacency)
-    
-def read_adjacency(pathh,city,data_seed):
-    if name == 'nt':#windows
-        sepa= '\\'
-    else:
-        sepa='/'
-    pathh = pathh+sepa+'Environments'+sepa+'OOH'+sepa+'Amazon_data'+sepa+city+sepa
-    adjacency = np.load(pathh+city+"_700_"+str(data_seed)+"_adjacency20.npy")
-    return adjacency
 
 
 class MemoryBuffer:
@@ -488,71 +482,3 @@ class MemoryBuffer:
         self.r1[pos] = torch.tensor(r1)
         self.s2[pos] = torch.tensor(s2, dtype=self.stype)
         self.done[pos] = torch.tensor(done)
-
-class Trajectory:
-    """
-    Pre-allocated memory interface for storing and using on-policy trajectories
-
-    Note: slight abuse of notation.
-          sometimes Code treats 'dist' as extra variable and uses it to store other things, like: prob, etc.
-    """
-    def __init__(self, max_len, state_dim, action_dim, atype, config, dist_dim=1, stype=float32):
-
-        self.s1 = torch.zeros((max_len, state_dim), dtype=stype, requires_grad=False)
-        self.a1 = torch.zeros((max_len, action_dim), dtype=atype, requires_grad=False)
-        self.r1 = torch.zeros((max_len, 1), dtype=float32, requires_grad=False)
-        self.s2 = torch.zeros((max_len, state_dim), dtype=stype, requires_grad=False)
-        self.done = torch.zeros((max_len, 1), dtype=float32, requires_grad=False)
-        self.dist = torch.zeros((max_len, dist_dim), dtype=float32, requires_grad=False)
-
-        self.ctr = 0
-        self.max_len = max_len
-        self.atype = atype
-        self.stype= stype
-        self.config = config
-
-    def add(self, s1, a1, dist, r1, s2, done):
-        if self.ctr == self.max_len:
-            raise OverflowError
-
-        self.s1[self.ctr] = torch.tensor(s1, dtype=self.stype)
-        self.a1[self.ctr] = torch.tensor(a1, dtype=self.atype)
-        self.dist[self.ctr] = torch.tensor(dist)
-        self.r1[self.ctr] = torch.tensor(r1)
-        self.s2[self.ctr] = torch.tensor(s2, dtype=self.stype)
-        self.done[self.ctr] = torch.tensor(done)
-
-        self.ctr += 1
-
-    def reset(self):
-        self.ctr = 0
-
-    @property
-    def size(self):
-        return self.ctr
-
-    def _get(self, ids):
-        return self.s1[ids], self.a1[ids], self.dist[ids], self.r1[ids], self.s2[ids], self.done[ids]
-
-    def get_current_transitions(self):
-        pos = self.ctr
-        return self.s1[:pos], self.a1[:pos], self.dist[:pos], self.r1[:pos], self.s2[:pos], self.done[:pos]
-
-    def get_all(self):
-        return self.s1, self.a1, self.dist, self.r1, self.s2, self.done
-
-    def get_latest(self):
-        return self._get([-1])
-
-    def batch_sample(self, batch_size, nth_return):
-        # Compute the estimated n-step gamma return
-        R = nth_return
-        for idx in range(self.ctr-1, -1, -1):
-            R = self.r1[idx] + self.config.gamma * R
-            self.r1[idx] = R
-
-        # Genreate random sub-samples from the trajectory
-        perm_indices = np.random.permutation(self.ctr)
-        for ids in [perm_indices[i:i + batch_size] for i in range(0, self.ctr, batch_size)]:
-            yield self._get(ids)
-

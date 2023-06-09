@@ -34,9 +34,7 @@ class utils_env(object):
         # HGS Solvers initialization
         ap = AlgorithmParameters(timeLimit=3.2)  # seconds
         self.hgs_solver = Solver(parameters=ap, verbose=False)#used for intermittent route
-        
-        ap_final = AlgorithmParameters(timeLimit=3.2)  # seconds
-        self.hgs_solver_final = Solver(parameters=ap_final, verbose=False)#used for final route
+
 
     def getdistance_euclidean(self,a,b):
         return sqrt((a.x-b.x)**2 + (a.y-b.y)**2)
@@ -73,31 +71,6 @@ class utils_env(object):
         fleet = self.extract_route_HGS(result,data)
         return fleet
     
-    def reopt_HGS_final(self,data):
-        data["demands"] = np.ones(len(data['x_coordinates']))
-        data["demands"][0] = 0#depot demand=0
-        result = self.hgs_solver_final.solve_cvrp(data)  
-        #update current routes
-        fleet = self.extract_route_HGS(result,data)
-        return fleet,result.cost
-    
-    def extract_route_HGS(self,route,data):
-        fleet = self.get_fleet([])#reset fleet and write to vehicles again
-        veh = 0
-        for r in route.routes:
-            for i in r:
-                loc = self.Location(data['x_coordinates'][i],data['y_coordinates'][i],data['id'][i])
-                idx = len(fleet["fleet"][veh]["routePlan"])-1
-                fleet["fleet"][veh]["routePlan"].insert(idx,loc)
-            veh+=1
-        return fleet
-    
-    def get_fleet(self,initRouteplan):
-        vehicles = np.empty(shape=(0,self.num_vehicles))
-        for v in range(self.num_vehicles):
-            vehicles = np.append(vehicles,self.Vehicle(initRouteplan.copy(),self.vehicleCapacity,v))
-        return self.Fleet(vehicles)
-    
     def reset_fleet(self,fleet,initRouteplan):
         for v in fleet["fleet"]:
             v.routePlan = initRouteplan
@@ -111,17 +84,15 @@ class utils_env(object):
             pps = np.append(pps,self.ParcelPoint(pp_locs[p],self.pp_capacity,p))
         return self.ParcelPoints(pps)
     
-    def get_parcelpoints_from_data(self,data):
+    def get_parcelpoints_from_data(self,data,start_id):
         pps = np.empty(shape=(0,len(data)))
+        start_id=start_id
         for p in range(len(data)):
-            pps = np.append(pps,self.ParcelPoint(data[p],self.pp_capacity,p))
+            pps = np.append(pps,self.ParcelPoint(data[p],self.pp_capacity,start_id))
+            start_id+=1
         return self.ParcelPoints(pps)
     
     def reset_parcelpoints(self,parcelpoints):
         for p in parcelpoints["parcelpoints"]:
             p.remainingCapacity = self.pp_capacity
         return parcelpoints
-    
-    def get_dist_mat_HGS(self,loc_ids):        
-        dist_mat = self.dist_matrix[loc_ids]
-        return dist_mat[:,loc_ids]

@@ -9,7 +9,6 @@ class Parser(object):
         # Seed for reproducibility
         parser.add_argument("--seed", default=1234, help="seed for variance testing",type=int)
 
-
         # General parameters
         parser.add_argument("--save_count", default=1000, help="Number of checkpoints for saving results and model", type=int)
         parser.add_argument("--optim", default='sgd', help="Optimizer type", choices=['adam', 'sgd', 'rmsprop'])
@@ -23,42 +22,33 @@ class Parser(object):
         parser.add_argument("--timestamp", default=timestamp, help="Timestamp to prefix experiment dumps")
         parser.add_argument("--folder_suffix", default='default', help="folder name suffix")
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
-
-        self.environment_parameters(parser)  # Environment parameters
-
+        
+        # Environment parameters
+        self.environment_parameters(parser)  
+        
         # General settings for algorithms
+        self.CNN_parameters(parser)
         self.Heuristic_parameters(parser)
-        self.QAC_parameters(parser)
-
+        
         self.parser = parser
 
-    def str2bool(self, text):
-        if text == 'True':
-            arg = True
-        elif text == 'False':
-            arg = False
-        else:
-            raise argparse.ArgumentTypeError('Boolean value expected.')
-        return arg
-
-    def get_parser(self):
-        return self.parser
-
-
     def environment_parameters(self, parser):
-        parser.add_argument("--algo_name", default='Heuristic', help="RL algorithm",choices=['QAC','Heuristic'])
+        parser.add_argument("--algo_name", default='Heuristic', help="RL algorithm",choices=['CNN','Heuristic'])
         parser.add_argument("--env_name", default='Parcelpoint_py', help="Environment to run the code")
-        parser.add_argument("--n_actions", default=6, help="size of the action vector", type=int)
         parser.add_argument("--max_episodes", default=int(3000), help="maximum number of episodes", type=int)
-        parser.add_argument("--max_steps", default=150, help="maximum steps per episode", type=int)
+        
+        parser.add_argument("--max_steps_mu", default=700, help="maximum steps per episode mu of normal dist.", type=int)
+        parser.add_argument("--max_steps_sigma", default=250, help="maximum steps per episode sigma of normal dist.", type=int)
         
         parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data", type=self.str2bool)
         parser.add_argument("--city", default='Austin', help="which city to load",choices=['Austin','Seattle'])
         parser.add_argument("--data_seed", default=0, help="which dataset to load",choices=[0,1,2,3], type=int)
         
-        parser.add_argument("--pricing", default=False, help="if we use pricing or offering decision space", type=self.str2bool)
+        parser.add_argument("--pricing", default=True, help="if we use pricing or offering decision space", type=self.str2bool)
         parser.add_argument("--max_price", default=5.0, help="max delivery charge >0", type=float)
         parser.add_argument("--min_price", default=-5.0, help="max discount <0", type=float)
+        
+        parser.add_argument("--k", default=1, help="Number of parcelpoints to offer to customer", type=int)
         
         parser.add_argument("--n_vehicles", default=2, help="number of vehicles", type=int)
         parser.add_argument("--veh_capacity", default=20, help="capacity per vehicle per day", type=int)
@@ -76,31 +66,34 @@ class Parser(object):
         
         parser.add_argument("--reopt", default=50, help="re-opt frequency of cheapest insertion route using HGS", type=int)
         
+    def CNN_parameters(self, parser):
         parser.add_argument("--grid_dim", default=50, help="division of operational area in X*X clusters", type=int)
-
-    def Heuristic_parameters(self, parser):
-        parser.add_argument("--k", default=1, help="Number of parcelpoints to offer to customer", type=int)
-        parser.add_argument("--saveRoutes", default=False, help="Used to save routes for use inside heuristic", type=self.str2bool)#could consider to make this an updating loop
-        parser.add_argument("--init_theta", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
-        parser.add_argument("--cool_theta", default=True, help="weight reduction for cheapest insertion", type=self.str2bool)
-        
-        parser.add_argument("--offer_all", default=True, help="alternative heuristic, just offer all feasible", type=self.str2bool)
-        
-    def QAC_parameters(self, parser):
-        parser.add_argument("--gamma", default=0.999, help="Discounting factor", type=float)
-        parser.add_argument("--actor_lr", default=1e-2, help="(1e-2) Learning rate of actor", type=float)
-        parser.add_argument("--critic_lr", default=1e-2, help="(1e-2) Learning rate of critic/baseline", type=float)
-        parser.add_argument("--state_lr", default=1e-3, help="Learning rate of state features", type=float)
-        parser.add_argument("--gauss_variance", default=0.5, help="Variance for gaussian policy", type=float) # 1 original setting
-
-        parser.add_argument("--hiddenLayerSize", default=32, help="size of hiddenlayer", type=int)
-        parser.add_argument("--hiddenActorLayerSize", default=128, help="size of hiddenlayer", type=int)
-        parser.add_argument("--deepActor", default=False, help="if we want a deep actor", type=self.str2bool)
-
-        parser.add_argument("--actor_scaling_factor_mean", default=1, help="scale output of actor mean by x", type=float)
-
-        parser.add_argument("--fourier_coupled", default=True, help="Coupled or uncoupled fourier basis", type=self.str2bool)
-        parser.add_argument("--fourier_order", default=3, help="Order of fourier basis, " + "(if > 0, it overrides neural nets)", type=int)
-
-        parser.add_argument("--buffer_size", default=int(100), help="Size of memory buffer (6e5)", type=int)
+        parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)
+        parser.add_argument("--buffer_size", default=int(100), help="Size of memory buffer", type=int)
         parser.add_argument("--batch_size", default=1, help="Batch size", type=int)
+        #lr, epochs, layers+size
+        parser.add_argument("--init_theta_cnn", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
+        parser.add_argument("--cool_theta_cnn", default=True, help="weight reduction for cheapest insertion", type=self.str2bool)
+        
+        parser.add_argument("--load_embed", default=False, type=self.str2bool, help="Retrain flag, if True we do not retrain but try to load a stored model")
+        
+    def Heuristic_parameters(self, parser):
+        parser.add_argument("--save_routes", default=False, help="Used to save routes for use inside heuristic", type=self.str2bool)#could consider to make this an updating loop
+        parser.add_argument("--init_theta", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
+        parser.add_argument("--cool_theta", default=(1/1500), help="weight reduction for cheapest insertion", type=float)
+        
+        parser.add_argument("--offer_all", default=False, help="baseline heuristic, just offer all feasible", type=self.str2bool)
+        
+    def str2bool(self, text):
+        if text == 'True':
+            arg = True
+        elif text == 'False':
+            arg = False
+        else:
+            raise argparse.ArgumentTypeError('Boolean value expected.')
+        return arg
+
+    def get_parser(self):
+        return self.parser
+
+    

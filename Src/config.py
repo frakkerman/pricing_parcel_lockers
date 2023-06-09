@@ -50,6 +50,12 @@ class Config(object):
         # Output logging
         sys.stdout = Utils.Logger(self.paths['logs'], args.log_output)
 
+        #load data
+        if args.load_data:
+            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.load_demand_data(self.paths['root'],args.city,args.data_seed)
+        else:
+            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = [],[],6,np.ones(6)
+
         # Get the domain and algorithm
         self.env, self.gym_env, self.cont_actions = self.get_domain(args.env_name, args=args, debug=args.debug,
                                                                path=path.join(self.paths['root'], 'Environments'))
@@ -57,7 +63,7 @@ class Config(object):
 
 
         # Hiddenlayer size
-        self.hiddenLayerSize = args.hiddenLayerSize
+       # self.hiddenLayerSize = args.hiddenLayerSize
 
         # Set Model
         self.algo = Utils.dynamic_load(path.join(self.paths['root'], 'Src', 'Algorithms'), args.algo_name, load_class=True)
@@ -79,9 +85,9 @@ class Config(object):
     def get_domain(self, tag, args, path, debug=True):
         if tag[:11] == 'Parcelpoint':
             obj = Utils.dynamic_load(path, tag, load_class=True)
-            env = obj(model=args.algo_name,pricing=args.pricing,n_vehicles=args.n_vehicles,veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,
-                      incentive_sens=args.incentive_sens,base_util=args.base_util,home_util=args.home_util,reopt=args.reopt,
-                      saveRoutes=args.saveRoutes,path=self.paths['root'],load_data=args.load_data,city=args.city,data_seed=args.data_seed,num_offers=args.k)
+            env = obj(model=args.algo_name,max_steps_mu=args.max_steps_mu,max_steps_sigma=args.max_steps_sigma,pricing=args.pricing,n_vehicles=args.n_vehicles,
+                      veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
+                      home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency)
             return env, False, env.action_space.dtype == np.float32
 
 if __name__ == '__main__':

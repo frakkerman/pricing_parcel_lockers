@@ -7,10 +7,8 @@ class customerchoicemodel(object):
                  base_util,
                  dist_scaler,
                  euclidean,
-                 action_space_matrix,
                  dist_mat):
         self.euclidean_distance = euclidean
-        self.action_space_matrix = action_space_matrix
         self.dist_scaler = dist_scaler
         self.base_util = base_util
         self.dist_mat = dist_mat
