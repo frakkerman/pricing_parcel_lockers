@@ -10,7 +10,9 @@ TODO: naming convention of output folder (pricing variant)
 TODO: CNN + state embedding/representation using grid overlay and time dimension
 TODO: CNN training loop + graph
 TODO: chekc grahs correct
+make run plan, run with different instanbce size+parcelpoint density
 perhaps add appartment builidng delivery time?
+question, how to determine costs per customer, how does the data structure look?
 """
 
 class Solver:

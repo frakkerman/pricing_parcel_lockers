@@ -336,7 +336,7 @@ def readCVRPLIB(pathh,v_cap,n_veh):
                 for i in file:
                     if not i.startswith('Route'):
                         loc = i.strip().split('\t')
-                        loc = Location(int(loc[0]),int(loc[1]),0)
+                        loc = Location(int(loc[0]),int(loc[1]),0)#add id_num here
                         routeplans[idx].append(loc)
                     else:
                         idx +=1
