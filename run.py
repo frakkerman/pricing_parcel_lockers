@@ -5,14 +5,15 @@ from Src.config import Config
 from time import time
 
 """
+TODO: just use cvrp standrad instance files
 TODO: new historic routes
-TODO: naming convention of output folder (pricing variant)
 TODO: CNN + state embedding/representation using grid overlay and time dimension
 TODO: CNN training loop + graph
-TODO: chekc grahs correct
 make run plan, run with different instanbce size+parcelpoint density
 perhaps add appartment builidng delivery time?
 question, how to determine costs per customer, how does the data structure look?
+also study fixed fee/free home delivery
+add time windows to support complex architecture?...
 """
 
 class Solver:

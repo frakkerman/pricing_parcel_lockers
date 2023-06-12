@@ -25,8 +25,8 @@ load_embed: false
 log_output: term_file
 max_episodes: 3000
 max_price: 5.0
-max_steps_mu: 1500
-max_steps_sigma: 250
+max_steps_p: 0.5
+max_steps_r: 700
 min_price: -5.0
 n_vehicles: 2
 offer_all: false
@@ -40,6 +40,6 @@ save_count: 1000
 save_model: true
 save_routes: false
 seed: 1234
-timestamp: 6|9|11:21:42
+timestamp: 6|12|14:47:41
 truck_speed: 40
 veh_capacity: 20

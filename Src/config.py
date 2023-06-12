@@ -27,8 +27,11 @@ class Config(object):
         # Add path to models
         folder_suffix = args.experiment + args.folder_suffix
         self.paths['Experiments'] = path.join(self.paths['root'], 'Experiments')
-        self.paths['experiment'] = path.join(self.paths['Experiments'], args.env_name, args.algo_name, folder_suffix)
-
+        if args.pricing:
+            self.paths['experiment'] = path.join(self.paths['Experiments'], args.env_name,'pricing', args.algo_name, folder_suffix)
+        else:
+            self.paths['experiment'] = path.join(self.paths['Experiments'], args.env_name,'offering', args.algo_name, folder_suffix)
+            
         if name == 'nt':
              suffix = '\\'
         else:
@@ -85,7 +88,7 @@ class Config(object):
     def get_domain(self, tag, args, path, debug=True):
         if tag[:11] == 'Parcelpoint':
             obj = Utils.dynamic_load(path, tag, load_class=True)
-            env = obj(model=args.algo_name,max_steps_mu=args.max_steps_mu,max_steps_sigma=args.max_steps_sigma,pricing=args.pricing,n_vehicles=args.n_vehicles,
+            env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
                       veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
                       home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency)
             return env, False, env.action_space.dtype == np.float32

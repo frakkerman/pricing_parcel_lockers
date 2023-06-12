@@ -10,8 +10,8 @@ from Environments.OOH.customerchoice import customerchoicemodel
 class Parcelpoint_py(object):
     def __init__(self,
                  model,
-                 max_steps_mu,
-                 max_steps_sigma,
+                 max_steps_r,
+                 max_steps_p,
                  pricing = False,
                  n_vehicles=2,
                  veh_capacity=100,
@@ -29,8 +29,8 @@ class Parcelpoint_py(object):
         
         #episode length params
         self.max_steps = 0
-        self.max_steps_mu = max_steps_mu
-        self.max_steps_sigma = max_steps_sigma
+        self.max_steps_r = max_steps_r
+        self.max_steps_p = max_steps_p
         
         #init fleet and parcelpoints
         self.n_vehicles = n_vehicles
@@ -96,7 +96,7 @@ class Parcelpoint_py(object):
         """
         Sets the environment to default conditions
         """
-        self.max_steps = int(np.random.normal(self.max_steps_mu,self.max_steps_sigma))
+        self.max_steps = np.random.negative_binomial(self.max_steps_r,self.max_steps_p)
         
         self.fleet = self.utils.reset_fleet(self.fleet,[self.depot,self.depot])
         self.parcelPoints = self.utils.reset_parcelpoints(self.parcelPoints)

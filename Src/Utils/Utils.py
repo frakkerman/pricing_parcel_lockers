@@ -71,7 +71,7 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     
     if config.pricing:
         #1 line chart of discounts over time
-        given_price = np.split(info[:,-2],episode+1,axis=0)
+        given_price = np.split(info[:,-1],episode+1,axis=0)
         mean_price = np.mean(given_price, axis=0)
         std_price = np.std(given_price, axis=0)
         x = np.arange(0, len(mean_price))
@@ -406,6 +406,7 @@ def extract_route_HGS(route,data):
             fleet["fleet"][veh]["routePlan"].insert(idx,loc)
         veh+=1
     return fleet
+
 def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,city,data_seed):
     """
     This function is used to generate the adjacency matrix, we stored them so we do not call this function
@@ -426,19 +427,12 @@ def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,city,data_seed):
 
 class MemoryBuffer:
     """
-    Pre-allocated memory interface for storing and using Off-policy trajectories
-
-    Note: slight abuse of notation.
-          sometimes Code treats 'dist' as extra variable and uses it to store other things, like: prob, etc.
+    Pre-allocated memory interface for storing and using observations
     """
-    def __init__(self, max_len, state_dim, action_dim, atype, config, dist_dim=1, stype=float32):
+    def __init__(self, max_len, matrix_dim, target_dim, atype, config, stype=float32):
 
-        self.s1 = torch.zeros((max_len, state_dim), dtype=stype, requires_grad=False)
-        self.a1 = torch.zeros((max_len, action_dim), dtype=atype, requires_grad=False)
-        self.dist = torch.zeros((max_len, dist_dim), dtype=float32, requires_grad=False)
-        self.r1 = torch.zeros((max_len, 1), dtype=float32, requires_grad=False)
-        self.s2 = torch.zeros((max_len, state_dim), dtype=stype, requires_grad=False)
-        self.done = torch.zeros((max_len, 1), dtype=float32, requires_grad=False)
+        self.features = torch.zeros((max_len, matrix_dim), dtype=stype, requires_grad=False)
+        self.target = torch.zeros((max_len, target_dim), dtype=atype, requires_grad=False)
 
         self.length = 0
         self.max_len = max_len
@@ -453,8 +447,8 @@ class MemoryBuffer:
     def reset(self):
         self.length = 0
 
-    def _get(self, ids):
-        return self.s1[ids], self.a1[ids], self.dist[ids], self.r1[ids], self.s2[ids], self.done[ids]
+    def _get(self, idx):
+        return self.s1[idx], self.a1[idx], self.dist[idx], self.r1[idx], self.s2[idx], self.done[idx]
 
     def batch_sample(self, batch_size, randomize=True):
         if randomize:
@@ -469,16 +463,12 @@ class MemoryBuffer:
         count = min(batch_size, self.length)
         return self._get(np.random.choice(self.length, count))
 
-    def add(self, s1, a1, dist, r1, s2, done):
+    def add(self, features, target):
         pos = self.length
         if self.length < self.max_len:
             self.length = self.length + 1
         else:
             pos = np.random.randint(self.max_len)
 
-        self.s1[pos] = torch.tensor(s1, dtype=self.stype)
-        self.a1[pos] = torch.tensor(a1, dtype=self.atype)
-        self.dist[pos] = torch.tensor(dist)
-        self.r1[pos] = torch.tensor(r1)
-        self.s2[pos] = torch.tensor(s2, dtype=self.stype)
-        self.done[pos] = torch.tensor(done)
+        self.features[pos] = torch.tensor(features, dtype=self.stype)
+        self.target[pos] = torch.tensor(target, dtype=self.atype)
