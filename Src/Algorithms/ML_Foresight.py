@@ -5,7 +5,7 @@ import torch.nn as nn
 from torch import float32
 from math import sqrt
 from Src.Utils.Utils import MemoryBuffer,get_dist_mat_HGS,extract_route_HGS, get_matrix
-from Src.Utils.Predictors import CNN
+from Src.Utils.Predictors import CNN_2d, CNN_3d
 from Src.Algorithms.Agent import Agent
 from scipy.special import lambertw
 from math import exp, e
@@ -44,14 +44,24 @@ class ML_Foresight(Agent):
         
         self.grid_dim = config.grid_dim
         self.initial_phase = True
-        self.memory =   MemoryBuffer(max_len=self.config.buffer_size, matrix_dim=self.grid_dim,
+        
+        self.n_layers = config.n_input_layers
+        self.memory =   MemoryBuffer(max_len=self.config.buffer_size,time_intervals=self.n_layers, matrix_dim=self.grid_dim,
                                      target_dim=1, atype=float32, config=config)  
         
-        self.customer_cell = get_matrix(config.coords,self.grid_dim)
-        self.feat_idx = np.empty(0)
-        self.features = np.empty((0,self.grid_dim*self.grid_dim))
+        if config.use3d_conv:
+            self.supervised_ml = CNN_3d(self.grid_dim,self.n_layers)
+        else:
+            self.supervised_ml = CNN_2d(self.grid_dim,self.n_layers)
+        self.features = np.empty((0,self.n_layers*self.grid_dim*self.grid_dim))
         
-        self.supervised_ml = CNN()
+        
+        self.customer_cell = get_matrix(config.coords,self.grid_dim)
+
+        self.interval = int((config.n_vehicles*config.veh_capacity)/config.n_input_layers)
+
+        
+
         self.optimizer = torch.optim.Adam(self.supervised_ml.parameters(),lr=1e-3)
         self.criterion = nn.MSELoss()
         
@@ -186,10 +196,11 @@ class ML_Foresight(Agent):
         return sqrt((a.x-b.x)**2 + (a.y-b.y)**2)
 
     def get_prediction(self,cur_feat,home,pps):
+        time_int = min(int(home.time/self.interval),self.n_layers-1)
         new_feat = torch.cat((2+len(pps))*[cur_feat])
-        new_feat[1][self.customer_cell[home.id_num][0]][self.customer_cell[home.id_num][1]]+=1
+        new_feat[1][time_int][self.customer_cell[home.id_num][0]][self.customer_cell[home.id_num][1]]+=1
         for idx,p in enumerate(pps):
-            new_feat[idx+2][self.customer_cell[p.location.id_num][0]][self.customer_cell[p.location.id_num][1]]+=1
+            new_feat[idx+2][time_int][self.customer_cell[p.location.id_num][0]][self.customer_cell[p.location.id_num][1]]+=1
         
         costs = []
         for feat  in new_feat:
@@ -223,7 +234,7 @@ class ML_Foresight(Agent):
             target = sorted(target, key=itemgetter(0))#sort in order of arrival (same as features)
             self.memory.add(self.features,target)
             
-            self.features = np.empty((0,self.grid_dim*self.grid_dim))
+            self.features = np.empty((0,self.n_layers*self.grid_dim*self.grid_dim))
 
             #optionally update model
             if self.initial_phase:#train model initial phase
@@ -281,16 +292,18 @@ class ML_Foresight(Agent):
         self.save()
         
     def get_feature_rep(self,data):
-        feature = np.zeros((self.grid_dim,self.grid_dim))
-        for i in data["id"]:
-            feature[self.customer_cell[i][0]][self.customer_cell[i][1]]+=1
+        feature = np.zeros((self.n_layers,self.grid_dim,self.grid_dim))
+        for i,t in zip(data["id"],data["time"]):
+            time_int = min(int(t/self.interval),self.n_layers-1)
+            feature[time_int][self.customer_cell[i][0]][self.customer_cell[i][1]]+=1
         return feature
     
     def get_feature_rep_infer(self,fleet):
-        feature = np.zeros((self.grid_dim,self.grid_dim))
+        feature = np.zeros((self.n_layers,self.grid_dim,self.grid_dim))
         for v in fleet:
             for i in v["routePlan"]:
-                feature[self.customer_cell[i.id_num][0]][self.customer_cell[i.id_num][1]]+=1
+                time_int = min(int(i.time/self.interval),self.n_layers-1)
+                feature[time_int][self.customer_cell[i.id_num][0]][self.customer_cell[i.id_num][1]]+=1
         return torch.tensor(feature,dtype=float32,requires_grad=False).unsqueeze(0)
     
 

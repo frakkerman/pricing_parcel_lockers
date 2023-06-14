@@ -448,9 +448,9 @@ class MemoryBuffer:
     """
     Pre-allocated memory interface for storing and using observations
     """
-    def __init__(self, max_len, matrix_dim, target_dim, atype, config, stype=float32):
+    def __init__(self, max_len, time_intervals, matrix_dim, target_dim, atype, config, stype=float32):
 
-        self.features = torch.zeros((max_len, matrix_dim, matrix_dim), dtype=stype, requires_grad=False)
+        self.features = torch.zeros((max_len, time_intervals, matrix_dim, matrix_dim), dtype=stype, requires_grad=False)
         self.target = torch.zeros((max_len, target_dim), dtype=atype, requires_grad=False)
 
         self.length = 0
@@ -459,6 +459,7 @@ class MemoryBuffer:
         self.stype = stype
         self.config = config
         self.matrix_dim = matrix_dim
+        self.time_intervals = time_intervals
 
     @property
     def size(self):
@@ -485,6 +486,7 @@ class MemoryBuffer:
 
     def add(self, features, target):
         mtrx_dim = self.matrix_dim
+        time_intervals = self.time_intervals
         if len(features)!=len(target):
             raise ValueError("MemoryBuffer: features and target are different length" )
         for i in range(len(features)):
@@ -494,7 +496,7 @@ class MemoryBuffer:
             else:
                 pos = np.random.randint(self.max_len)
     
-            self.features[pos] = torch.tensor(features[i].reshape(mtrx_dim,mtrx_dim), dtype=self.stype)
+            self.features[pos] = torch.tensor(features[i].reshape(time_intervals,mtrx_dim,mtrx_dim), dtype=self.stype)
             self.target[pos] = torch.tensor(target[i][1], dtype=self.atype)
         
     def save(self, filename):

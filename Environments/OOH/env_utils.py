@@ -1,6 +1,7 @@
 from math import sqrt
 import numpy as np
 from hygese import AlgorithmParameters, Solver
+from Src.Utils.Utils import extract_route_HGS
 
 class utils_env(object):
     def __init__(self,
@@ -68,7 +69,7 @@ class utils_env(object):
         data["demands"][0] = 0#depot demand=0
         result = self.hgs_solver.solve_cvrp(data)
         #update current routes
-        fleet = self.extract_route_HGS(result,data)
+        fleet = extract_route_HGS(result,data)
         return fleet
     
     def reset_fleet(self,fleet,initRouteplan):
