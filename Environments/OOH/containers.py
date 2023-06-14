@@ -6,6 +6,7 @@ class Location:
     x: float
     y: float
     id_num: int #id only used for loaded data
+    time: int#arrival time
     def __getitem__(self, item):
         return getattr(self, item)
 

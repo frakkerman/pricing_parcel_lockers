@@ -27,13 +27,13 @@ class Parser(object):
         self.environment_parameters(parser)  
         
         # General settings for algorithms
-        self.CNN_parameters(parser)
+        self.ML_parameters(parser)
         self.Heuristic_parameters(parser)
         
         self.parser = parser
 
     def environment_parameters(self, parser):
-        parser.add_argument("--algo_name", default='CNN', help="RL algorithm",choices=['CNN','Heuristic'])
+        parser.add_argument("--algo_name", default='ML_Foresight', help="RL algorithm",choices=['ML_Foresight','Heuristic'])
         parser.add_argument("--env_name", default='Parcelpoint_py', help="Environment to run the code")
         parser.add_argument("--max_episodes", default=int(3000), help="maximum number of episodes", type=int)
         
@@ -66,10 +66,11 @@ class Parser(object):
         
         parser.add_argument("--reopt", default=50, help="re-opt frequency of cheapest insertion route using HGS", type=int)
         
-    def CNN_parameters(self, parser):
+    def ML_parameters(self, parser):
         parser.add_argument("--grid_dim", default=5, help="division of operational area in X*X clusters", type=int)
         parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)
-        parser.add_argument("--buffer_size", default=int(100), help="Size of memory buffer", type=int)
+        parser.add_argument("--initial_phase_epochs", default=1000, help="maximum number of episodes", type=int)
+        parser.add_argument("--buffer_size", default=int(30), help="Size of memory buffer", type=int)
         parser.add_argument("--batch_size", default=1, help="Batch size", type=int)
         #lr, epochs, layers+size
         parser.add_argument("--init_theta_cnn", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)

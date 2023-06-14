@@ -10,6 +10,7 @@ import importlib
 from time import time
 import sys
 from Environments.OOH.containers import Location,Vehicle,Fleet
+from math import trunc
 
 np.random.seed(0)
 torch.manual_seed(0)
@@ -336,7 +337,7 @@ def readCVRPLIB(pathh,v_cap,n_veh):
                 for i in file:
                     if not i.startswith('Route'):
                         loc = i.strip().split('\t')
-                        loc = Location(int(loc[0]),int(loc[1]),0)#add id_num here
+                        loc = Location(int(loc[0]),int(loc[1]),0,0)#add id_num here
                         routeplans[idx].append(loc)
                     else:
                         idx +=1
@@ -363,7 +364,7 @@ def load_demand_data(pathh,city,data_seed):
             for j,i in enumerate(file):
                 if not i.startswith('NODE'):
                     loc = i.strip().split('\t')
-                    loc = Location(float(loc[1]),float(loc[2]),j-1)
+                    loc = Location(float(loc[1]),float(loc[2]),j-1,0)
                     coords = np.append(coords,loc)
         f = pathh+"_dist_matrix.txt"
         dist_matrix = np.empty(shape=(0,len(coords)),dtype=int)
@@ -401,7 +402,7 @@ def extract_route_HGS(route,data):
     veh = 0
     for r in route.routes:
         for i in r:
-            loc = Location(data['x_coordinates'][i],data['y_coordinates'][i],data['id'][i])
+            loc = Location(data['x_coordinates'][i],data['y_coordinates'][i],data['id'][i],data['time'][i])
             idx = len(fleet["fleet"][veh]["routePlan"])-1
             fleet["fleet"][veh]["routePlan"].insert(idx,loc)
         veh+=1
@@ -425,13 +426,31 @@ def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,city,data_seed):
     np.save(pathh+city+"_700_"+str(data_seed)+"_adjacency20", adjacency)
 
 
+def get_matrix(coords,dim):
+    max_xcoord = max(coords, key=lambda x: x.x).x
+    max_ycoord = max(coords, key=lambda y: y.y).y
+    min_xcoord = min(coords, key=lambda x: x.x).x
+    min_ycoord = min(coords, key=lambda y: y.y).y
+    
+    customer_cells = np.empty((0,2),dtype=int)
+    min_x = min_xcoord
+    diff_x = max_xcoord-min_xcoord
+    min_y = min_ycoord
+    diff_y = max_ycoord-min_ycoord
+    
+    for i in coords:
+        column = trunc(dim* ((i.x - min_x) / diff_x)-1e-5)
+        row = trunc(dim* ((i.y - min_y) / diff_y)-1e-5)
+        customer_cells = np.vstack((customer_cells,[column,row]))
+    return customer_cells
+
 class MemoryBuffer:
     """
     Pre-allocated memory interface for storing and using observations
     """
     def __init__(self, max_len, matrix_dim, target_dim, atype, config, stype=float32):
 
-        self.features = torch.zeros((max_len, matrix_dim), dtype=stype, requires_grad=False)
+        self.features = torch.zeros((max_len, matrix_dim, matrix_dim), dtype=stype, requires_grad=False)
         self.target = torch.zeros((max_len, target_dim), dtype=atype, requires_grad=False)
 
         self.length = 0
@@ -439,6 +458,7 @@ class MemoryBuffer:
         self.atype = atype
         self.stype = stype
         self.config = config
+        self.matrix_dim = matrix_dim
 
     @property
     def size(self):
@@ -448,7 +468,7 @@ class MemoryBuffer:
         self.length = 0
 
     def _get(self, idx):
-        return self.s1[idx], self.a1[idx], self.dist[idx], self.r1[idx], self.s2[idx], self.done[idx]
+        return self.features[idx], self.target[idx]
 
     def batch_sample(self, batch_size, randomize=True):
         if randomize:
@@ -464,11 +484,19 @@ class MemoryBuffer:
         return self._get(np.random.choice(self.length, count))
 
     def add(self, features, target):
-        pos = self.length
-        if self.length < self.max_len:
-            self.length = self.length + 1
-        else:
-            pos = np.random.randint(self.max_len)
-
-        self.features[pos] = torch.tensor(features, dtype=self.stype)
-        self.target[pos] = torch.tensor(target, dtype=self.atype)
+        mtrx_dim = self.matrix_dim
+        if len(features)!=len(target):
+            raise ValueError("MemoryBuffer: features and target are different length" )
+        for i in range(len(features)):
+            pos = self.length
+            if self.length < self.max_len:
+                self.length = self.length + 1
+            else:
+                pos = np.random.randint(self.max_len)
+    
+            self.features[pos] = torch.tensor(features[i].reshape(mtrx_dim,mtrx_dim), dtype=self.stype)
+            self.target[pos] = torch.tensor(target[i][1], dtype=self.atype)
+        
+    def save(self, filename):
+        torch.save(self.features, filename + 'feat.pt')
+        torch.save(self.target, filename + 'target.pt')

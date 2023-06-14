@@ -57,7 +57,7 @@ class Parcelpoint_py(object):
             self.num_cust_loc = len(self.dist_matrix)-len(self.parcelPoints["parcelpoints"])-1
             self.dist_scaler = np.amax(self.dist_matrix)
         else:
-            self.depot = Location(50,50,0)
+            self.depot = Location(50,50,0,0)
             self.utils = utils_env(Location,Vehicle,Fleet,ParcelPoint,ParcelPoints,self.veh_capacity,self.n_vehicles,self.pp_capacity,self.data,self.dist_matrix)
             self.parcelPoints = self.utils.get_parcelpoints()
             self.action_space = Space(size=2**self.n_parcelpoints)
@@ -106,6 +106,7 @@ class Parcelpoint_py(object):
         self.data['x_coordinates'] = self.depot.x
         self.data['y_coordinates'] =  self.depot.y
         self.data['id'] = 0
+        self.data['time'] = 0
         self.data['vehicle_capacity'] = self.veh_capacity
         self.data['num_vehicles'] = self.n_vehicles
         
@@ -115,10 +116,11 @@ class Parcelpoint_py(object):
     def get_new_customer_from_data(self):
         idx = np.random.randint(1, self.num_cust_loc)
         home = self.coords[idx]#depot = 0
+        home.time=self.steps
         return Customer(home,self.incentive_sens,self.home_util,idx)
 
     def generate_new_customer(self):
-        home = Location(np.random.randint(0,500),np.random.randint(0,500),0)
+        home = Location(np.random.randint(0,500),np.random.randint(0,500),0,self.steps)
         return Customer(home,self.incentive_sens,self.home_util,0)
 
     def make_state(self):
@@ -127,7 +129,7 @@ class Parcelpoint_py(object):
         return state
         
     def is_terminal(self):
-        if self.steps >= self.max_steps:
+        if self.steps > self.max_steps:
             return 1
         else:
             return 0
@@ -149,6 +151,7 @@ class Parcelpoint_py(object):
         self.data['x_coordinates']= np.append(self.data['x_coordinates'],loc.x)
         self.data['y_coordinates'] = np.append(self.data['y_coordinates'],loc.y)
         self.data['id'] = np.append(self.data['id'],loc.id_num)
+        self.data['time'] = np.append(self.data['time'],self.steps)
         
         #reduce parcelpoint capacity, if chosen
         if accepted:

@@ -79,7 +79,7 @@ class utils_env(object):
     
     def get_parcelpoints(self):
         pps = np.empty(shape=(0,6))
-        pp_locs = [self.Location(25,25,0),self.Location(25,75,1),self.Location(50,25,2),self.Location(50,75,3),self.Location(75,25,4),self.Location(75,75,5)]
+        pp_locs = [self.Location(25,25,0,0),self.Location(25,75,1,0),self.Location(50,25,2,0),self.Location(50,75,3,0),self.Location(75,25,4,0),self.Location(75,75,5,0)]
         for p in range(len(pp_locs)):
             pps = np.append(pps,self.ParcelPoint(pp_locs[p],self.pp_capacity,p))
         return self.ParcelPoints(pps)

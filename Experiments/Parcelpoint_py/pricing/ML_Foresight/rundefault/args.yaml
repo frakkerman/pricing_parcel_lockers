@@ -1,8 +1,8 @@
 ---
-algo_name: CNN
+algo_name: ML_Foresight
 base_util: 0.2
 batch_size: 1
-buffer_size: 1000
+buffer_size: 30
 city: Austin
 cool_theta: 0.0006666666666666666
 cool_theta_cnn: true
@@ -41,6 +41,6 @@ save_count: 1000
 save_model: true
 save_routes: false
 seed: 1234
-timestamp: 6|13|16:52:43
+timestamp: 6|14|12:38:49
 truck_speed: 40
 veh_capacity: 20

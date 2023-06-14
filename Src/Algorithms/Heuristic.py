@@ -97,7 +97,7 @@ class Heuristic(Agent):
                 sum_mnl += exp(util+(state[0].incentiveSensitivity*(pp_costs[idx]-self.revenue)))
        
         #2 obtain lambert w0
-        lambertw0 = float(lambertw(sum_mnl/e)+1)/state[0].incentiveSensitivity
+        lambertw0 = (lambertw(sum_mnl/e).real+1)/state[0].incentiveSensitivity
         
         # 3 calculate discounts/prices
         a_hat = np.zeros(len(pps)+1)
