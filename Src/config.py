@@ -22,7 +22,7 @@ class Config(object):
         self.__dict__.update(vars(args))
 
         # Save results after every certain number of episodes
-        self.save_after = args.max_episodes // args.save_count if args.max_episodes > args.save_count else args.max_episodes
+        self.save_after = args.max_episodes // args.save_count if args.max_episodes >= args.save_count else args.max_episodes
 
         # Add path to models
         folder_suffix = args.experiment + args.folder_suffix

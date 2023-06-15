@@ -5,15 +5,13 @@ from Src.config import Config
 from time import time
 
 """
-TODO: just use cvrp standrad instance files
-TODO: new historic routes
-TODO: CNN + state embedding/representation using grid overlay and time dimension
-TODO: CNN training loop + graph
-make run plan, run with different instanbce size+parcelpoint density
+TODO: perhaps add VRPTW later (would require use of pyvrp lib), would make 3d conv interesting
+TODO: generate historic routes for foresight method
+TODO: tune customer choice model such that x% of customer select pp when offeral is used
+TODO: cleanup action space in environment (needed?)
+TODO: how to deal with different instance seeds
 perhaps add appartment builidng delivery time?
-question, how to determine costs per customer, how does the data structure look?
 also study fixed fee/free home delivery
-add time windows to support complex architecture?...
 """
 
 class Solver:

@@ -68,8 +68,9 @@ def save_plots_test_runs(test_returns,test_std,step_time,config):
 
 def save_plots_stats(stats,costs,run_time,actions,config,episode):
     info = np.array(stats)
-    np.save(config.paths['results'] + "time", run_time)
+    np.save(config.paths['results'] + "run_time", run_time)
     
+    pricing_revenue = 0
     if config.pricing:
         #1 line chart of discounts over time
         given_price = np.split(info[:,-1],episode+1,axis=0)
@@ -87,7 +88,8 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
         
         #2 boxplot of price discounts
         all_prices = np.concatenate( actions, axis=0 ) 
-        given_price = np.concatenate( given_price, axis=0 ) 
+        given_price = np.concatenate( given_price, axis=0 )
+        pricing_revenue = sum(given_price)/(episode+1)
         plt.figure()
         plt.ylabel("Price")
         plt.title("Performance")
@@ -111,6 +113,7 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     plt.close()
     
     #4 boxplot final hgs distance
+    costs =  np.array([i for i in costs if i != 0])
     plt.figure()
     plt.ylabel("Total distance")
     plt.title("Performance")
@@ -118,82 +121,44 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     plt.savefig(config.paths['results'] + "box_hgs_distance.png")
     plt.close()
     
+    #5 count number of unique parcelpoints
+    count_pps = len(np.unique(info[np.logical_or(info[:,1]!=info[:,3], info[:,2]!=info[:,4])][:,3]))
+    np.save(config.paths['results'] + "num_active_parcelpoints", count_pps)
+    
+    #6 bar times
+    added_costs_home = (config.del_time/60)
+    drive_time = np.mean(costs) / config.truck_speed
+    service_time = added_costs_home*count_home
+    plt.figure()
+    plt.ylabel("Hours")
+    plt.title("Performance")
+    plt.bar([1,2],[drive_time,service_time])
+    plt.xticks([1, 2], ['Driving time', 'Service time'])
+    plt.savefig(config.paths['results'] + "bar_drive_del_time.png")
+    plt.close()
+    
+    #cost and revenue
+    cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / config.truck_speed
+    revenue = (len(info)/(episode+1))*config.revenue
+    total_costs = added_costs_home*count_home+(np.mean(costs)*cost_multiplier)
+    plt.figure()
+    plt.ylabel("Monetary unit")
+    plt.title("Performance")
+    plt.bar([1,2,3],[revenue,pricing_revenue,total_costs])
+    plt.xticks([1, 2,3], ['Revenue', 'Pricing', 'Total costs'])
+    plt.savefig(config.paths['results'] + "bar_revenue_cost.png")
+    plt.close()
+       
+    #maybe add stats later considering OOH capacity
+    
     #save data
-    np.save(config.paths['results'] + "hgs_costs", costs)
+    np.save(config.paths['results'] + "drive_time", drive_time)
+    np.save(config.paths['results'] + "service_time", service_time)
+    np.save(config.paths['results'] + "pricing_revenue", pricing_revenue)
+    np.save(config.paths['results'] + "revenues", revenue)
+    np.save(config.paths['results'] + "total_costs", total_costs)
+    np.save(config.paths['results'] + "hgs_distances", costs)
     np.save(config.paths['results'] + "num_home_deliveries", count_home)
-
-class NeuralNet(nn.Module):
-    def __init__(self):
-        super(NeuralNet, self).__init__()
-        self.ctr = 0
-        self.nan_check_fequency = 10000
-
-    # def custom_weight_init(self):
-    #     # Initialize the weight values
-    #     for m in self.modules():
-    #         weight_init(m)
-
-    def update(self, loss, retain_graph=False, clip_norm=False):
-        self.optim.zero_grad()  # Reset the gradients
-        loss.backward(retain_graph=retain_graph)
-        self.step(clip_norm)
-
-    def step(self, clip_norm):
-        if clip_norm:
-            torch.nn.utils.clip_grad_norm_(self.parameters(), clip_norm)
-        self.optim.step()
-        self.check_nan()
-
-    def save(self, filename):
-        torch.save(self.state_dict(), filename)
-
-    def load(self, filename):
-        self.load_state_dict(torch.load(filename))
-
-    def check_nan(self):
-        # Check for nan periodically
-        self.ctr += 1
-        if self.ctr == self.nan_check_fequency:
-            self.ctr = 0
-            # Note: nan != nan  #https://github.com/pytorch/pytorch/issues/4767
-            for nme, param in self.named_parameters():
-                if (param != param).any():
-                    raise ValueError(nme + ": Weights have become nan... Exiting.")
-
-    def reset(self):
-        return
-
-
-def binaryEncoding(num, size,level=1):
-    binary = np.zeros(size)
-    i = -1
-    while num > 0:
-        binary[i] = num % (level+1)
-        num = num//(level+1)
-        i -= 1
-    return binary
-
-
-def pairwise_distances(x, y):
-    '''
-    Input: x is a Nxd matrix
-           y is a Mxd matirx
-    Output: dist is a NxM matrix where dist[i,j] is the square norm between x[i,:] and y[j,:]
-    i.e. dist[i,j] = ||x[i,:]-y[j,:]||^2
-
-    Advantage: Less memory requirement O(M*d + N*d + M*N) instead of O(N*M*d)
-    Computationally more expensive? Maybe, Not sure.
-    adapted from: https://discuss.pytorch.org/t/efficient-distance-matrix-computation/9065/2
-    '''
-    x_norm = (x ** 2).sum(1).view(-1, 1)
-    y_norm = (y ** 2).sum(1).view(1, -1)
-    y_t = torch.transpose(y, 0, 1)
-
-    # a^2 + b^2 - 2ab
-    dist = x_norm + y_norm - 2.0 * torch.mm(x, y_t)
-    # dist[dist != dist] = 0 # replace nan values with 0
-    return dist
-
 
 class Space:
     def __init__(self, low=[0], high=[1], dtype=np.uint8, size=-1):
@@ -282,17 +247,6 @@ def create_directory_tree(dir_path):
 def remove_directory(dir_path):
     shutil.rmtree(dir_path, ignore_errors=True)
 
-
-def clip_norm(params, max_norm=1):
-    # return params
-    norm_param = []
-    for param in params:
-        norm = np.linalg.norm(param, 2)
-        if norm > max_norm:
-            norm_param.append(param/norm * max_norm)
-        else:
-            norm_param.append(param)
-    return norm_param
 
 def writeCVRPLIB(fleet,filename,pathh,n_cust,n_veh):
     if name == 'nt':#windows

@@ -4,7 +4,7 @@ from torch import flatten
 import numpy as np
 
 class CNN_2d(nn.Module):
-    def __init__(self,dim,n_layers):
+    def __init__(self,dim,n_layers,n_filters,dropout):
         super().__init__()
         
         kernel1 = (3,3)#conv
@@ -12,11 +12,10 @@ class CNN_2d(nn.Module):
         dilation=1
         stride=(1,1)
         padding=(1,1)
+        out_channels=n_filters
+        dropout = dropout
         
-        out_channels=16#tune
-        dropout = 0.5#tune
-        #learning rate, batch size(8,16,32,)
-        
+        #calculate output shape of conv and pool layer
         h1 = np.floor(((dim+2*padding[0]-dilation*(kernel1[0]-1)-1)/stride[0])+1)
         w1 = np.floor(((dim+2*padding[1]-dilation*(kernel1[1]-1)-1)/stride[1])+1)
         h2 = np.floor(((h1+2*padding[0]-dilation*(kernel1[0]-1)-1)/stride[0])+1)
@@ -32,7 +31,7 @@ class CNN_2d(nn.Module):
         
         self.fc1 = nn.Linear(in_features=int(2*out_channels*h3*w3), out_features=256)
         self.fc2 = nn.Linear(256, 128)
-        self.fc3 = nn.Linear(64, 1)
+        self.fc3 = nn.Linear(128, 1)
         
         self.dropout = nn.Dropout(p=dropout)
 
@@ -61,7 +60,7 @@ class CNN_2d(nn.Module):
         self.load_state_dict(torch.load(filename))
 
 class CNN_3d(nn.Module):
-    def __init__(self,n_layers):
+    def __init__(self,dim,n_layers,n_filters,dropout):
         super().__init__()
         
         print("Not supported yet, but should be useful for even more complex data, with 4th dimension")

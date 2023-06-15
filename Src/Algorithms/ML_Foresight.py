@@ -12,8 +12,7 @@ from math import exp, e
 from hygese import AlgorithmParameters, Solver
 from operator import itemgetter
 
-# This function implements the a Q-actor critic (QAC) algorithm
-# contains the updates of actor and critic
+# This function implements the foresight modle employing supervised ML
 class ML_Foresight(Agent):
     def __init__(self, config):
         super(ML_Foresight, self).__init__(config)
@@ -21,21 +20,16 @@ class ML_Foresight(Agent):
         
         # heuristic parameters
         self.k = config.k
-        self.init_theta = config.init_theta
-        self.cool_theta = config.cool_theta#linear cooling scheme
+        self.init_theta = config.init_theta_cnn
+        self.cool_theta = config.cool_theta_cnn#linear cooling scheme
         
         #problem variant: pricing or offering
         if self.config.pricing:
-            if config.offer_all:
-                raise ValueError("Offer all heuristic not available for pricing problem variant" )
             self.get_action = self.get_action_pricing
             self.max_p = config.max_price
             self.min_p = config.min_price
         else:
-            if config.offer_all:
-                self.get_action = self.get_action_offerall
-            else:
-                self.get_action = self.get_action_offer
+            self.get_action = self.get_action_offer
         
         self.dist_matrix = config.dist_matrix
         self.adjacency = config.adjacency
@@ -50,20 +44,18 @@ class ML_Foresight(Agent):
                                      target_dim=1, atype=float32, config=config)  
         
         if config.use3d_conv:
-            self.supervised_ml = CNN_3d(self.grid_dim,self.n_layers)
+            self.supervised_ml = CNN_3d(self.grid_dim,self.n_layers,config.n_filters,config.dropout)
         else:
-            self.supervised_ml = CNN_2d(self.grid_dim,self.n_layers)
+            self.supervised_ml = CNN_2d(self.grid_dim,self.n_layers,config.n_filters,config.dropout)
         self.features = np.empty((0,self.n_layers*self.grid_dim*self.grid_dim))
         
         
         self.customer_cell = get_matrix(config.coords,self.grid_dim)
 
         self.interval = int((config.n_vehicles*config.veh_capacity)/config.n_input_layers)
-
         
-
-        self.optimizer = torch.optim.Adam(self.supervised_ml.parameters(),lr=1e-3)
-        self.criterion = nn.MSELoss()
+        self.optimizer = config.optim(self.supervised_ml.parameters(), lr=self.config.learning_rate)
+        self.criterion = nn.HuberLoss(delta=1.0)
         
         #define learning modules
         self.modules = [('supervised_ml', self.supervised_ml)]
@@ -82,7 +74,7 @@ class ML_Foresight(Agent):
         self.base_util = config.base_util
         self.cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / config.truck_speed
         self.added_costs_home = config.driver_wage*(config.del_time/60)
-        self.revenue = config.revenue
+        self.revenue = config.revenue/100.0
         
         #hgs settings
         ap_final = AlgorithmParameters(timeLimit=3.2)  # seconds
@@ -121,7 +113,9 @@ class ML_Foresight(Agent):
 
     def get_action_pricing(self,state,training):
         if self.initial_phase:
-            a_hat = np.zeros(21)
+            mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
+            pps = mask[mask.mask].data
+            a_hat = np.zeros(len(pps)+1)
             return np.around(a_hat,decimals=2)
         else:
             
@@ -276,7 +270,7 @@ class ML_Foresight(Agent):
 
             initial_losses.append(np.mean(losses))
             if counter % 1 == 0:
-                print("Epoch {} loss:: {}".format(counter, np.mean(initial_losses[-10:])))
+                print("Epoch {} Huber loss:: {}".format(counter, np.mean(initial_losses[-10:])))
                 if self.config.only_phase_one:
                     self.memory.save(self.config.paths['checkpoint']+'initial_' )
                     self.save()

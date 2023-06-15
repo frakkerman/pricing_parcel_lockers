@@ -7,8 +7,8 @@ from scipy.special import lambertw
 from math import exp, e
 from hygese import AlgorithmParameters, Solver
 
-# This function implements the a Q-actor critic (QAC) algorithm
-# contains the updates of actor and critic
+# This function implements the method proposed in Yang et. al (2016) adapted to the OOH setting
+#"Choice-Based Demand Management and Vehicle Routing in E-Fulfillment"
 class Heuristic(Agent):
     def __init__(self, config):
         super(Heuristic, self).__init__(config)
@@ -20,16 +20,11 @@ class Heuristic(Agent):
         
         #problem variant: pricing or offering
         if self.config.pricing:
-            if config.offer_all:
-                raise ValueError("Offer all heuristic not available for pricing problem variant" )
             self.get_action = self.get_action_pricing
             self.max_p = config.max_price
             self.min_p = config.min_price
         else:
-            if config.offer_all:
-                self.get_action = self.get_action_offerall
-            else:
-                self.get_action = self.get_action_offer
+            self.get_action = self.get_action_offer
             
         # Define learning modules -- in LAR we have 3 learning modules as we have to additionally train the SL predictor
         self.modules = []
@@ -51,7 +46,7 @@ class Heuristic(Agent):
         self.base_util = config.base_util
         self.cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / config.truck_speed
         self.added_costs_home = config.driver_wage*(config.del_time/60)
-        self.revenue = config.revenue
+        self.revenue = config.revenue/100.0
         
         #hgs settings
         ap_final = AlgorithmParameters(timeLimit=3.2)  # seconds
@@ -108,16 +103,6 @@ class Heuristic(Agent):
         
         a_hat = np.clip(a_hat,self.min_p,self.max_p)
         return np.around(a_hat,decimals=2)
-    
-    def get_action_offerall(self,state,training):   
-        #check if pp is feasible
-        mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
-        pps = mask[mask.mask].data
-        action = np.empty(0,dtype=int)
-        for idx,pp in enumerate(pps):
-            if pp.remainingCapacity > 0:
-                action = np.append(action,pp.id_num)
-        return action
     
     def addedcosts_euclid(self,route,i,loc):
         costs = self.getdistance_euclidean(route[i-1],loc) + self.getdistance_euclidean(loc,route[i])\

@@ -6,6 +6,61 @@ Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py
 Module path:  Src.Algorithms.ML_Foresight ML_Foresight
 Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
 =====Configurations=====
- Namespace(seed=1234, save_count=1000, optim='sgd', log_output='term_file', debug=True, save_model=True, timestamp='6|14|21:52:12', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=10000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.99, base_util=0.2, home_util=0.3, revenue=0.4, fuel_cost=0.1, truck_speed=40, del_time=5, driver_wage=25, reopt=10000000, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, init_theta_cnn=1.0, cool_theta_cnn=True, load_embed=False, use3d_conv=False, save_routes=False, init_theta=1.0, cool_theta=0.0006666666666666666, offer_all=False)
+ Namespace(seed=1234, save_count=1000, log_output='term_file', debug=True, save_model=True, timestamp='6|15|11:48:25', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.99, base_util=0.2, home_util=0.3, revenue=40, fuel_cost=0.1, truck_speed=40, del_time=5, driver_wage=25, reopt=10000000, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=0.0, price_home=0.0)
 Actions space: 1048576 :: State space: 4
 Inital training phase started...
+Epoch 0 Huber loss:: 172.53807706361016
+Epoch 1 Huber loss:: 171.3539181467146
+Epoch 2 Huber loss:: 167.07315737911398
+Epoch 3 Huber loss:: 158.32580442807327
+Epoch 4 Huber loss:: 149.71846568092704
+Epoch 5 Huber loss:: 142.45179890779158
+Epoch 6 Huber loss:: 136.89247556630343
+Epoch 7 Huber loss:: 132.9498504067771
+Epoch 8 Huber loss:: 129.56697710402034
+Epoch 9 Huber loss:: 127.06403028371433
+Epoch 10 Huber loss:: 120.24117196649313
+Epoch 11 Huber loss:: 113.70509515494106
+Epoch 12 Huber loss:: 108.47889793723823
+Epoch 13 Huber loss:: 106.11954296439885
+Epoch 14 Huber loss:: 105.02986010561388
+Epoch 15 Huber loss:: 104.84684095074734
+Epoch 16 Huber loss:: 105.15933386812608
+Epoch 17 Huber loss:: 104.7322794465224
+Epoch 18 Huber loss:: 104.7816605838982
+Epoch 19 Huber loss:: 104.72495145965097
+Epoch 20 Huber loss:: 104.73661231526212
+Epoch 21 Huber loss:: 104.97657017398353
+Epoch 22 Huber loss:: 104.48234965690449
+Epoch 23 Huber loss:: 103.85999775616801
+Epoch 24 Huber loss:: 104.04354128925479
+Epoch 25 Huber loss:: 104.09289699960229
+Epoch 26 Huber loss:: 103.24380751697694
+Epoch 27 Huber loss:: 103.59692989755149
+Epoch 28 Huber loss:: 103.66103993296622
+Epoch 29 Huber loss:: 103.4516218795379
+Epoch 30 Huber loss:: 103.24777948757014
+Epoch 31 Huber loss:: 102.62605052848657
+Epoch 32 Huber loss:: 102.46220699951053
+Epoch 33 Huber loss:: 102.21025367106
+Epoch 34 Huber loss:: 101.55643301293253
+Epoch 35 Huber loss:: 101.0246985463798
+Epoch 36 Huber loss:: 101.46819959923623
+Epoch 37 Huber loss:: 101.03055787051717
+Epoch 38 Huber loss:: 100.70580649976928
+Epoch 39 Huber loss:: 100.94906731391946
+Epoch 40 Huber loss:: 101.13248530810078
+Epoch 41 Huber loss:: 101.20871094490091
+Epoch 42 Huber loss:: 101.3645302327474
+Epoch 43 Huber loss:: 101.19933110555013
+Epoch 44 Huber loss:: 101.16477427939573
+Epoch 45 Huber loss:: 101.01910200258096
+Epoch 46 Huber loss:: 100.84987255440403
+Epoch 47 Huber loss:: 100.88065670357396
+Epoch 48 Huber loss:: 101.0442370512709
+Converged...
+... Initial training phase terminated!
+time required for 1 episodes :17.269105434417725
+time required for 1 episodes :5.014682292938232
+time required for 1 episodes :5.009866714477539
+time required for 1 episodes :4.9883644580841064

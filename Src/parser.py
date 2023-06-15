@@ -11,7 +11,6 @@ class Parser(object):
 
         # General parameters
         parser.add_argument("--save_count", default=1000, help="Number of checkpoints for saving results and model", type=int)
-        parser.add_argument("--optim", default='sgd', help="Optimizer type", choices=['adam', 'sgd', 'rmsprop'])
         parser.add_argument("--log_output", default='term_file', help="Log all the print outputs",choices=['term_file', 'term', 'file'])
         parser.add_argument("--debug", default=True, type=self.str2bool, help="Debug mode on/off")
         parser.add_argument("--save_model", default=True, type=self.str2bool, help="flag to save model checkpoints")
@@ -23,19 +22,21 @@ class Parser(object):
         parser.add_argument("--folder_suffix", default='default', help="folder name suffix")
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
         
+        parser.add_argument("--algo_name", default='ML_Foresight', help="RL algorithm",choices=['ML_Foresight','Heuristic','Baseline'])
+        
         # Environment parameters
         self.environment_parameters(parser)  
         
         # General settings for algorithms
         self.ML_parameters(parser)
         self.Heuristic_parameters(parser)
+        self.Baseline_parameters(parser)
         
         self.parser = parser
 
     def environment_parameters(self, parser):
-        parser.add_argument("--algo_name", default='ML_Foresight', help="RL algorithm",choices=['ML_Foresight','Heuristic'])
         parser.add_argument("--env_name", default='Parcelpoint_py', help="Environment to run the code")
-        parser.add_argument("--max_episodes", default=int(10000), help="maximum number of episodes", type=int)
+        parser.add_argument("--max_episodes", default=int(1000), help="maximum number of episodes", type=int)
         
         parser.add_argument("--max_steps_r", default=700, help="maximum steps per episode r of gamma dist.", type=int)
         parser.add_argument("--max_steps_p", default=0.5, help="maximum steps per episode p of gamma dist. [0,1]", type=float)
@@ -58,7 +59,7 @@ class Parser(object):
         parser.add_argument("--base_util", default=0.2, help="base utility across all alternativesy", type=float)
         parser.add_argument("--home_util", default=0.3, help="utility given to home delivery", type=float)
         
-        parser.add_argument("--revenue", default=0.4, help="revenue per customer", type=float)
+        parser.add_argument("--revenue", default=40, help="revenue per customer", type=float)
         parser.add_argument("--fuel_cost", default=0.1, help="costs of fuel per distance unit", type=float)
         parser.add_argument("--truck_speed", default=40, help="distance travelled per hour", type=float)
         parser.add_argument("--del_time", default=5, help="time in minutes to drop off parcel", type=float)
@@ -73,19 +74,26 @@ class Parser(object):
         parser.add_argument("--initial_phase_epochs", default=1000, help="maximum number of episodes", type=int)
         parser.add_argument("--buffer_size", default=int(30), help="Size of memory buffer", type=int)
         parser.add_argument("--batch_size", default=1, help="Batch size", type=int)
-        #lr, epochs, layers+size
-        parser.add_argument("--init_theta_cnn", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
-        parser.add_argument("--cool_theta_cnn", default=True, help="weight reduction for cheapest insertion", type=self.str2bool)
+        parser.add_argument("--learning_rate", default=1e-4, help="learning rate", type=float)
         
-        parser.add_argument("--load_embed", default=False, type=self.str2bool, help="Retrain flag, if True we do not retrain but try to load a stored model")
+        parser.add_argument("--init_theta_cnn", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
+        parser.add_argument("--cool_theta_cnn", default=(1/700), help="weight reduction for cheapest insertion", type=float)
+        
+        #parser.add_argument("--load_embed", default=False, type=self.str2bool, help="Retrain flag, if True we do not retrain but try to load a stored model")
+        parser.add_argument("--optim", default='adam', help="Optimizer type", choices=['adam', 'sgd', 'rmsprop'])
         parser.add_argument("--use3d_conv", default=False, type=self.str2bool, help="Use 3D convolution instead of 2D")
+        parser.add_argument("--n_filters", default=16, help="number of filters in first convolutional layer", type=int)
+        parser.add_argument("--dropout", default=0.1, help="dropout rate of the FC layers", type=float)
+       
         
     def Heuristic_parameters(self, parser):
         parser.add_argument("--save_routes", default=False, help="Used to save routes for use inside heuristic", type=self.str2bool)#could consider to make this an updating loop
         parser.add_argument("--init_theta", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
-        parser.add_argument("--cool_theta", default=(1/1500), help="weight reduction for cheapest insertion", type=float)
-        
-        parser.add_argument("--offer_all", default=False, help="baseline heuristic, just offer all feasible", type=self.str2bool)
+        parser.add_argument("--cool_theta", default=(1/700), help="weight reduction for cheapest insertion", type=float)
+    
+    def Baseline_parameters(self, parser):
+        parser.add_argument("--price_pp", default=0.0, help="fixed fee price to offer for all parcelpoints", type=float)
+        parser.add_argument("--price_home", default=0.0, help="fixed fee price to offer for home delivery", type=float)
         
     def str2bool(self, text):
         if text == 'True':
