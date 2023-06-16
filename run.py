@@ -51,7 +51,7 @@ class Solver:
                 step_time.append(time()-t1)
                 if step >= self.max_steps:
                     break
-            costs.append(self.model.update(data))#fix
+            costs.append(self.model.update(data,state,False))#fix
             steps.append(step)
         return costs,step_time,steps
 

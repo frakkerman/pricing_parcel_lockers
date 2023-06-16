@@ -59,6 +59,8 @@ class ML_Foresight(Agent):
         
         #define learning modules
         self.modules = [('supervised_ml', self.supervised_ml)]
+        self.init()#write module to device
+        self.device = config.device
         
         self.load_data = config.load_data
         if self.load_data:
@@ -198,7 +200,7 @@ class ML_Foresight(Agent):
         
         costs = []
         for feat  in new_feat:
-            costs.append(self.supervised_ml(feat.unsqueeze(0)).item())
+            costs.append(self.supervised_ml(feat.unsqueeze(0).to(self.device)).item())
         return costs
                                                        
 
@@ -231,7 +233,7 @@ class ML_Foresight(Agent):
             self.features = np.empty((0,self.n_layers*self.grid_dim*self.grid_dim))
 
             #optionally update model
-            if self.initial_phase:#train model initial phase
+            if self.initial_phase:#train model initial phase            
                 if self.memory.length >= self.config.buffer_size:
                     self.initial_phase_training(max_epochs=self.config.initial_phase_epochs)
             elif not self.config.only_phase_one:

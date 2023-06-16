@@ -22,6 +22,10 @@ class Agent:
         # Abstract class variables
         self.modules = None
 
+    def init(self):
+         for name, m in self.modules:
+             m.to(self.config.device)
+
     def clear_gradients(self):
         for _, module in self.modules:
             module.optim.zero_grad()

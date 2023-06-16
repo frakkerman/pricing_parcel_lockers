@@ -1,7 +1,7 @@
 import numpy as np
 import numpy.ma as ma
 from math import sqrt
-from Src.Utils.Utils import readCVRPLIB,writeCVRPLIB,get_dist_mat_HGS,extract_route_HGS
+from Src.Utils.Utils import readCVRPLIB,get_dist_mat_HGS
 from Src.Algorithms.Agent import Agent
 from scipy.special import lambertw
 from math import exp, e
@@ -151,9 +151,7 @@ class Heuristic(Agent):
             #obtain final CVRP schedule after end of booking horizon
             if self.load_data:
                 data["distance_matrix"] = get_dist_mat_HGS(self.dist_matrix,data['id'])
-            fleet,cost = self.reopt_HGS_final(data)#do a final reopt
-            if self.config.save_routes:
-                writeCVRPLIB(fleet,self.filecounter,self.path,self.max_steps,self.n_vehicles)
+            cost = self.reopt_HGS_final(data)#do a final reopt
             return cost
     
     def reopt_HGS_final(self,data):
@@ -161,5 +159,4 @@ class Heuristic(Agent):
         data["demands"][0] = 0#depot demand=0
         result = self.hgs_solver_final.solve_cvrp(data)  
         #update current routes
-        fleet = extract_route_HGS(result,data)
-        return fleet,result.cost
+        return result.cost

@@ -2,7 +2,7 @@
 algo_name: ML_Foresight
 base_util: -2.5
 batch_size: 1
-buffer_size: 30
+buffer_size: 10
 city: Austin
 cool_theta: 0.0014285714285714286
 cool_theta_cnn: 0.0014285714285714286
@@ -15,9 +15,10 @@ env_name: Parcelpoint_py
 experiment: run
 folder_suffix: default
 fuel_cost: 0.05
+gpu: 1
 grid_dim: 10
-hgs_final_time: 3.2
-hgs_reopt_time: 15.2
+hgs_final_time: 15.2
+hgs_reopt_time: 3.2
 home_util: 2.95
 incentive_sens: -0.1
 init_theta: 1.0
@@ -47,7 +48,7 @@ save_count: 100
 save_model: true
 save_routes: false
 seed: 1234
-timestamp: 6|16|12:10:52
+timestamp: 6|16|15:2:1
 truck_speed: 50
 use3d_conv: false
 veh_capacity: 60

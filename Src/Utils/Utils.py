@@ -291,7 +291,7 @@ def readCVRPLIB(pathh,v_cap,n_veh):
                 for i in file:
                     if not i.startswith('Route'):
                         loc = i.strip().split('\t')
-                        loc = Location(int(loc[0]),int(loc[1]),0,0)#add id_num here
+                        loc = Location(float(loc[0]),float(loc[1]),int(loc[2]),0)#we do not care about time here
                         routeplans[idx].append(loc)
                     else:
                         idx +=1
@@ -404,8 +404,8 @@ class MemoryBuffer:
     """
     def __init__(self, max_len, time_intervals, matrix_dim, target_dim, atype, config, stype=float32):
 
-        self.features = torch.zeros((max_len, time_intervals, matrix_dim, matrix_dim), dtype=stype, requires_grad=False)
-        self.target = torch.zeros((max_len, target_dim), dtype=atype, requires_grad=False)
+        self.features = torch.zeros((max_len, time_intervals, matrix_dim, matrix_dim), dtype=stype, requires_grad=False,device=config.device)
+        self.target = torch.zeros((max_len, target_dim), dtype=atype, requires_grad=False,device=config.device)
 
         self.length = 0
         self.max_len = max_len

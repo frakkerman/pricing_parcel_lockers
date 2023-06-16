@@ -71,6 +71,16 @@ class Config(object):
         # Set Model
         self.algo = Utils.dynamic_load(path.join(self.paths['root'], 'Src', 'Algorithms'), args.algo_name, load_class=True)
 
+        # GPU
+        if args.gpu:
+            self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        else:
+            self.device = 'cpu'
+        self.cuda = 0
+        if self.device.type=='cuda':
+            print('Number of GPUs available: ',torch.cuda.device_count())
+            self.cuda = 1
+
         # optimizer
         if args.optim == 'adam':
             self.optim = torch.optim.Adam
