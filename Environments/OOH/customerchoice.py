@@ -22,7 +22,7 @@ class customerchoicemodel(object):
         multi-nomial logit model calculating euclidean distance
         """
         distance = self.euclidean_distance(customer.home,parcelpoint.location)#distance from parcelpoint to home
-        beta_p = exp(-distance/self.dist_scaler)
+        beta_p = -exp(-distance/self.dist_scaler)
         return self.base_util + beta_p
 
     def mnl_distmat(self,customer,parcelpoint):
@@ -30,7 +30,7 @@ class customerchoicemodel(object):
         multi-nomial logit model using distance matrix
         """
         distance = self.dist_mat[customer.id_num][parcelpoint.id_num]#distance from parcelpoint to home
-        beta_p = exp(-distance/self.dist_scaler)
+        beta_p = -exp(-distance/self.dist_scaler)
         return self.base_util + beta_p
     
     def customerchoice_offer(self,customer,action,parcelpoints):
@@ -40,7 +40,7 @@ class customerchoicemodel(object):
         pps = parcelpoints[action]
         shape = (len(action)+1, 1)
         utils= np.empty(shape)
-        utils[0]=customer.home_util
+        utils[0]=self.base_util+customer.home_util
         for idx,pp in enumerate(pps):
             utils[idx+1] = self.mnl(customer,pp)
         utils = np.add(utils,gumbel(0,1, np.shape(utils)))#mu=0,beta=1 (std Gumbel)
@@ -58,7 +58,7 @@ class customerchoicemodel(object):
         pps = parcelpoints[parcelpoints.mask].data
         shape = (len(pps)+1, 1)
         utils= np.empty(shape)
-        utils[0]=customer.home_util+customer.incentiveSensitivity*action[0]
+        utils[0]=self.base_util+customer.home_util
         for idx,pp in enumerate(pps):
             utils[idx+1] = self.mnl(customer,pp)
         utils = np.add(utils,customer.incentiveSensitivity*action.reshape((len(action),1)))#incentive

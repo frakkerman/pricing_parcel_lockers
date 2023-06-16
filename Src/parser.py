@@ -10,7 +10,7 @@ class Parser(object):
         parser.add_argument("--seed", default=1234, help="seed for variance testing",type=int)
 
         # General parameters
-        parser.add_argument("--save_count", default=1000, help="Number of checkpoints for saving results and model", type=int)
+        parser.add_argument("--save_count", default=100, help="Number of checkpoints for saving results and model", type=int)
         parser.add_argument("--log_output", default='term_file', help="Log all the print outputs",choices=['term_file', 'term', 'file'])
         parser.add_argument("--debug", default=True, type=self.str2bool, help="Debug mode on/off")
         parser.add_argument("--save_model", default=True, type=self.str2bool, help="flag to save model checkpoints")
@@ -55,17 +55,20 @@ class Parser(object):
         parser.add_argument("--veh_capacity", default=60, help="capacity per vehicle per day", type=int)
         parser.add_argument("--parcelpoint_capacity", default=10000, help="parcel point capacity per day", type=int)
         
-        parser.add_argument("--incentive_sens", default=-0.99, help="sensitivty of customer to incentives <0", type=float)
-        parser.add_argument("--base_util", default=0.2, help="base utility across all alternativesy", type=float)
-        parser.add_argument("--home_util", default=0.3, help="utility given to home delivery", type=float)
+        parser.add_argument("--incentive_sens", default=-0.1, help="sensitivty of customer to incentives <0", type=float)#-0.1
+        parser.add_argument("--base_util", default=-2.5, help="base utility across all alternativesy", type=float)#-2.5
+        parser.add_argument("--home_util", default=2.95, help="utility given to home delivery", type=float)#2.95
         
-        parser.add_argument("--revenue", default=40, help="revenue per customer", type=float)
-        parser.add_argument("--fuel_cost", default=0.1, help="costs of fuel per distance unit", type=float)
-        parser.add_argument("--truck_speed", default=40, help="distance travelled per hour", type=float)
-        parser.add_argument("--del_time", default=5, help="time in minutes to drop off parcel", type=float)
-        parser.add_argument("--driver_wage", default=25, help="salary of driver per hour", type=float)
+        parser.add_argument("--revenue", default=90, help="revenue per customer", type=float)
+        parser.add_argument("--fuel_cost", default=0.05, help="costs of fuel per distance unit", type=float)
+        parser.add_argument("--truck_speed", default=50, help="distance travelled per hour", type=float)
+        parser.add_argument("--del_time", default=2.0, help="time in minutes to drop off parcel", type=float)
+        parser.add_argument("--driver_wage", default=8, help="salary of driver per hour", type=float)
         
         parser.add_argument("--reopt", default=10000000, help="re-opt frequency of cheapest insertion route using HGS", type=int)
+        parser.add_argument("--hgs_reopt_time", default=3.2, help="re-opt HGS time limit", type=float)
+        
+        parser.add_argument("--hgs_final_time", default=15.2, help="HGS time limit for obtain gfinal routing schedule", type=float)
         
     def ML_parameters(self, parser):
         parser.add_argument("--grid_dim", default=10, help="division of operational area in X*X clusters", type=int)
@@ -92,8 +95,8 @@ class Parser(object):
         parser.add_argument("--cool_theta", default=(1/700), help="weight reduction for cheapest insertion", type=float)
     
     def Baseline_parameters(self, parser):
-        parser.add_argument("--price_pp", default=0.0, help="fixed fee price to offer for all parcelpoints", type=float)
-        parser.add_argument("--price_home", default=0.0, help="fixed fee price to offer for home delivery", type=float)
+        parser.add_argument("--price_pp", default=-5.0, help="fixed fee price to offer for all parcelpoints", type=float)
+        parser.add_argument("--price_home", default=5.0, help="fixed fee price to offer for home delivery", type=float)
         
     def str2bool(self, text):
         if text == 'True':

@@ -49,7 +49,7 @@ class Heuristic(Agent):
         self.revenue = config.revenue/100.0
         
         #hgs settings
-        ap_final = AlgorithmParameters(timeLimit=3.2)  # seconds
+        ap_final = AlgorithmParameters(timeLimit=config.hgs_final_time)  # seconds
         self.hgs_solver_final = Solver(parameters=ap_final, verbose=False)#used for final route        
         
         #lambdas
@@ -80,7 +80,7 @@ class Heuristic(Agent):
         mltplr = self.cost_multiplier
         
         homeCosts = self.added_costs_home+mltplr*((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*(self.historicCosts(state[0].home,self.historicRoutes) ))
-        sum_mnl = exp(state[0].home_util+(state[0].incentiveSensitivity*(homeCosts-self.revenue)))
+        sum_mnl = exp(self.base_util+state[0].home_util+(state[0].incentiveSensitivity*(homeCosts-self.revenue)))
         
         mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
         pps = mask[mask.mask].data
@@ -136,22 +136,25 @@ class Heuristic(Agent):
     
     def mnl_euclid(self,customer,parcelpoint):
         distance = self.getdistance_euclidean(customer.home,parcelpoint.location)#distance from parcelpoint to home
-        beta_p = exp(-distance/self.dist_scaler)
+        beta_p = -exp(-distance/self.dist_scaler)
         return self.base_util + beta_p
     
     def mnl_distmat(self,customer,parcelpoint):
         distance = self.dist_matrix[customer.id_num][parcelpoint.id_num]#distance from parcelpoint to home
-        beta_p = exp(-distance/self.dist_scaler)
+        beta_p = -exp(-distance/self.dist_scaler)
         return self.base_util + beta_p
     
-    def update(self,data):
-        #obtain final CVRP schedule after end of booking horizon
-        if self.load_data:
-            data["distance_matrix"] = get_dist_mat_HGS(self.dist_matrix,data['id'])
-        fleet,cost = self.reopt_HGS_final(data)#do a final reopt
-        if self.config.save_routes:
-            writeCVRPLIB(fleet,self.filecounter,self.path,self.max_steps,self.n_vehicles)
-        return cost
+    def update(self,data,state,done):
+        if not done:
+            return 0.0
+        else:
+            #obtain final CVRP schedule after end of booking horizon
+            if self.load_data:
+                data["distance_matrix"] = get_dist_mat_HGS(self.dist_matrix,data['id'])
+            fleet,cost = self.reopt_HGS_final(data)#do a final reopt
+            if self.config.save_routes:
+                writeCVRPLIB(fleet,self.filecounter,self.path,self.max_steps,self.n_vehicles)
+            return cost
     
     def reopt_HGS_final(self,data):
         data["demands"] = np.ones(len(data['x_coordinates']))

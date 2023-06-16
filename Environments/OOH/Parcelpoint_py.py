@@ -24,8 +24,8 @@ class Parcelpoint_py(object):
                  coords=[],
                  dist_matrix=[],
                  n_parcelpoints=6,
-                 adjacency=[]
-                 ):
+                 adjacency=[],
+                 hgs_time=3.0):
         
         #episode length params
         self.max_steps = 0
@@ -49,7 +49,7 @@ class Parcelpoint_py(object):
         self.n_unique_customer_locs = len(self.coords)-self.n_parcelpoints
         if self.load_data:
             print("\n Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py \n")
-            self.utils = utils_env(Location,Vehicle,Fleet,ParcelPoint,ParcelPoints,self.veh_capacity,self.n_vehicles,self.pp_capacity,self.data,self.dist_matrix)
+            self.utils = utils_env(Location,Vehicle,Fleet,ParcelPoint,ParcelPoints,self.veh_capacity,self.n_vehicles,self.pp_capacity,self.data,self.dist_matrix,hgs_time)
             self.depot = self.coords[0]
             self.parcelPoints = self.utils.get_parcelpoints_from_data(self.coords[-self.n_parcelpoints:],self.n_unique_customer_locs)
             self.action_space = Space(size=2**20)#we only select from the 20 closest parcelpoints
@@ -58,7 +58,7 @@ class Parcelpoint_py(object):
             self.dist_scaler = np.amax(self.dist_matrix)
         else:
             self.depot = Location(50,50,0,0)
-            self.utils = utils_env(Location,Vehicle,Fleet,ParcelPoint,ParcelPoints,self.veh_capacity,self.n_vehicles,self.pp_capacity,self.data,self.dist_matrix)
+            self.utils = utils_env(Location,Vehicle,Fleet,ParcelPoint,ParcelPoints,self.veh_capacity,self.n_vehicles,self.pp_capacity,self.data,self.dist_matrix,hgs_time)
             self.parcelPoints = self.utils.get_parcelpoints()
             self.action_space = Space(size=2**self.n_parcelpoints)
             self.get_customer = self.generate_new_customer

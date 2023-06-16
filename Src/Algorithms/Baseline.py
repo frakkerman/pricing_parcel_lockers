@@ -1,6 +1,8 @@
 import numpy as np
 import numpy.ma as ma
 from Src.Algorithms.Agent import Agent
+from Src.Utils.Utils import get_dist_mat_HGS
+from hygese import AlgorithmParameters, Solver
 
 # This function implements a baseline for pricing and offering decisions
 class Baseline(Agent):
@@ -15,9 +17,17 @@ class Baseline(Agent):
             
         # Define learning modules -- in LAR we have 3 learning modules as we have to additionally train the SL predictor
         self.modules = []
+        
+        self.dist_matrix = config.dist_matrix
+        self.adjacency = config.adjacency
+        self.load_data = config.load_data
 
         self.home_price = config.price_home
         self.pp_price = config.price_pp
+        
+        #hgs settings
+        ap_final = AlgorithmParameters(timeLimit=config.hgs_final_time)  # seconds
+        self.hgs_solver_final = Solver(parameters=ap_final, verbose=False)#used for final route        
 
     def get_action_offerall(self,state,training):   
         #check if pp is feasible
@@ -40,3 +50,19 @@ class Baseline(Agent):
                 a_hat[idx+1] = self.pp_price
         
         return np.around(a_hat,decimals=2)
+    
+    def update(self,data,state,done):
+        if not done:
+            return 0.0
+        else:
+            #obtain final CVRP schedule after end of booking horizon
+            if self.load_data:
+                data["distance_matrix"] = get_dist_mat_HGS(self.dist_matrix,data['id'])
+            cost = self.reopt_HGS_final(data)#do a final reopt
+            return cost
+    
+    def reopt_HGS_final(self,data):
+        data["demands"] = np.ones(len(data['x_coordinates']))
+        data["demands"][0] = 0#depot demand=0
+        result = self.hgs_solver_final.solve_cvrp(data)  
+        return result.cost

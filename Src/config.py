@@ -90,7 +90,8 @@ class Config(object):
             obj = Utils.dynamic_load(path, tag, load_class=True)
             env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
                       veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
-                      home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency)
+                      home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,
+                      n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency,hgs_time=args.hgs_reopt_time)
             return env, False, env.action_space.dtype == np.float32
 
 if __name__ == '__main__':

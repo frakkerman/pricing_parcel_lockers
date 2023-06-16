@@ -77,7 +77,7 @@ class ML_Foresight(Agent):
         self.revenue = config.revenue/100.0
         
         #hgs settings
-        ap_final = AlgorithmParameters(timeLimit=3.2)  # seconds
+        ap_final = AlgorithmParameters(timeLimit=config.hgs_final_time)  # seconds
         self.hgs_solver_final = Solver(parameters=ap_final, verbose=False)#used for final route        
         
         #lambdas
@@ -132,7 +132,7 @@ class ML_Foresight(Agent):
             mltplr = self.cost_multiplier
             
             homeCosts = self.added_costs_home+mltplr*((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*( costs[1]-costs[0] ))
-            sum_mnl = exp(state[0].home_util+(state[0].incentiveSensitivity*(homeCosts-self.revenue)))
+            sum_mnl = exp(self.base_util+state[0].home_util+(state[0].incentiveSensitivity*(homeCosts-self.revenue)))
             
 
             for idx,pp in enumerate(pps):
@@ -204,12 +204,12 @@ class ML_Foresight(Agent):
 
     def mnl_euclid(self,customer,parcelpoint):
         distance = self.getdistance_euclidean(customer.home,parcelpoint.location)#distance from parcelpoint to home
-        beta_p = exp(-distance/self.dist_scaler)
+        beta_p = -exp(-distance/self.dist_scaler)
         return self.base_util + beta_p
     
     def mnl_distmat(self,customer,parcelpoint):
         distance = self.dist_matrix[customer.id_num][parcelpoint.id_num]#distance from parcelpoint to home
-        beta_p = exp(-distance/self.dist_scaler)
+        beta_p = -exp(-distance/self.dist_scaler)
         return self.base_util + beta_p
     
     

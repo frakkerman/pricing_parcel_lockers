@@ -1,5 +1,5 @@
 ---
-algo_name: ML_Foresight
+algo_name: Baseline
 base_util: -2.5
 batch_size: 1
 buffer_size: 30
@@ -8,16 +8,16 @@ cool_theta: 0.0014285714285714286
 cool_theta_cnn: 0.0014285714285714286
 data_seed: 0
 debug: true
-del_time: 2.0
-driver_wage: 8
+del_time: 5
+driver_wage: 25
 dropout: 0.1
 env_name: Parcelpoint_py
 experiment: run
 folder_suffix: default
-fuel_cost: 0.05
+fuel_cost: 0.1
 grid_dim: 10
-hgs_final_time: 3.2
-hgs_reopt_time: 15.2
+hgs_final_time: 1.0
+hgs_reopt_time: 3.2
 home_util: 2.95
 incentive_sens: -0.1
 init_theta: 1.0
@@ -27,7 +27,7 @@ k: 1
 learning_rate: 0.0001
 load_data: true
 log_output: term_file
-max_episodes: 1000
+max_episodes: 10
 max_price: 5.0
 max_steps_p: 0.5
 max_steps_r: 700
@@ -42,12 +42,12 @@ price_home: 5.0
 price_pp: -5.0
 pricing: true
 reopt: 10000000
-revenue: 90
-save_count: 100
+revenue: 60
+save_count: 1000
 save_model: true
 save_routes: false
 seed: 1234
-timestamp: 6|16|12:10:52
-truck_speed: 50
+timestamp: 6|16|11:30:28
+truck_speed: 40
 use3d_conv: false
 veh_capacity: 60

@@ -1,0 +1,1749 @@
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Baseline Baseline
+Dynamically loaded from:  <class 'Src.Algorithms.Baseline.Baseline'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=1000, log_output='term_file', debug=True, save_model=True, timestamp='6|16|11:30:28', folder_suffix='default', experiment='run', algo_name='Baseline', env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.1, truck_speed=40, del_time=5, driver_wage=25, reopt=10000000, hgs_reopt_time=3.2, hgs_final_time=1.0, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+time required for 10 episodes :1.0175385475158691
+0.4369747899159664
+time required for 10 episodes :9.194357633590698
+0.45294117647058824
+11.347432374954224
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Algorithms.Agent, Src.AlgorModule path:  Environments.OOHMoModule path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=1000, log_output='term_file', debug=True, save_model=True, timestamp='6|16|11:46:14', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.1, truck_speed=40, del_time=5, driver_wage=25, reopt=10000000, hgs_reopt_time=3.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 334.61908365885415
+Epoch 1 Huber loss:: 332.86476745605466
+Epoch 2 Huber loss:: 324.9610621558295
+Epoch 3 Huber loss:: 301.2567476590474
+Epoch 4 Huber loss:: 271.23361737569167
+Epoch 5 Huber loss:: 249.8455199559529
+Epoch 6 Huber loss:: 234.6167237236386
+Epoch 7 Huber loss:: 223.97949531873064
+Epoch 8 Huber loss:: 215.14326153507938
+Epoch 9 Huber loss:: 207.9100286134084
+Epoch 10 Huber loss:: 188.81752736727398
+Epoch 11 Huber loss:: 169.84521171887715
+Epoch 12 Huber loss:: 153.77788474082948
+Epoch 13 Huber loss:: 145.5252874406179
+Epoch 14 Huber loss:: 145.00441568056743
+Epoch 15 Huber loss:: 144.61182829856872
+Epoch 16 Huber loss:: 145.3065977128347
+Epoch 17 Huber loss:: 144.55112046877542
+Epoch 18 Huber loss:: 144.32212398846943
+Epoch 19 Huber loss:: 144.85719579060873
+Epoch 20 Huber loss:: 145.00349637349447
+Epoch 21 Huber loss:: 145.4069234975179
+Epoch 22 Huber loss:: 144.7688515218099
+Epoch 23 Huber loss:: 144.991157506307
+Epoch 24 Huber loss:: 145.15125673929847
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :8.286794662475586
+0.7058823529411765
+time required for 10 episodes :45.892091035842896
+0.6848739495798319
+55.48673605918884
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.Utils.Utils, Src.parser[0m
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(1)[0;36m<module>[0;34m()[0m
+[0;32m----> 1 [0;31m[0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      2 [0;31m[0;32mimport[0m [0mSrc[0m[0;34m.[0m[0mUtils[0m[0;34m.[0m[0mUtils[0m [0;32mas[0m [0mUtils[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      3 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mparser[0m [0;32mimport[0m [0mParser[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      4 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mconfig[0m [0;32mimport[0m [0mConfig[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      5 [0;31m[0;32mfrom[0m [0mtime[0m [0;32mimport[0m [0mtime[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|11:48:9', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.1, truck_speed=40, del_time=5, driver_wage=25, reopt=10000000, hgs_reopt_time=3.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 334.61908365885415
+Epoch 1 Huber loss:: 332.86476745605466
+Epoch 2 Huber loss:: 324.9610621558295
+Epoch 3 Huber loss:: 301.2567476590474
+Epoch 4 Huber loss:: 271.23361737569167
+Epoch 5 Huber loss:: 249.8455199559529
+Epoch 6 Huber loss:: 234.6167237236386
+Epoch 7 Huber loss:: 223.97949531873064
+Epoch 8 Huber loss:: 215.14326153507938
+Epoch 9 Huber loss:: 207.9100286134084
+Epoch 10 Huber loss:: 188.81752736727398
+Epoch 11 Huber loss:: 169.84521171887715
+Epoch 12 Huber loss:: 153.77788474082948
+Epoch 13 Huber loss:: 145.5252874406179
+Epoch 14 Huber loss:: 145.00441568056743
+Epoch 15 Huber loss:: 144.61182829856872
+Epoch 16 Huber loss:: 145.3065977128347
+Epoch 17 Huber loss:: 144.55112046877542
+Epoch 18 Huber loss:: 144.32212398846943
+Epoch 19 Huber loss:: 144.85719579060873
+Epoch 20 Huber loss:: 145.00349637349447
+Epoch 21 Huber loss:: 145.4069234975179
+Epoch 22 Huber loss:: 144.7688515218099
+Epoch 23 Huber loss:: 144.991157506307
+Epoch 24 Huber loss:: 145.15125673929847
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :19.380640506744385
+
+Program interrupted. (Use 'cont' to resume).
+--Call--
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(1)[0;36m<module>[0;34m()[0m
+[0;32m----> 1 [0;31m[0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      2 [0;31m[0;32mimport[0m [0mSrc[0m[0;34m.[0m[0mUtils[0m[0;34m.[0m[0mUtils[0m [0;32mas[0m [0mUtils[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      3 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mparser[0m [0;32mimport[0m [0mParser[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      4 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mconfig[0m [0;32mimport[0m [0mConfig[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      5 [0;31m[0;32mfrom[0m [0mtime[0m [0;32mimport[0m [0mtime[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.AlgorithNamespace(seed=1234, save_count=100, log_output='term_file'Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|11:56:58', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.1, truck_speed=40, del_time=5, driver_wage=25, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(92)[0;36mtrain[0;34m()[0m
+[0;32m     90 [0;31m                [0mcosts[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mmodel[0m[0;34m.[0m[0mupdate[0m[0;34m([0m[0mdata[0m[0;34m,[0m[0mstate[0m[0;34m,[0m[0mdone[0m[0;34m)[0m[0;34m)[0m[0;31m#update model only after episode ends[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     91 [0;31m                [0;32mif[0m [0mstep[0m [0;34m>=[0m [0mself[0m[0;34m.[0m[0mmax_steps[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;31m127[0;32m> 92 [0;31m                    [0mcosts[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mmodel[0m[0;34m.[0m[0mupdate[0m[0;34m([0m[0mdata[0m[0;34m,[0m[0mstate[0m[0;34m,[0m[0;32mTrue[0m[0;34m)[0m[0;34m)[0m[0;31m#update model only after episode ends[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     93 [0;31m                    [0;32mbreak[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     94 [0;31m            [0msteps[0m [0;34m+=[0m [0mstep[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Inital training phase started...
+Epoch 0 Huber loss:: 334.61908365885415
+Epoch 1 Huber loss:: 332.86476745605466
+Epoch 2 Huber loss:: 324.9610621558295
+Epoch 3 Huber loss:: 301.2567476590474
+Epoch 4 Huber loss:: 271.23361737569167
+Epoch 5 Huber loss:: 249.8455199559529
+Epoch 6 Huber loss:: 234.6167237236386
+Epoch 7 Huber loss:: 223.97949531873064
+Epoch 8 Huber loss:: 215.14326153507938
+Epoch 9 Huber loss:: 207.9100286134084
+Epoch 10 Huber loss:: 188.81752736727398
+Epoch 11 Huber loss:: 169.84521171887715
+Epoch 12 Huber loss:: 153.77788474082948
+Epoch 13 Huber loss:: 145.5252874406179
+Epoch 14 Huber loss:: 145.00441568056743
+Epoch 15 Huber loss:: 144.61182829856872
+Epoch 16 Huber loss:: 145.3065977128347
+Epoch 17 Huber loss:: 144.55112046877542
+Epoch 18 Huber loss:: 144.32212398846943
+Epoch 19 Huber loss:: 144.85719579060873
+Epoch 20 Huber loss:: 145.00349637349447
+Epoch 21 Huber loss:: 145.4069234975179
+Epoch 22 Huber loss:: 144.7688515218099
+Epoch 23 Huber loss:: 144.991157506307
+Epoch 24 Huber loss:: 145.15125673929847
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :14.75526213645935
+
+Program interrupted. (Use 'cont' to resume).
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.parser, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight[0m
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(1)[0;36m<module>[0;34m()[0m
+[0;32m----> 1 [0;31m[0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      2 [0;31m[0;32mimport[0m [0mSrc[0m[0;34m.[0m[0mUtils[0m[0;34m.[0m[0mUtils[0m [0;32mas[0m [0mUtils[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      3 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mparser[0m [0;32mimport[0m [0mParser[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      4 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mconfig[0m [0;32mimport[0m [0mConfig[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      5 [0;31m[0;32mfrom[0m [0mtime[0m [0;32mimport[0m [0mtime[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|11:58:3', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.1, truck_speed=40, del_time=5, driver_wage=25, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(92)[0;36mtrain[0;34m()[0m
+[0;32m     90 [0;31m                [0mcosts[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mmodel[0m[0;34m.[0m[0mupdate[0m[0;34m([0m[0mdata[0m[0;34m,[0m[0mstate[0m[0;34m,[0m[0mdone[0m[0;34m)[0m[0;34m)[0m[0;31m#update model only after episode ends[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     91 [0;31m                [0;32mif[0m [0mstep[0m [0;34m>=[0m [0mself[0m[0;34m.[0m[0mmax_steps[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;31m127[0;32m> 92 [0;31m                    [0mcosts[0m[0;34m.[0m[0mappend[0m[0;34m([0m[0mself[0m[0;34m.[0m[0mmodel[0m[0;34m.[0m[0mupdate[0m[0;34m([0m[0mdata[0m[0;34m,[0m[0mstate[0m[0;34m,[0m[0;32mTrue[0m[0;34m)[0m[0;34m)[0m[0;31m#update model only after episode ends[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     93 [0;31m                    [0;32mbreak[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     94 [0;31m            [0msteps[0m [0;34m+=[0m [0mstep[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Inital training phase started...
+Epoch 0 Huber loss:: 334.61908365885415
+Epoch 1 Huber loss:: 332.86476745605466
+Epoch 2 Huber loss:: 324.9610621558295
+Epoch 3 Huber loss:: 301.2567476590474
+Epoch 4 Huber loss:: 271.23361737569167
+Epoch 5 Huber loss:: 249.8455199559529
+Epoch 6 Huber loss:: 234.6167237236386
+Epoch 7 Huber loss:: 223.97949531873064
+Epoch 8 Huber loss:: 215.14326153507938
+Epoch 9 Huber loss:: 207.9100286134084
+Epoch 10 Huber loss:: 188.81752736727398
+Epoch 11 Huber loss:: 169.84521171887715
+Epoch 12 Huber loss:: 153.77788474082948
+Epoch 13 Huber loss:: 145.5252874406179
+Epoch 14 Huber loss:: 145.00441568056743
+Epoch 15 Huber loss:: 144.61182829856872
+Epoch 16 Huber loss:: 145.3065977128347
+Epoch 17 Huber loss:: 144.55112046877542
+Epoch 18 Huber loss:: 144.32212398846943
+Epoch 19 Huber loss:: 144.85719579060873
+Epoch 20 Huber loss:: 145.00349637349447
+Epoch 21 Huber loss:: 145.4069234975179
+Epoch 22 Huber loss:: 144.7688515218099
+Epoch 23 Huber loss:: 144.991157506307
+Epoch 24 Huber loss:: 145.15125673929847
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :17.126848936080933
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|11:59:42', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=50, del_time=5, driver_wage=20, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 207.689084370931
+Epoch 1 Huber loss:: 205.9347661972046
+Epoch 2 Huber loss:: 198.4278549194336
+Epoch 3 Huber loss:: 179.3592617670695
+Epoch 4 Huber loss:: 163.09776596069338
+Epoch 5 Huber loss:: 151.8192995283339
+Epoch 6 Huber loss:: 143.48667627970377
+Epoch 7 Huber loss:: 137.5366547893267
+Epoch 8 Huber loss:: 132.51568419013032
+Epoch 9 Huber loss:: 128.6912366156404
+Epoch 10 Huber loss:: 117.34142582462479
+Epoch 11 Huber loss:: 106.37650726841142
+Epoch 12 Huber loss:: 97.82764144148678
+Epoch 13 Huber loss:: 95.47174056258051
+Epoch 14 Huber loss:: 95.23227563745031
+Epoch 15 Huber loss:: 94.97541337853917
+Epoch 16 Huber loss:: 95.48329927331457
+Epoch 17 Huber loss:: 95.14405565222104
+Epoch 18 Huber loss:: 95.35537040710449
+Epoch 19 Huber loss:: 95.28042577107747
+Epoch 20 Huber loss:: 95.32655868530273
+Epoch 21 Huber loss:: 95.43000539143881
+Epoch 22 Huber loss:: 94.9596528371175
+Epoch 23 Huber loss:: 94.83468147277833
+Epoch 24 Huber loss:: 95.02302744547526
+Epoch 25 Huber loss:: 94.96729968259731
+Epoch 26 Huber loss:: 94.3747314249476
+Epoch 27 Huber loss:: 94.9458211567998
+Epoch 28 Huber loss:: 94.943571044902
+Epoch 29 Huber loss:: 95.20532985568046
+Epoch 30 Huber loss:: 95.04916367729504
+Epoch 31 Huber loss:: 94.8565492618084
+Epoch 32 Huber loss:: 95.05806921521821
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :11.232041835784912
+time required for 10 episodes :52.175562620162964
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:2:10', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=50, del_time=5, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 108.06658471425375
+Epoch 1 Huber loss:: 106.31226698557536
+Epoch 2 Huber loss:: 99.17202220492892
+Epoch 3 Huber loss:: 86.77363072116859
+Epoch 4 Huber loss:: 78.72079984569301
+Epoch 5 Huber loss:: 73.26176741308429
+Epoch 6 Huber loss:: 69.2709402741687
+Epoch 7 Huber loss:: 66.35745873526126
+Epoch 8 Huber loss:: 64.01302124011087
+Epoch 9 Huber loss:: 62.368750773000826
+Epoch 10 Huber loss:: 56.1018593252978
+Epoch 11 Huber loss:: 50.05897829426142
+Epoch 12 Huber loss:: 46.31828485859247
+Epoch 13 Huber loss:: 46.03221066257295
+Epoch 14 Huber loss:: 45.97566341646326
+Epoch 15 Huber loss:: 45.88470323595219
+Epoch 16 Huber loss:: 46.20043096694164
+Epoch 17 Huber loss:: 45.894985678239415
+Epoch 18 Huber loss:: 45.8919820142972
+Epoch 19 Huber loss:: 45.701215350348505
+Epoch 20 Huber loss:: 45.75408730876321
+Epoch 21 Huber loss:: 45.91464992574726
+Epoch 22 Huber loss:: 45.5657589726833
+Epoch 23 Huber loss:: 45.46121934974566
+Epoch 24 Huber loss:: 45.53848879434169
+Epoch 25 Huber loss:: 45.56970486474534
+Epoch 26 Huber loss:: 45.1139247944206
+Epoch 27 Huber loss:: 45.48071523529787
+Epoch 28 Huber loss:: 45.39585801941653
+Epoch 29 Huber loss:: 45.35760507327815
+Epoch 30 Huber loss:: 45.145625322624696
+Epoch 31 Huber loss:: 45.0745043308185
+Epoch 32 Huber loss:: 45.22803328306937
+Epoch 33 Huber loss:: 45.07729787904982
+Epoch 34 Huber loss:: 44.81886192454859
+Epoch 35 Huber loss:: 44.60159913514023
+Epoch 36 Huber loss:: 44.64028684401477
+Epoch 37 Huber loss:: 44.4047462505496
+Epoch 38 Huber loss:: 44.489825214783
+Epoch 39 Huber loss:: 44.562981008827336
+Epoch 40 Huber loss:: 44.74697444915772
+Epoch 41 Huber loss:: 44.701369502196705
+Epoch 42 Huber loss:: 44.646299793720246
+Epoch 43 Huber loss:: 44.5711278907458
+Epoch 44 Huber loss:: 44.67527520843316
+Epoch 45 Huber loss:: 44.63613356618055
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :15.882885217666626
+time required for 10 episodes :51.036566972732544
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:4:14', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=75, del_time=2.5, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 78.98658501307169
+Epoch 1 Huber loss:: 77.2322675228119
+Epoch 2 Huber loss:: 70.21424510743883
+Epoch 3 Huber loss:: 61.37103310426076
+Epoch 4 Huber loss:: 55.91835297512512
+Epoch 5 Huber loss:: 52.18950545727793
+Epoch 6 Huber loss:: 49.46653359534131
+Epoch 7 Huber loss:: 47.48178031076677
+Epoch 8 Huber loss:: 45.88597483145142
+Epoch 9 Huber loss:: 44.770990818353994
+Epoch 10 Huber loss:: 40.1932295338437
+Epoch 11 Huber loss:: 35.875951612802844
+Epoch 12 Huber loss:: 33.72784985702485
+Epoch 13 Huber loss:: 33.65691318354259
+Epoch 14 Huber loss:: 33.595574530040224
+Epoch 15 Huber loss:: 33.52687934726166
+Epoch 16 Huber loss:: 33.75657636436013
+Epoch 17 Huber loss:: 33.52803029964057
+Epoch 18 Huber loss:: 33.52363141951151
+Epoch 19 Huber loss:: 33.40672187253135
+Epoch 20 Huber loss:: 33.45008169257936
+Epoch 21 Huber loss:: 33.56679411177136
+Epoch 22 Huber loss:: 33.30025342754321
+Epoch 23 Huber loss:: 33.23177774878141
+Epoch 24 Huber loss:: 33.29625532469945
+Epoch 25 Huber loss:: 33.325708640412586
+Epoch 26 Huber loss:: 32.99087240476743
+Epoch 27 Huber loss:: 33.269552583091816
+Epoch 28 Huber loss:: 33.196653279655536
+Epoch 29 Huber loss:: 33.14821960754421
+Epoch 30 Huber loss:: 32.985236931989974
+Epoch 31 Huber loss:: 32.923808916161846
+Epoch 32 Huber loss:: 33.04815078683235
+Epoch 33 Huber loss:: 32.92503671594003
+Epoch 34 Huber loss:: 32.737613359069215
+Epoch 35 Huber loss:: 32.573581058755906
+Epoch 36 Huber loss:: 32.5893846316915
+Epoch 37 Huber loss:: 32.40485816228203
+Epoch 38 Huber loss:: 32.47362831024142
+Epoch 39 Huber loss:: 32.52271254532349
+Epoch 40 Huber loss:: 32.65389867648482
+Epoch 41 Huber loss:: 32.62112421344345
+Epoch 42 Huber loss:: 32.57704638134068
+Epoch 43 Huber loss:: 32.49870345992967
+Epoch 44 Huber loss:: 32.566875882974514
+Epoch 45 Huber loss:: 32.539425877075026
+Epoch 46 Huber loss:: 32.58428941263817
+Epoch 47 Huber loss:: 32.55205375347597
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :17.128424167633057
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+ Huber loss:: 33.75657636436013
+Epoch 17 Huber loss:: 33.52803029964057
+Epoch 18 Huber loss:: 33.52363141951151
+Epoch 19 Huber loss:: 33.40672187253135
+Epoch 20 Huber loss:: 33.45008169257936
+Epoch 21 Huber loss:: 33.56679411177136
+Epoch 22 Huber loss:: 33.30025342754321
+Epoch 23 Huber loss:: 33.23177774878141
+Epoch 24 Huber loss:: 33.29625532469945
+Epoch 25 Huber loss:: 33.325708640412586
+Epoch 26 Huber loss:: 32.99087240476743
+Epoch 27 Huber loss:: 33.269552583091816
+Epoch 28 Huber loss:: 33.196653279655536
+Epoch 29 Huber loss:: 33.14821960754421
+Epoch 30 Huber loss:: 32.985236931989974
+Epoch 31 Huber loss:: 32.923808916161846
+Epoch 32 Huber loss:: 33.04815078683235
+Epoch 33 Huber loss:: 32.92503671594003
+Epoch 34 Huber loss:: 32.737613359069215
+Epoch 35 Huber loss:: 32.573581058755906
+Epoch 36 Huber loss:: 32.5893846316915
+Epoch 37 Huber loss:: 32.40485816228203
+Epoch 38 Huber loss:: 32.47362831024142
+Epoch 39 Huber loss:: 32.52271254532349
+Epoch 40 Huber loss:: 32.65389867648482
+Epoch 41 Huber loss:: 32.62112421344345
+Epoch 42 Huber loss:: 32.57704638134068
+Epoch 43 Huber loss:: 32.49870345992967
+Epoch 44 Huber loss:: 32.566875882974514
+Epoch 45 Huber loss:: 32.539425877075026
+Epoch 46 Huber loss:: 32.58428941263817
+Epoch 47 Huber loss:: 32.55205375347597
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :17.128424167633057
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+3
+Epoch 17 Huber loss:: 33.52803029964057
+Epoch 18 Huber loss:: 33.52363141951151
+Epoch 19 Huber loss:: 33.40672187253135
+Epoch 20 Huber loss:: 33.45008169257936
+Epoch 21 Huber loss:: 33.56679411177136
+Epoch 22 Huber loss:: 33.30025342754321
+Epoch 23 Huber loss:: 33.23177774878141
+Epoch 24 Huber loss:: 33.29625532469945
+Epoch 25 Huber loss:: 33.325708640412586
+Epoch 26 Huber loss:: 32.99087240476743
+Epoch 27 Huber loss:: 33.269552583091816
+Epoch 28 Huber loss:: 33.196653279655536
+Epoch 29 Huber loss:: 33.14821960754421
+Epoch 30 Huber loss:: 32.985236931989974
+Epoch 31 Huber loss:: 32.923808916161846
+Epoch 32 Huber loss:: 33.04815078683235
+Epoch 33 Huber loss:: 32.92503671594003
+Epoch 34 Huber loss:: 32.737613359069215
+Epoch 35 Huber loss:: 32.573581058755906
+Epoch 36 Huber loss:: 32.5893846316915
+Epoch 37 Huber loss:: 32.40485816228203
+Epoch 38 Huber loss:: 32.47362831024142
+Epoch 39 Huber loss:: 32.52271254532349
+Epoch 40 Huber loss:: 32.65389867648482
+Epoch 41 Huber loss:: 32.62112421344345
+Epoch 42 Huber loss:: 32.57704638134068
+Epoch 43 Huber loss:: 32.49870345992967
+Epoch 44 Huber loss:: 32.566875882974514
+Epoch 45 Huber loss:: 32.539425877075026
+Epoch 46 Huber loss:: 32.58428941263817
+Epoch 47 Huber loss:: 32.55205375347597
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :17.128424167633057
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+poch 16 Huber loss:: 33.75657636436013
+Epoch 17 Huber loss:: 33.52803029964057
+Epoch 18 Huber loss:: 33.52363141951151
+Epoch 19 Huber loss:: 33.40672187253135
+Epoch 20 Huber loss:: 33.45008169257936
+Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:4:14', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='AuEpoch 28 Huber loss:: 33.196653279655536
+Epoch 29 Huber loss:: 33.14821960754421
+Epoch 30 Huber loss:: 32.985236931989974
+Epoch 31 Huber loss:: 32.923808916161846
+Epoch 32 Huber loss:: 33.04815078683235
+Epoch 33 Huber loss:: 32.92503671594003
+Epoch 34 Huber loss:: 32.737613359069215
+Epoch 35 Huber loss:: 32.573581058755906
+Epoch 36 Huber loss:: 32.5893846316915
+Epoch 37 Huber loss:: 32.40485816228203
+Epoch 38 Huber loss:: 32.47362831024142
+Epoch 39 Huber loss:: 32.52271254532349
+Epoch 40 Huber loss:: 32.65389867648482
+Epoch 41 Huber loss:: 32.62112421344345
+Epoch 42 Huber loss:: 32.57704638134068
+Epoch 43 Huber loss:: 32.49870345992967
+Epoch 44 Huber loss:: 32.566875882974514
+Epoch 45 Huber loss:: 32.539425877075026
+Epoch 46 Huber loss:: 32.58428941263817
+Epoch 47 Huber loss:: 32.55205375347597
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :17.128424167633057
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:5:20', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=80, del_time=2.0, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 75.3515840212504
+Epoch 1 Huber loss:: 73.59726672172546
+Epoch 2 Huber loss:: 66.59452210532294
+Epoch 3 Huber loss:: 58.2161746252949
+Epoch 4 Huber loss:: 53.07340241387486
+Epoch 5 Huber loss:: 49.54852435551584
+Epoch 6 Huber loss:: 46.98902124077791
+Epoch 7 Huber loss:: 45.12607449277614
+Epoch 8 Huber loss:: 43.622011339022876
+Epoch 9 Huber loss:: 42.57324328665311
+Epoch 10 Huber loss:: 38.20712171161547
+Epoch 11 Huber loss:: 34.10505718473966
+Epoch 12 Huber loss:: 32.156255915208405
+Epoch 13 Huber loss:: 32.10603835818047
+Epoch 14 Huber loss:: 32.05226427979146
+Epoch 15 Huber loss:: 31.99398050917002
+Epoch 16 Huber loss:: 32.211145689217375
+Epoch 17 Huber loss:: 31.985906983641904
+Epoch 18 Huber loss:: 31.98266508627372
+Epoch 19 Huber loss:: 31.87074968573482
+Epoch 20 Huber loss:: 31.90914498246741
+Epoch 21 Huber loss:: 32.01977679329148
+Epoch 22 Huber loss:: 31.76144629079771
+Epoch 23 Huber loss:: 31.699692578004516
+Epoch 24 Huber loss:: 31.757626130567708
+Epoch 25 Huber loss:: 31.782349879470804
+Epoch 26 Huber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:7:35', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=80, fuel_cost=0.05, truck_speed=40, del_time=2.0, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 129.87658557891845
+Epoch 1 Huber loss:: 128.12226804097492
+Epoch 2 Huber loss:: 120.89035648769801
+Epoch 3 Huber loss:: 106.13862975239753
+Epoch 4 Huber loss:: 96.17081443627674
+Epoch 5 Huber loss:: 89.35868765380648
+Epoch 6 Huber loss:: 84.388738475669
+Epoch 7 Huber loss:: 80.76729126051747
+Epoch 8 Huber loss:: 77.84624414852975
+Epoch 9 Huber loss:: 75.78883831074384
+Epoch 10 Huber loss:: 68.26662645390181
+Epoch 11 Huber loss:: 60.95425095926272
+Epoch 12 Huber loss:: 56.03140697529462
+Epoch 13 Huber loss:: 55.47809753547656
+Epoch 14 Huber loss:: 55.40845323056526
+Epoch 15 Huber loss:: 55.33115617961234
+Epoch 16 Huber loss:: 55.711684967284874
+Epoch 17 Huber loss:: 55.334466394484046
+Epoch 18 Huber loss:: 55.34515324354171
+Epoch 19 Huber loss:: 55.099081682364144
+Epoch 20 Huber loss:: 55.153789730866755
+Epoch 21 Huber loss:: 55.3305886881457
+Epoch 22 Huber loss:: 54.897221493016296
+Epoch 23 Huber loss:: 54.77221925297441
+Epoch 24 Huber loss:: 54.83239912866615
+Epoch 25 Huber loss:: 54.83443112173738
+Epoch 26 Huber loss:: 54.266002761811635
+Epoch 27 Huber loss:: 54.727543607046826
+Epoch 28 Huber loss:: 54.61870842485689
+Epoch 29 Huber loss:: 54.59981379696789
+Epoch 30 Huber loss:: 54.36217780301037
+Epoch 31 Huber loss:: 54.27625133057435
+Epoch 32 Huber loss:: 54.46046190814426
+Epoch 33 Huber loss:: 54.286867231987415
+Epoch 34 Huber loss:: 53.99861932244151
+Epoch 35 Huber loss:: 53.75087120181571
+
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ 3
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ 1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=80, del_time=2.0, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 75.3515840212504
+Epoch 1 Huber loss:: 73.59726672172546
+Epoch 2 Huber loss:: 66.59452210532294
+Epoch 3 Huber loss:: 58.2161746252949
+Epoch 4 Huber loss:: 53.07340241387486
+Epoch 5 Huber loss:: 49.54852435551584
+Epoch 6 Huber loss:: 46.98902124077791
+Epoch 7 Huber loss:: 45.12607449277614
+Epoch 8 Huber loss:: 43.622011339022876
+Epoch 9 Huber loss:: 42.57324328665311
+Epoch 10 Huber loss:: 38.20712171161547
+Epoch 11 Huber loss:: 34.10505718473966
+Epoch 12 Huber loss:: 32.156255915208405
+Epoch 13 Huber loss:: 32.10603835818047
+Epoch 14 Huber loss:: 32.05226427979146
+Epoch 15 Huber loss:: 31.99398050917002
+Epoch 16 Huber loss:: 32.211145689217375
+Epoch 17 Huber loss:: 31.985906983641904
+Epoch 18 Huber loss:: 31.98266508627372
+Epoch 19 Huber loss:: 31.87074968573482
+Epoch 20 Huber loss:: 31.90914498246741
+Epoch 21 Huber loss:: 32.01977679329148
+Epoch 22 Huber loss:: 31.76144629079771
+Epoch 23 Huber loss:: 31.699692578004516
+Epoch 24 Huber loss:: 31.757626130567708
+Epoch 25 Huber loss:: 31.782349879470804
+Epoch 26 Huber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ ber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ ber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ ber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ uber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ ber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ er loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ uber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ uber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ uber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ ber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ e_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=80, del_time=2.0, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 75.3515840212504
+Epoch 1 Huber loss:: 73.59726672172546
+Epoch 2 Huber loss:: 66.59452210532294
+Epoch 3 Huber loss:: 58.2161746252949
+Epoch 4 Huber loss:: 53.07340241387486
+Epoch 5 Huber loss:: 49.54852435551584
+Epoch 6 Huber loss:: 46.98902124077791
+Epoch 7 Huber loss:: 45.12607449277614
+Epoch 8 Huber loss:: 43.622011339022876
+Epoch 9 Huber loss:: 42.57324328665311
+Epoch 10 Huber loss:: 38.20712171161547
+Epoch 11 Huber loss:: 34.10505718473966
+Epoch 12 Huber loss:: 32.156255915208405
+Epoch 13 Huber loss:: 32.10603835818047
+Epoch 14 Huber loss:: 32.05226427979146
+Epoch 15 Huber loss:: 31.99398050917002
+Epoch 16 Huber loss:: 32.211145689217375
+Epoch 17 Huber loss:: 31.985906983641904
+Epoch 18 Huber loss:: 31.98266508627372
+Epoch 19 Huber loss:: 31.87074968573482
+Epoch 20 Huber loss:: 31.90914498246741
+Epoch 21 Huber loss:: 32.01977679329148
+Epoch 22 Huber loss:: 31.76144629079771
+Epoch 23 Huber loss:: 31.699692578004516
+Epoch 24 Huber loss:: 31.757626130567708
+Epoch 25 Huber loss:: 31.782349879470804
+Epoch 26 Huber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+  Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+  2 Huber loss:: 70.21424510743883
+Epoch 3 Huber loss:: 61.37103310426076
+Epoch 4 Huber loss:: 55.91835297512512
+Epoch 5 Huber loss:: 52.18950545727793
+Epoch 6 Huber loss:: 49.46653359534131
+Epoch 7 Huber loss:: 47.48178031076677
+Epoch 8 Huber loss:: 45.88597483145142
+Epoch 9 Huber loss:: 44.770990818353994
+Epoch 10 Huber loss:: 40.1932295338437
+Epoch 11 Huber loss:: 35.875951612802844
+Epoch 12 Huber loss:: 33.72784985702485
+Epoch 13 Huber loss:: 33.65691318354259
+Epoch 14 Huber loss:: 33.595574530040224
+Epoch 15 Huber loss:: 33.52687934726166
+Epoch 16 Huber loss:: 33.75657636436013
+Epoch 17 Huber loss:: 33.52803029964057
+Epoch 18 Huber loss:: 33.52363141951151
+Epoch 19 Huber loss:: 33.40672187253135
+Epoch 20 Huber loss:: 33.45008169257936
+Epoch 21 Huber loss:: 33.56679411177136
+Epoch 22 Huber loss:: 33.30025342754321
+Epoch 23 Huber loss:: 33.23177774878141
+Epoch 24 Huber loss:: 33.29625532469945
+Epoch 25 Huber loss:: 33.325708640412586
+Epoch 26 Huber loss:: 32.99087240476743
+Epoch 27 Huber loss:: 33.269552583091816
+Epoch 28 Huber loss:: 33.196653279655536
+Epoch 29 Huber loss:: 33.14821960754421
+Epoch 30 Huber loss:: 32.985236931989974
+Epoch 31 Huber loss:: 32.923808916161846
+Epoch 32 Huber loss:: 33.04815078683235
+Epoch 33 Huber loss:: 32.92503671594003
+Epoch 34 Huber loss:: 32.737613359069215
+Epoch 35 Huber loss:: 32.573581058755906
+Epoch 36 Huber loss:: 32.5893846316915
+Epoch 37 Huber loss:: 32.40485816228203
+Epoch 38 Huber loss:: 32.47362831024142
+Epoch 39 Huber loss:: 32.52271254532349
+Epoch 40 Huber loss:: 32.65389867648482
+Epoch 41 Huber loss:: 32.62112421344345
+Epoch 42 Huber loss:: 32.57704638134068
+Epoch 43 Huber loss:: 32.49870345992967
+Epoch 44 Huber loss:: 32.566875882974514
+Epoch 45 Huber loss:: 32.539425877075026
+Epoch 46 Huber loss:: 32.58428941263817
+Epoch 47 Huber loss:: 32.55205375347597
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :17.128424167633057
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:5:20', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=80, del_time=2.0, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 75.3515840212504
+Epoch 1 Huber loss:: 73.59726672172546
+Epoch 2 Huber loss:: 66.59452210532294
+Epoch 3 Huber loss:: 58.2161746252949
+Epoch 4 Huber loss:: 53.07340241387486
+Epoch 5 Huber loss:: 49.54852435551584
+Epoch 6 Huber loss:: 46.98902124077791
+Epoch 7 Huber loss:: 45.12607449277614
+Epoch 8 Huber loss:: 43.622011339022876
+Epoch 9 Huber loss:: 42.57324328665311
+Epoch 10 Huber loss:: 38.20712171161547
+Epoch 11 Huber loss:: 34.10505718473966
+Epoch 12 Huber loss:: 32.156255915208405
+Epoch 13 Huber loss:: 32.10603835818047
+Epoch 14 Huber loss:: 32.05226427979146
+Epoch 15 Huber loss:: 31.99398050917002
+Epoch 16 Huber loss:: 32.211145689217375
+Epoch 17 Huber loss:: 31.985906983641904
+Epoch 18 Huber loss:: 31.98266508627372
+Epoch 19 Huber loss:: 31.87074968573482
+Epoch 20 Huber loss:: 31.90914498246741
+Epoch 21 Huber loss:: 32.01977679329148
+Epoch 22 Huber loss:: 31.76144629079771
+Epoch 23 Huber loss:: 31.699692578004516
+Epoch 24 Huber loss:: 31.757626130567708
+Epoch 25 Huber loss:: 31.782349879470804
+Epoch 26 Huber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ h 6 Huber loss:: 143.48667627970377
+Epoch 7 Huber loss:: 137.5366547893267
+Epoch 8 Huber loss:: 132.51568419013032
+Epoch 9 Huber loss:: 128.6912366156404
+Epoch 10 Huber loss:: 117.34142582462479
+Epoch 11 Huber loss:: 106.37650726841142
+Epoch 12 Huber loss:: 97.82764144148678
+Epoch 13 Huber loss:: 95.47174056258051
+Epoch 14 Huber loss:: 95.23227563745031
+Epoch 15 Huber loss:: 94.97541337853917
+Epoch 16 Huber loss:: 95.48329927331457
+Epoch 17 Huber loss:: 95.14405565222104
+Epoch 18 Huber loss:: 95.35537040710449
+Epoch 19 Huber loss:: 95.28042577107747
+Epoch 20 Huber loss:: 95.32655868530273
+Epoch 21 Huber loss:: 95.43000539143881
+Epoch 22 Huber loss:: 94.9596528371175
+Epoch 23 Huber loss:: 94.83468147277833
+Epoch 24 Huber loss:: 95.02302744547526
+Epoch 25 Huber loss:: 94.96729968259731
+Epoch 26 Huber loss:: 94.3747314249476
+Epoch 27 Huber loss:: 94.9458211567998
+Epoch 28 Huber loss:: 94.943571044902
+Epoch 29 Huber loss:: 95.20532985568046
+Epoch 30 Huber loss:: 95.04916367729504
+Epoch 31 Huber loss:: 94.8565492618084
+Epoch 32 Huber loss:: 95.05806921521821
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :11.232041835784912
+time required for 10 episodes :52.175562620162964
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:2:10', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=50, del_time=5, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 108.06658471425375
+Epoch 1 Huber loss:: 106.31226698557536
+Epoch 2 Huber loss:: 99.17202220492892
+Epoch 3 Huber loss:: 86.77363072116859
+Epoch 4 Huber loss:: 78.72079984569301
+Epoch 5 Huber loss:: 73.26176741308429
+Epoch 6 Huber loss:: 69.2709402741687
+Epoch 7 Huber loss:: 66.35745873526126
+Epoch 8 Huber loss:: 64.01302124011087
+Epoch 9 Huber loss:: 62.368750773000826
+Epoch 10 H
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:2:10', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=50, del_time=5, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 108.06658471425375
+Epoch 1 Huber loss:: 106.31226698557536
+Epoch 2 Huber loss:: 99.17202220492892
+Epoch 3 Huber loss:: 86.77363072116859
+Epoch 4 Huber loss:: 78.72079984569301
+Epoch 5 Huber loss:: 73.26176741308429
+Epoch 6 Huber loss:: 69.2709402741687
+Epoch 7 Huber loss:: 66.35745873526126
+Epoch 8 Huber loss:: 64.01302124011087
+Epoch 9 Huber loss:: 62.368750773000826
+Epoch 10 Huber loss:: 56.1018593252978
+Epoch 11 Huber loss:: 50.05897829426142
+Epoch 12 Huber loss:: 46.31828485859247
+Epoch 13 Huber loss:: 46.03221066257295
+Epoch 14 Huber loss:: 45.9Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:4:14', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=75, del_time=2.5, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 78.98658501307169
+Epoch 1 Huber loss:: 77.2322675228119
+Epoch 2 Huber loss:: 70.21424510743883
+Epoch 3 Huber loss:: 61.37103310426076
+Epoch 4 Huber loss:: 55.91835297512512
+Epoch 5 Huber loss:: 52.18950545727793
+Epoch 6 Huber loss:: 49.46653359534131
+Epoch 7 Huber loss:: 47.48178031076677
+Epoch 8 Huber loss:: 45.88597483145142
+Epoch 9 Huber loss:: 44.770990818353994
+Epoch 10 Huber loss:: 40.1932295338437
+Epoch 11 Huber loss:: 35.875951612802844
+Epoch 12 Huber loss:: 33.72784985702485
+Epoch 13 Huber loss:: 33.65691318354259
+Epoch 14 Huber loss:: 33.595574530040224
+Epoch 15 Huber loss:: 33.52687934726166
+Epoch 16 Huber loss:: 33.75657636436013
+Epoch 17 Huber loss:: 33.52803029964057
+Epoch 18 Huber loss:: 33.52363141951151
+Epoch 19 Huber loss:: 33.40672187253135
+Epoch 20 Huber loss:: 33.45008169257936
+Epoch 21 Huber loss:: 33.56679411177136
+Epoch 22 Huber loss:: 33.30025342754321
+Epoch 23 Huber loss:: 33.23177774878141
+Epoch 24 Huber loss:: 33.29625532469945
+Epoch 25 Huber loss:: 33.325708640412586
+Epoch 26 Huber loss:: 32.99087240476743
+Epoch 27 Huber loss:: 33.269552583091816
+Epoch 28 Huber loss:: 33.196653279655536
+Epoch 29 Huber loss:: 33.14821960754421
+Epoch 30 Huber loss:: 32.985236931989974
+Epoch 31 Huber loss:: 32.923808916161846
+Epoch 32 Huber loss:: 33.04815078683235
+Epoch 33 Huber loss:: 32.92503671594003
+Epoch 34 Huber loss:: 32.737613359069215
+Epoch 35 Huber loss:: 32.573581058755906
+Epoch 36 Huber loss:: 32.5893846316915
+Epoch 37 Huber loss:: 32.40485816228203
+Epoch 38 Huber loss:: 32.47362831024142
+Epoch 39 Huber loss:: 32.52271254532349
+Epoch 40 Huber loss:: 32.65389867648482
+Epoch 41 Huber loss:: 32.62112421344345
+Epoch 42 Huber loss:: 32.57704638134068
+Epoch 43 Huber loss:: 32.49870345992967
+Epoch 44 Huber loss:: 32.566875882974514
+Epoch 45 Huber loss:: 32.539425877075026
+Epoch 46 Huber loss:: 32.58428941263817
+Epoch 47 Huber loss:: 32.55205375347597
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :17.128424167633057
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:5:20', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=80, del_time=2.0, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 75.3515840212504
+Epoch 1 Huber loss:: 73.59726672172546
+Epoch 2 Huber loss:: 66.59452210532294
+Epoch 3 Huber loss:: 58.2161746252949
+Epoch 4 Huber loss:: 53.07340241387486
+Epoch 5 Huber loss:: 49.54852435551584
+Epoch 6 Huber loss:: 46.98902124077791
+Epoch 7 Huber loss:: 45.12607449277614
+Epoch 8 Huber loss:: 43.622011339022876
+Epoch 9 Huber loss:: 42.57324328665311
+Epoch 10 Huber loss:: 38.20712171161547
+Epoch 11 Huber loss:: 34.10505718473966
+Epoch 12 Huber loss:: 32.156255915208405
+Epoch 13 Huber loss:: 32.10603835818047
+Epoch 14 Huber loss:: 32.05226427979146
+Epoch 15 Huber loss:: 31.99398050917002
+Epoch 16 Huber loss:: 32.211145689217375
+Epoch 17 Huber loss:: 31.985906983641904
+Epoch 18 Huber loss:: 31.98266508627372
+Epoch 19 Huber loss:: 31.87074968573482
+Epoch 20 Huber loss:: 31.90914498246741
+Epoch 21 Huber loss:: 32.01977679329148
+Epoch 22 Huber loss:: 31.76144629079771
+Epoch 23 Huber loss:: 31.699692578004516
+Epoch 24 Huber loss:: 31.757626130567708
+Epoch 25 Huber loss:: 31.782349879470804
+Epoch 26 Huber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ loss:: 32.58428941263817
+Epoch 47 Huber loss:: 32.55205375347597
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :17.128424167633057
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|16|12:5:20', folder_suffix='default', experiment='run', algo_name='ML_Foresight', env_name='Parcelpoint_py', max_episodes=1000, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=True, max_price=5.0, min_price=-5.0, k=1, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.1, base_util=-2.5, home_util=2.95, revenue=60, fuel_cost=0.05, truck_speed=80, del_time=2.0, driver_wage=10, reopt=10000000, hgs_reopt_time=15.2, hgs_final_time=3.2, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=1000, buffer_size=30, batch_size=1, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, save_routes=False, init_theta=1.0, cool_theta=0.0014285714285714286, price_pp=-5.0, price_home=5.0)
+Actions space: 1048576 :: State space: 4
+Inital training phase started...
+Epoch 0 Huber loss:: 75.3515840212504
+Epoch 1 Huber loss:: 73.59726672172546
+Epoch 2 Huber loss:: 66.59452210532294
+Epoch 3 Huber loss:: 58.2161746252949
+Epoch 4 Huber loss:: 53.07340241387486
+Epoch 5 Huber loss:: 49.54852435551584
+Epoch 6 Huber loss:: 46.98902124077791
+Epoch 7 Huber loss:: 45.12607449277614
+Epoch 8 Huber loss:: 43.622011339022876
+Epoch 9 Huber loss:: 42.57324328665311
+Epoch 10 Huber loss:: 38.20712171161547
+Epoch 11 Huber loss:: 34.10505718473966
+Epoch 12 Huber loss:: 32.156255915208405
+Epoch 13 Huber loss:: 32.10603835818047
+Epoch 14 Huber loss:: 32.05226427979146
+Epoch 15 Huber loss:: 31.99398050917002
+Epoch 16 Huber loss:: 32.211145689217375
+Epoch 17 Huber loss:: 31.985906983641904
+Epoch 18 Huber loss:: 31.98266508627372
+Epoch 19 Huber loss:: 31.87074968573482
+Epoch 20 Huber loss:: 31.90914498246741
+Epoch 21 Huber loss:: 32.01977679329148
+Epoch 22 Huber loss:: 31.76144629079771
+Epoch 23 Huber loss:: 31.699692578004516
+Epoch 24 Huber loss:: 31.757626130567708
+Epoch 25 Huber loss:: 31.782349879470804
+Epoch 26 Huber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+  loss:: 66.59452210532294
+Epoch 3 Huber loss:: 58.2161746252949
+Epoch 4 Huber loss:: 53.07340241387486
+Epoch 5 Huber loss:: 49.54852435551584
+Epoch 6 Huber loss:: 46.98902124077791
+Epoch 7 Huber loss:: 45.12607449277614
+Epoch 8 Huber loss:: 43.622011339022876
+Epoch 9 Huber loss:: 42.57324328665311
+Epoch 10 Huber loss:: 38.20712171161547
+Epoch 11 Huber loss:: 34.10505718473966
+Epoch 12 Huber loss:: 32.156255915208405
+Epoch 13 Huber loss:: 32.10603835818047
+Epoch 14 Huber loss:: 32.05226427979146
+Epoch 15 Huber loss:: 31.99398050917002
+Epoch 16 Huber loss:: 32.211145689217375
+Epoch 17 Huber loss:: 31.985906983641904
+Epoch 18 Huber loss:: 31.98266508627372
+Epoch 19 Huber loss:: 31.87074968573482
+Epoch 20 Huber loss:: 31.90914498246741
+Epoch 21 Huber loss:: 32.01977679329148
+Epoch 22 Huber loss:: 31.76144629079771
+Epoch 23 Huber loss:: 31.699692578004516
+Epoch 24 Huber loss:: 31.757626130567708
+Epoch 25 Huber loss:: 31.782349879470804
+Epoch 26 Huber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ .2161746252949
+Epoch 4 Huber loss:: 53.07340241387486
+Epoch 5 Huber loss:: 49.54852435551584
+Epoch 6 Huber loss:: 46.98902124077791
+Epoch 7 Huber loss:: 45.12607449277614
+Epoch 8 Huber loss:: 43.622011339022876
+Epoch 9 Huber loss:: 42.57324328665311
+Epoch 10 Huber loss:: 38.20712171161547
+Epoch 11 Huber loss:: 34.10505718473966
+Epoch 12 Huber loss:: 32.156255915208405
+Epoch 13 Huber loss:: 32.10603835818047
+Epoch 14 Huber loss:: 32.05226427979146
+Epoch 15 Huber loss:: 31.99398050917002
+Epoch 16 Huber loss:: 32.211145689217375
+Epoch 17 Huber loss:: 31.985906983641904
+Epoch 18 Huber loss:: 31.98266508627372
+Epoch 19 Huber loss:: 31.87074968573482
+Epoch 20 Huber loss:: 31.90914498246741
+Epoch 21 Huber loss:: 32.01977679329148
+Epoch 22 Huber loss:: 31.76144629079771
+Epoch 23 Huber loss:: 31.699692578004516
+Epoch 24 Huber loss:: 31.757626130567708
+Epoch 25 Huber loss:: 31.782349879470804
+Epoch 26 Huber loss:: 31.456421669612173
+Epoch 27 Huber loss:: 31.72623738158727
+Epoch 28 Huber loss:: 31.65386448730016
+Epoch 29 Huber loss:: 31.607443305431712
+Epoch 30 Huber loss:: 31.454692952832364
+Epoch 31 Huber loss:: 31.39353933592715
+Epoch 32 Huber loss:: 31.51640319157081
+Epoch 33 Huber loss:: 31.3919394807859
+Epoch 34 Huber loss:: 31.214684691711643
+Epoch 35 Huber loss:: 31.059413028045867
+Epoch 36 Huber loss:: 31.07962711386072
+Epoch 37 Huber loss:: 30.90133711836922
+Epoch 38 Huber loss:: 30.97008372964648
+Epoch 39 Huber loss:: 31.016583469730495
+Epoch 40 Huber loss:: 31.141893961032235
+Epoch 41 Huber loss:: 31.112830846160655
+Epoch 42 Huber loss:: 31.07013423795501
+Epoch 43 Huber loss:: 30.99366224573304
+Epoch 44 Huber loss:: 31.05851732319842
+Epoch 45 Huber loss:: 31.032862263467884
+Epoch 46 Huber loss:: 31.07349883729912
+Epoch 47 Huber loss:: 31.0426817373036
+Converged...
+... Initial training phase terminated!
+time required for 10 episodes :16.259196758270264
+time required for 10 episodes :52.500452756881714
+time required for 10 episodes :52.59187340736389
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Utils.Predictors, Src.Algorithms.Agent, Src.Algorithms.ML_Foresight, Src.parser[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.ML_Foresight ML_Foresight
+Dynamically loaded from:  <class 'Src.Algorithms.ML_Foresight.ML_Foresight'>
+=====Configurations=====
+ 

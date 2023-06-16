@@ -14,7 +14,8 @@ class utils_env(object):
                  num_vehicles,
                  pp_capacity,
                  data,
-                 dist_matrix):
+                 dist_matrix,
+                 hgs_time):
         
         self.Location = Location
         self.Vehicle = Vehicle
@@ -33,7 +34,7 @@ class utils_env(object):
             self.addedcosts = self.addedcosts_euclid
         
         # HGS Solvers initialization
-        ap = AlgorithmParameters(timeLimit=3.2)  # seconds
+        ap = AlgorithmParameters(timeLimit=hgs_time)  # seconds
         self.hgs_solver = Solver(parameters=ap, verbose=False)#used for intermittent route
 
 
