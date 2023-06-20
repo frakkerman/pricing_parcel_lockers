@@ -74,12 +74,12 @@ class Parcelpoint_py(object):
         #pricing of offering problem variant
         if pricing:
             #self.action_space_matrix = self.get_actions(pricing,self.n_parcelpoints)
-            self.customerchoice = customerchoicemodel(base_util,self.dist_scaler,self.utils.getdistance_euclidean,self.dist_matrix)
+            self.customerchoice = customerchoicemodel(base_util,self.dist_scaler,self.utils.getdistance_euclidean,self.dist_matrix,self.n_unique_customer_locs)
             self.customerChoice = self.customerchoice.customerchoice_pricing
             self.get_delivery_loc = self.get_delivery_loc_pricing
         else:
             #self.action_space_matrix = self.get_actions(pricing,self.n_parcelpoints)
-            self.customerchoice = customerchoicemodel(base_util,self.dist_scaler,self.utils.getdistance_euclidean,self.dist_matrix)
+            self.customerchoice = customerchoicemodel(base_util,self.dist_scaler,self.utils.getdistance_euclidean,self.dist_matrix,self.n_unique_customer_locs)
             self.customerChoice = self.customerchoice.customerchoice_offer
             self.get_delivery_loc = self.get_delivery_loc_offer
         
@@ -142,6 +142,12 @@ class Parcelpoint_py(object):
         #get the chosen delivery location
         return self.customerChoice(self.newCustomer,action,self.parcelPoints["parcelpoints"])
     
+    def reopt_for_eval(self,data):
+        if self.load_data:
+            data["distance_matrix"] = get_dist_mat_HGS(self.dist_matrix,data['id'])
+        _,cost = self.utils.reopt_HGS(data)
+        return cost
+    
     def step(self,action,training=True):
         done=False
         self.steps += 1
@@ -168,7 +174,7 @@ class Parcelpoint_py(object):
         if self.steps % self.reopt_freq == 0:#do re-opt using HGS
             if self.load_data:
                 self.data["distance_matrix"] = get_dist_mat_HGS(self.dist_matrix,self.data['id'])
-            self.fleet = self.utils.reopt_HGS(self.data)
+            self.fleet,_ = self.utils.reopt_HGS(self.data)
         
         #generate new customer arrival and return state info
         self.curr_state = self.make_state()

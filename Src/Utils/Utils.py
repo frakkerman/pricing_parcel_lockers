@@ -2,7 +2,6 @@ from __future__ import print_function
 import numpy as np
 import torch
 from torch import float32
-import torch.nn as nn
 import shutil
 import matplotlib.pyplot as plt
 from os import path, mkdir, listdir, fsync, name
@@ -11,6 +10,7 @@ from time import time
 import sys
 from Environments.OOH.containers import Location,Vehicle,Fleet
 from math import trunc
+import hygese
 
 np.random.seed(0)
 torch.manual_seed(0)
@@ -53,17 +53,24 @@ class Logger(object):
    
 
 def save_plots_test_runs(test_returns,test_std,step_time,config):
-    np.save(config.paths['results'] + "test_returns_mean", test_returns)
-    np.save(config.paths['results'] + "test_returns_std", test_std)
-    np.save(config.paths['results'] + "step_time", step_time)
+    np.save(config.paths['results'] + "eval_dist_mean", test_returns)
+    np.save(config.paths['results'] + "eval_dist_std", test_std)
+    np.save(config.paths['results'] + "eval_step_time", step_time)
     x = config.save_after * np.arange(0, len(test_returns))
     plt.figure()
-    plt.ylabel("Total return")
+    plt.ylabel("Total HGS distance")
     plt.xlabel("Episode")
     plt.title("Performance")
     plt.plot(x,test_returns,color='#CC4F1B')
     plt.fill_between(x,np.array(test_returns)+np.array(test_std),np.array(test_returns)-np.array(test_std),alpha=0.5, edgecolor='#CC4F1B', facecolor='#FF9848')
-    plt.savefig(config.paths['results'] + "performance_test_runs.png")
+    plt.savefig(config.paths['results'] + "dist_eval_runs.png")
+    plt.close()
+    
+    plt.figure()
+    plt.ylabel("Step time")
+    plt.title("Performance")
+    plt.boxplot(step_time)
+    plt.savefig(config.paths['results'] + "box_eval_step_time.png")
     plt.close()
 
 def save_plots_stats(stats,costs,run_time,actions,config,episode):
@@ -109,8 +116,11 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     plt.title("Performance")
     plt.bar([1,2],[count_home/len(info),1-(count_home/len(info))])
     plt.xticks([1, 2], ['Home deliveries', 'Parcel point deliveries'])
+    plt.ylim((0.0,1.0))
     plt.savefig(config.paths['results'] + "bar_deliveries.png")
     plt.close()
+    
+    print(count_home/len(info))
     
     #4 boxplot final hgs distance
     costs =  np.array([i for i in costs if i != 0])
@@ -137,7 +147,7 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     plt.savefig(config.paths['results'] + "bar_drive_del_time.png")
     plt.close()
     
-    #cost and revenue
+    #7cost and revenue
     cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / config.truck_speed
     revenue = (len(info)/(episode+1))*config.revenue
     total_costs = added_costs_home*count_home+(np.mean(costs)*cost_multiplier)
@@ -158,7 +168,9 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     np.save(config.paths['results'] + "revenues", revenue)
     np.save(config.paths['results'] + "total_costs", total_costs)
     np.save(config.paths['results'] + "hgs_distances", costs)
-    np.save(config.paths['results'] + "num_home_deliveries", count_home)
+    np.save(config.paths['results'] + "percent_home_deliveries", count_home/len(info))
+    
+
 
 class Space:
     def __init__(self, low=[0], high=[1], dtype=np.uint8, size=-1):

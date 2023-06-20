@@ -7,11 +7,13 @@ class customerchoicemodel(object):
                  base_util,
                  dist_scaler,
                  euclidean,
-                 dist_mat):
+                 dist_mat,
+                 n_cust):
         self.euclidean_distance = euclidean
         self.dist_scaler = dist_scaler
         self.base_util = base_util
         self.dist_mat = dist_mat
+        self.n_cust = n_cust
         if len(self.dist_mat)>0:
             self.mnl = self.mnl_distmat
         else:
@@ -37,7 +39,7 @@ class customerchoicemodel(object):
         """
         Customer choice model for the offering decision, i.e., action is 1 parcelpoint offer
         """
-        pps = parcelpoints[action]
+        pps = parcelpoints[action-self.n_cust]
         shape = (len(action)+1, 1)
         utils= np.empty(shape)
         utils[0]=self.base_util+customer.home_util

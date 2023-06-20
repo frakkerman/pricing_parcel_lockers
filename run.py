@@ -39,7 +39,7 @@ class Solver:
         steps = []
         step_time = []
         for episode in range(episodes):
-            state = self.env.reset(training=False)#np.float32(self.env.reset(training=False))
+            state = self.env.reset(training=False)
             step = 0
             done = False
             while not done:
@@ -51,7 +51,7 @@ class Solver:
                 step_time.append(time()-t1)
                 if step >= self.max_steps:
                     break
-            costs.append(self.model.update(data,state,False))#fix
+            costs.append(self.env.reopt_for_eval(data))#short HGS (re-opt) call
             steps.append(step)
         return costs,step_time,steps
 
@@ -87,21 +87,21 @@ class Solver:
                 actions.append(action)
                 state = new_state
                 step += 1
-                costs.append(self.model.update(data,state,done))#update model only after episode ends
+                costs.append(self.model.update(data,state,done))
                 if step >= self.max_steps:
-                    costs.append(self.model.update(data,state,True))#update model only after episode ends
+                    costs.append(self.model.update(data,state,True))#do full update when episode is done
                     break
             steps += step
 
             if episode%checkpoint == 0 or episode == self.config.max_episodes-1:
                 print('time required for '+str(checkpoint)+' episodes :' +str(time()-t0))
-                # test_reward, step_time, _ = self.eval(10)   
-                # avg_test_reward = np.average(test_reward)
-                # std_test_reward = np.std(test_reward)
-                # avg_step_time.append(np.average(step_time))
-                # test_std.append(std_test_reward)
-                # test_returns.append(avg_test_reward)
-                # Utils.save_plots_test_runs(test_returns,test_std,avg_step_time,config=self.config)
+                test_reward, step_time, _ = self.eval(1)   
+                avg_test_reward = np.average(test_reward)
+                std_test_reward = np.std(test_reward)
+                avg_step_time.append(np.average(step_time))
+                test_std.append(std_test_reward)
+                test_returns.append(avg_test_reward)
+                Utils.save_plots_test_runs(test_returns,test_std,avg_step_time,config=self.config)
                 run_time.append((time()-t_init))
                 Utils.save_plots_stats(run_info,costs,run_time,actions=actions,config=self.config,episode=episode)
                

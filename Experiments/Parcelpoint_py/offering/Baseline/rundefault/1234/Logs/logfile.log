@@ -1,0 +1,168 @@
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Baseline Baseline
+Dynamically loaded from:  <class 'Src.Algorithms.Baseline.Baseline'>
+Number of GPUs available:  1
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|20|12:16:54', folder_suffix='default', experiment='run', algo_name='Baseline', gpu=1, env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=3.0, min_price=-3.0, k=1, n_vehicles=2, veh_capacity=20, parcelpoint_capacity=10000, incentive_sens=-0.25, base_util=-2.0, home_util=3.55, revenue=90, fuel_cost=0.05, truck_speed=50, del_time=2.0, driver_wage=8, reopt=10000000, hgs_reopt_time=2.1, hgs_final_time=6.3, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=3000, buffer_size=100000, batch_size=8, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, init_theta=1.0, cool_theta=0.0014285714285714286, save_routes=False, price_pp=-0.0, price_home=0.0)
+Actions space: 1048576 :: State space: 4
+time required for 10 episodes :6.308112859725952
+0.8205128205128205
+time required for 10 episodes :56.76194405555725
+0.7923076923076923
+63.98509383201599
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.configModule path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Baseline Baseline
+Dynamically loaded from:  <class 'Src.Algorithms.Baseline.Baseline'>
+Number of GPUs available:  1
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|20|12:16:54', folder_suffix='default', experiment='run', algo_name='Baseline', gpu=1, env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=3.0, min_price=-3.0, k=1, n_vehicles=2, veh_capacity=20, parcelpoint_capacity=10000, incentive_sens=-0.25, base_util=-2.0, home_util=3.55, revenue=90, fuel_cost=0.05, truck_speed=50, del_time=2.0, driver_wage=8, reopt=10000000, hgs_reopt_time=2.1, hgs_final_time=6.3, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=3000, buffer_size=100000, batch_size=8, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, init_theta=1.0, cool_theta=0.0014285714285714286, save_routes=False, price_pp=-0.0, price_home=0.0)
+Actions space: 1048576 :: State space: 4
+time required for 10 episodes :6.308112859725952
+0.8205128205128205
+time required for 10 episodes :56.76194405555725
+0.7923076923076923
+63.98509383201599
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Algorithms.Agent, Src.Algorithms.Baseline, Src.parser[0m
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(1)[0;36m<module>[0;34m()[0m
+[0;32m----> 1 [0;31m[0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      2 [0;31m[0;32mimport[0m [0mSrc[0m[0;34m.[0m[0mUtils[0m[0;34m.[0m[0mUtils[0m [0;32mas[0m [0mUtils[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      3 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mparser[0m [0;32mimport[0m [0mParser[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      4 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mconfig[0m [0;32mimport[0m [0mConfig[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      5 [0;31m[0;32mfrom[0m [0mtime[0m [0;32mimport[0m [0mtime[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Heuristic Heuristic
+Dynamically loaded from:  <class 'Src.Algorithms.Heuristic.Heuristic'>
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\src\config.py[0m(75)[0;36m__init__[0;34m()[0m
+[0;32m     73 [0;31m[0;34m[0m[0m
+[0m[0;32m     74 [0;31m        [0;31m# GPU[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;31m133[0;32m> 75 [0;31m        [0;32mif[0m [0margs[0m[0;34m.[0m[0mgpu[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     76 [0;31m            [0mself[0m[0;34m.[0m[0mdevice[0m [0;34m=[0m [0mtorch[0m[0;34m.[0m[0mdevice[0m[0;34m([0m[0;34m"cuda:0"[0m [0;32mif[0m [0mtorch[0m[0;34m.[0m[0mcuda[0m[0;34m.[0m[0mis_available[0m[0;34m([0m[0;34m)[0m [0;32melse[0m [0;34m"cpu"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     77 [0;31m        [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Number of GPUs available:  1
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|20|12:18:25', folder_suffix='default', experiment='run', algo_name='Heuristic', gpu=1, env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=3.0, min_price=-3.0, k=1, n_vehicles=2, veh_capacity=20, parcelpoint_capacity=10000, incentive_sens=-0.25, base_util=-2.0, home_util=3.55, revenue=90, fuel_cost=0.05, truck_speed=50, del_time=2.0, driver_wage=8, reopt=10000000, hgs_reopt_time=2.1, hgs_final_time=6.3, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=3000, buffer_size=100000, batch_size=8, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, init_theta=1.0, cool_theta=0.0014285714285714286, save_routes=False, price_pp=-0.0, price_home=0.0)
+Actions space: 1048576 :: State space: 4
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.parser, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Algorithms.Agent, Src.Algorithms.Heuristic[0m
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(1)[0;36m<module>[0;34m()[0m
+[0;32m----> 1 [0;31m[0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      2 [0;31m[0;32mimport[0m [0mSrc[0m[0;34m.[0m[0mUtils[0m[0;34m.[0m[0mUtils[0m [0;32mas[0m [0mUtils[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      3 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mparser[0m [0;32mimport[0m [0mParser[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      4 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mconfig[0m [0;32mimport[0m [0mConfig[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      5 [0;31m[0;32mfrom[0m [0mtime[0m [0;32mimport[0m [0mtime[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Heuristic Heuristic
+Dynamically loaded from:  <class 'Src.Algorithms.Heuristic.Heuristic'>
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\src\config.py[0m(75)[0;36m__init__[0;34m()[0m
+[0;32m     73 [0;31m[0;34m[0m[0m
+[0m[0;32m     74 [0;31m        [0;31m# GPU[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;31m134[0;32m> 75 [0;31m        [0;32mif[0m [0margs[0m[0;34m.[0m[0mgpu[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     76 [0;31m            [0mself[0m[0;34m.[0m[0mdevice[0m [0;34m=[0m [0mtorch[0m[0;34m.[0m[0mdevice[0m[0;34m([0m[0;34m"cuda:0"[0m [0;32mif[0m [0mtorch[0m[0;34m.[0m[0mcuda[0m[0;34m.[0m[0mis_available[0m[0;34m([0m[0;34m)[0m [0;32melse[0m [0;34m"cpu"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     77 [0;31m        [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Number of GPUs available:  1
+=====Configurations=====
+ 
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|20|12:18:25', folder_suffix='default', experiment='run', algo_name='Heuristic', gpu=1, env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=3.0, min_price=-3.0, k=1, n_vehicles=2, veh_capacity=20, parcelpoint_capacity=10000, incentive_sens=-0.25, base_util=-2.0, home_util=3.55, revenue=90, fuel_cost=0.05, truck_speed=50, del_time=2.0, driver_wage=8, reopt=10000000, hgs_reopt_time=2.1, hgs_final_time=6.3, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=3000, buffer_size=100000, batch_size=8, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, init_theta=1.0, cool_theta=0.0014285714285714286, save_routes=False, price_pp=-0.0, price_home=0.0)
+Actions space: 1048576 :: State space: 4
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.parser, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Algorithms.Agent, Src.Algorithms.Heuristic[0m
+lgorithms.Agent, Src.Algorithms.Baseline, Src.parser[0m
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(1)[0;36m<module>[0;34m()[0m
+[0;32m----> 1 [0;31m[0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      2 [0;31m[0;32mimport[0m [0mSrc[0m[0;34m.[0m[0mUtils[0m[0;34m.[0m[0mUtils[0m [0;32mas[0m [0mUtils[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      3 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mparser[0m [0;32mimport[0m [0mParser[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      4 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mconfig[0m [0;32mimport[0m [0mConfig[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      5 [0;31m[0;32mfrom[0m [0mtime[0m [0;32mimport[0m [0mtime[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Heuristic Heuristic
+Dynamically loaded from:  <class 'Src.Algorithms.Heuristic.Heuristic'>
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\src\config.py[0m(75)[0;36m__init__[0;34m()[0m
+[0;32m     73 [0;31m[0;34m[0m[0m
+[0m[0;32m     74 [0;31m        [0;31m# GPU[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;31m133[0;32m> 75 [0;31m        [0;32mif[0m [0margs[0m[0;34m.[0m[0mgpu[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     76 [0;31m            [0mself[0m[0;34m.[0m[0mdevice[0m [0;34m=[0m [0mtorch[0m[0;34m.[0m[0mdevice[0m[0;34m([0m[0;34m"cuda:0"[0m [0;32mif[0m [0mtorch[0m[0;34m.[0m[0mcuda[0m[0;34m.[0m[0mis_available[0m[0;34m([0m[0;34m)[0m [0;32melse[0m [0;34m"cpu"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     77 [0;31m        [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Number of GPUs availablNamespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|20|12:16:54', folder_suffix='default', experiment='run', algo_name='Baseline', gpu=1, env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=3.0, min_price=-3.0, k=1, n_vehicles=2, veh_capacity=20, parcelpoint_capacity=10000, incentive_sens=-0.25, base_util=-2.0, home_util=3.55, revenue=90, fuel_cost=0.05, truck_speed=50, del_time=2.0, driver_wage=8, reopt=10000000, hgs_reopt_time=2.1, hgs_final_time=6.3, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=3000, buffer_size=100000, batch_size=8, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, init_theta=1.0, cool_theta=0.0014285714285714286, save_routes=False, price_pp=-0.0, price_home=0.0)
+Actions space: 1048576 :: State space: 4
+time required for 10 episodes :6.308112859725952
+0.8205128205128205
+time required for 10 episodes :56.76194405555725
+0.7923076923076923
+63.98509383201599
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Algorithms.Agent, Src.Algorithms.Baseline, Src.parser[0m
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(1)[0;36m<module>[0;34m()[0m
+[0;32m----> 1 [0;31m[0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      2 [0;31m[0;32mimport[0m [0mSrc[0m[0;34m.[0m[0mUtils[0m[0;34m.[0m[0mUtils[0m [0;32mas[0m [0mUtils[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      3 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mparser[0m [0;32mimport[0m [0mParser[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      4 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mconfig[0m [0;32mimport[0m [0mConfig[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      5 [0;31m[0;32mfrom[0m [0mtime[0m [0;32mimport[0m [0mtime[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Heuristic Heuristic
+Dynamically loaded from:  <class 'Src.Algorithms.Heuristic.Heuristic'>
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\src\config.py[0m(75)[0;36m__init__[0;34m()[0m
+[0;32m     73 [0;31m[0;34m[0m[0m
+[0m[0;32m     74 [0;31m        [0;31m# GPU[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;31m133[0;32m> 75 [0;31m        [0;32mif[0m [0margs[0m[0;34m.[0m[0mgpu[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     76 [0;31m            [0mself[0m[0;34m.[0m[0mdevice[0m [0;34m=[0m [0mtorch[0m[0;34m.[0m[0mdevice[0m[0;34m([0m[0;34m"cuda:0"[0m [0;32mif[0m [0mtorch[0m[0;34m.[0m[0mcuda[0m[0;34m.[0m[0mis_available[0m[0;34m([0m[0;34m)[0m [0;32melse[0m [0;34m"cpu"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     77 [0;31m        [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Number of GPUs available:  1
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|20|12:18:25', folder_suffix='default', experiment='run', algo_name='Heuristic', gpu=1, env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=3.0, min_price=-3.0, k=1, n_vehicles=2, veh_capacity=20, parcelpoint_capacity=10000, incentive_sens=-0.25, base_util=-2.0, home_util=3.55, revenue=90, fuel_cost=0.05, truck_speed=50, del_time=2.0, driver_wage=8, reopt=10000000, hgs_reopt_time=2.1, hgs_final_time=6.3, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=3000, buffer_size=100000, batch_size=8, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, init_theta=1.0, cool_theta=0.0014285714285714286, save_routes=False, price_pp=-0.0, price_home=0.0)
+Actions space: 1048576 :: State space: 4
+[4;33mReloaded modules[24m: Src.Utils, Environments, Environments.OOH, Environments.OOH.containers, Src.Utils.Utils, Src.parser, Src.config, Environments.OOH.env_utils, Environments.OOH.customerchoice, Environments.OOH.Parcelpoint_py, Src.Algorithms.Agent, Src.Algorithms.Heuristic[0m
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\run.py[0m(1)[0;36m<module>[0;34m()[0m
+[0;32m----> 1 [0;31m[0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      2 [0;31m[0;32mimport[0m [0mSrc[0m[0;34m.[0m[0mUtils[0m[0;34m.[0m[0mUtils[0m [0;32mas[0m [0mUtils[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      3 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mparser[0m [0;32mimport[0m [0mParser[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      4 [0;31m[0;32mfrom[0m [0mSrc[0m[0;34m.[0m[0mconfig[0m [0;32mimport[0m [0mConfig[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m      5 [0;31m[0;32mfrom[0m [0mtime[0m [0;32mimport[0m [0mtime[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Heuristic Heuristic
+Dynamically loaded from:  <class 'Src.Algorithms.Heuristic.Heuristic'>
+> [0;32mc:\onedrive - university of twente\documenten\research\parcelpoint\ooh_code\src\config.py[0m(75)[0;36m__init__[0;34m()[0m
+[0;32m     73 [0;31m[0;34m[0m[0m
+[0m[0;32m     74 [0;31m        [0;31m# GPU[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;31m134[0;32m> 75 [0;31m        [0;32mif[0m [0margs[0m[0;34m.[0m[0mgpu[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     76 [0;31m            [0mself[0m[0;34m.[0m[0mdevice[0m [0;34m=[0m [0mtorch[0m[0;34m.[0m[0mdevice[0m[0;34m([0m[0;34m"cuda:0"[0m [0;32mif[0m [0mtorch[0m[0;34m.[0m[0mcuda[0m[0;34m.[0m[0mis_available[0m[0;34m([0m[0;34m)[0m [0;32melse[0m [0;34m"cpu"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[0;32m     77 [0;31m        [0;32melse[0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m
+Number of GPUs available:  1
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|20|12:19:16', folder_suffix='default', experiment='run', algo_name='Heuristic', gpu=1, env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=3.0, min_price=-3.0, k=1, n_vehicles=2, veh_capacity=20, parcelpoint_capacity=10000, incentive_sens=-0.25, base_util=-2.0, home_util=3.55, revenue=90, fuel_cost=0.05, truck_speed=50, del_time=2.0, driver_wage=8, reopt=10000000, hgs_reopt_time=2.1, hgs_final_time=6.3, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=3000, buffer_size=100000, batch_size=8, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, init_theta=1.0, cool_theta=0.0014285714285714286, save_routes=False, price_pp=-0.0, price_home=0.0)
+Actions space: 1048576 :: State space: 4
+--Call--

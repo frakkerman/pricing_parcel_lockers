@@ -1,0 +1,13 @@
+Module path:  Environments.OOH.Parcelpoint_py Parcelpoint_py
+Dynamically loaded from:  <class 'Environments.OOH.Parcelpoint_py.Parcelpoint_py'>
+
+ Note: the HGS python implementation (hygese 0.0.0.8) throws an assertion error for coords<0, you will need to outcomment this check in hygese.py 
+
+Module path:  Src.Algorithms.Heuristic Heuristic
+Dynamically loaded from:  <class 'Src.Algorithms.Heuristic.Heuristic'>
+Number of GPUs available:  1
+=====Configurations=====
+ Namespace(seed=1234, save_count=100, log_output='term_file', debug=True, save_model=True, timestamp='6|20|12:22:14', folder_suffix='default', experiment='run', algo_name='Heuristic', gpu=1, env_name='Parcelpoint_py', max_episodes=10, max_steps_r=700, max_steps_p=0.5, load_data=True, city='Austin', data_seed=0, pricing=False, max_price=3.0, min_price=-3.0, k=2, n_vehicles=2, veh_capacity=60, parcelpoint_capacity=10000, incentive_sens=-0.25, base_util=-2.0, home_util=3.55, revenue=90, fuel_cost=0.05, truck_speed=50, del_time=2.0, driver_wage=8, reopt=10000000, hgs_reopt_time=2.1, hgs_final_time=6.3, grid_dim=10, n_input_layers=3, only_phase_one=False, initial_phase_epochs=3000, buffer_size=100000, batch_size=8, learning_rate=0.0001, init_theta_cnn=1.0, cool_theta_cnn=0.0014285714285714286, optim='adam', use3d_conv=False, n_filters=16, dropout=0.1, init_theta=1.0, cool_theta=0.0014285714285714286, save_routes=False, price_pp=-0.0, price_home=0.0)
+Actions space: 1048576 :: State space: 4
+time required for 10 episodes :7.034559965133667
+0.9663865546218487

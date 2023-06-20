@@ -71,7 +71,7 @@ class utils_env(object):
         result = self.hgs_solver.solve_cvrp(data)
         #update current routes
         fleet = extract_route_HGS(result,data)
-        return fleet
+        return fleet, result.cost
     
     def reset_fleet(self,fleet,initRouteplan):
         for v in fleet["fleet"]:

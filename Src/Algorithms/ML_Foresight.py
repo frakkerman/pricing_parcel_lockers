@@ -52,7 +52,7 @@ class ML_Foresight(Agent):
         
         self.customer_cell = get_matrix(config.coords,self.grid_dim)
 
-        self.interval = int((config.n_vehicles*config.veh_capacity)/config.n_input_layers)
+        self.interval = int(config.max_steps_r/config.n_input_layers)
         
         self.optimizer = config.optim(self.supervised_ml.parameters(), lr=self.config.learning_rate)
         self.criterion = nn.HuberLoss(delta=1.0)
