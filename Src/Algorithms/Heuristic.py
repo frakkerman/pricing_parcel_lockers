@@ -1,10 +1,9 @@
 import numpy as np
 import numpy.ma as ma
-from math import sqrt
 from Src.Utils.Utils import readCVRPLIB,get_dist_mat_HGS
 from Src.Algorithms.Agent import Agent
 from scipy.special import lambertw
-from math import exp, e
+from math import exp, e, sqrt
 from hygese import AlgorithmParameters, Solver
 
 # This function implements the method proposed in Yang et. al (2016) adapted to the OOH setting
@@ -67,7 +66,7 @@ class Heuristic(Agent):
         for pp in range(len(pps)):
             if state[2]["parcelpoints"][pp].remainingCapacity > 0:#check if parcelpont has remaining capacity
                 pp_costs[pp] =  mltplr*((1-theta)*self.cheapestInsertionCosts(state[2]["parcelpoints"][pp].location, state[1]) + theta*self.historicCosts(state[2]["parcelpoints"][pp].location,self.historicRoutes))
-        pp_sorted_args = state[2]["parcelpoints"][np.argpartition(pp_costs, self.k)[:self.k]]
+        pp_sorted_args = pps[np.argpartition(pp_costs, self.k)[:self.k]]
         
         #get k best PPs
         action = self.get_id(pp_sorted_args)

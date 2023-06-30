@@ -6,12 +6,8 @@ from time import time
 
 """
 TODO: perhaps add VRPTW later (would require use of pyvrp lib), would make 3d conv interesting
-TODO: generate historic routes for foresight method
-TODO: tune customer choice model such that x% of customer select pp when offeral is used
 TODO: cleanup action space in environment (needed?)
-TODO: how to deal with different instance seeds
 perhaps add appartment builidng delivery time?
-also study fixed fee/free home delivery
 """
 
 class Solver:

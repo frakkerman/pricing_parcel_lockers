@@ -10,7 +10,7 @@ class Parser(object):
         parser.add_argument("--seed", default=1234, help="seed for variance testing",type=int)
 
         # General parameters
-        parser.add_argument("--save_count", default=100, help="Number of checkpoints for saving results and model", type=int)
+        parser.add_argument("--save_count", default=2, help="Number of checkpoints for saving results and model", type=int)
         parser.add_argument("--log_output", default='term_file', help="Log all the print outputs",choices=['term_file', 'term', 'file'])
         parser.add_argument("--debug", default=True, type=self.str2bool, help="Debug mode on/off")
         parser.add_argument("--save_model", default=True, type=self.str2bool, help="flag to save model checkpoints")
@@ -22,7 +22,7 @@ class Parser(object):
         parser.add_argument("--folder_suffix", default='default', help="folder name suffix")
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
         
-        parser.add_argument("--algo_name", default='Heuristic', help="Policy/algorithm used",choices=['ML_Foresight','Heuristic','Baseline'])
+        parser.add_argument("--algo_name", default='Baseline', help="Policy/algorithm used",choices=['ML_Foresight','Heuristic','Baseline'])
         parser.add_argument("--gpu", default=1, help="GPU BUS ID ", type=int)
         
         # Environment parameters
@@ -37,7 +37,7 @@ class Parser(object):
 
     def environment_parameters(self, parser):
         parser.add_argument("--env_name", default='Parcelpoint_py', help="Environment to run the code")
-        parser.add_argument("--max_episodes", default=int(10), help="maximum number of episodes", type=int)
+        parser.add_argument("--max_episodes", default=int(2), help="maximum number of episodes", type=int)
         
         parser.add_argument("--max_steps_r", default=700, help="maximum steps per episode r of gamma dist.", type=int)
         parser.add_argument("--max_steps_p", default=0.5, help="maximum steps per episode p of gamma dist. [0,1]", type=float)
@@ -50,11 +50,11 @@ class Parser(object):
         parser.add_argument("--max_price", default=3.0, help="max delivery charge >0", type=float)
         parser.add_argument("--min_price", default=-3.0, help="max discount <0", type=float)
         
-        parser.add_argument("--k", default=2, help="Number of parcelpoints to offer to customer", type=int)
+        parser.add_argument("--k", default=15, help="Number of parcelpoints to offer to customer", type=int)
         
         parser.add_argument("--n_vehicles", default=2, help="number of vehicles", type=int)
         parser.add_argument("--veh_capacity", default=60, help="capacity per vehicle per day", type=int)
-        parser.add_argument("--parcelpoint_capacity", default=10000, help="parcel point capacity per day", type=int)
+        parser.add_argument("--parcelpoint_capacity", default=100000, help="parcel point capacity per day", type=int)
         
         parser.add_argument("--incentive_sens", default=-0.25, help="sensitivty of customer to incentives", type=float)
         parser.add_argument("--base_util", default=-2.0, help="base utility across all alternativesy", type=float)
@@ -78,7 +78,7 @@ class Parser(object):
         parser.add_argument("--initial_phase_epochs", default=11, help="maximum number of training epochs", type=int)
         parser.add_argument("--buffer_size", default=int(1e5), help="Size of memory buffer", type=int)
         parser.add_argument("--batch_size", default=8, help="Batch size", type=int)
-        parser.add_argument("--learning_rate", default=1e-4, help="learning rate", type=float)
+        parser.add_argument("--learning_rate", default=1e-3, help="learning rate", type=float)
         
         parser.add_argument("--init_theta_cnn", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
         parser.add_argument("--cool_theta_cnn", default=(1/700), help="weight reduction for cheapest insertion", type=float)
