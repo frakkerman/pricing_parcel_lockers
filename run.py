@@ -6,7 +6,6 @@ from time import time
 
 """
 TODO: perhaps add VRPTW later (would require use of pyvrp lib), would make 3d conv interesting
-TODO: cleanup action space in environment (needed?)
 perhaps add appartment builidng delivery time?
 """
 
@@ -21,11 +20,7 @@ class Solver:
         #to ensure we do not exceed the fleet capacity
         self.max_steps = int(config.n_vehicles*config.veh_capacity)-1
         
-        if len(self.env.action_space.shape) > 0:
-            self.action_dim = self.env.action_space.shape[0]
-        else:
-            self.action_dim = self.env.action_space.n
-        print("Actions space: {} :: State space: {}".format(self.action_dim, self.state_dim))
+        print("State space: {}".format(self.state_dim))
 
         self.model = config.algo(config=config)
 

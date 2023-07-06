@@ -58,12 +58,12 @@ def save_plots_test_runs(test_returns,test_std,step_time,config):
     np.save(config.paths['results'] + "eval_step_time", step_time)
     x = config.save_after * np.arange(0, len(test_returns))
     plt.figure()
-    plt.ylabel("Total HGS distance")
+    plt.ylabel("Total HGS time")
     plt.xlabel("Episode")
     plt.title("Performance")
     plt.plot(x,test_returns,color='#CC4F1B')
     plt.fill_between(x,np.array(test_returns)+np.array(test_std),np.array(test_returns)-np.array(test_std),alpha=0.5, edgecolor='#CC4F1B', facecolor='#FF9848')
-    plt.savefig(config.paths['results'] + "dist_eval_runs.png")
+    plt.savefig(config.paths['results'] + "hgs_time_eval_runs.png")
     plt.close()
     
     plt.figure()
@@ -125,10 +125,10 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     #4 boxplot final hgs distance
     costs =  np.array([i for i in costs if i != 0])
     plt.figure()
-    plt.ylabel("Total distance")
+    plt.ylabel("Total time")
     plt.title("Performance")
     plt.boxplot(costs)
-    plt.savefig(config.paths['results'] + "box_hgs_distance.png")
+    plt.savefig(config.paths['results'] + "box_hgs_time.png")
     plt.close()
     
     #5 count number of unique parcelpoints
@@ -137,7 +137,7 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     
     #6 bar times
     added_costs_home = (config.del_time/60)
-    drive_time = np.mean(costs) / config.truck_speed
+    drive_time = np.mean(costs)
     service_time = added_costs_home*count_home
     plt.figure()
     plt.ylabel("Hours")
@@ -148,9 +148,10 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     plt.close()
     
     #7cost and revenue
-    cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / config.truck_speed
+    cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
     revenue = (len(info)/(episode+1))*config.revenue
     total_costs = added_costs_home*count_home+(np.mean(costs)*cost_multiplier)
+    total_costs += count_home*config.home_failure*config.failure_cost#costs of failed delivery
     plt.figure()
     plt.ylabel("Monetary unit")
     plt.title("Performance")
@@ -167,21 +168,8 @@ def save_plots_stats(stats,costs,run_time,actions,config,episode):
     np.save(config.paths['results'] + "pricing_revenue", pricing_revenue)
     np.save(config.paths['results'] + "revenues", revenue)
     np.save(config.paths['results'] + "total_costs", total_costs)
-    np.save(config.paths['results'] + "hgs_distances", costs)
+    np.save(config.paths['results'] + "hgs_times", costs)
     np.save(config.paths['results'] + "percent_home_deliveries", count_home/len(info))
-    
-
-
-class Space:
-    def __init__(self, low=[0], high=[1], dtype=np.uint8, size=-1):
-        if size == -1:
-            self.shape = np.shape(low)
-        else:
-            self.shape = (size, )
-        self.low = np.array(low)
-        self.high = np.array(high)
-        self.dtype = dtype
-        self.n = len(self.low)
 
 
 def save_training_checkpoint(state, is_best, episode_count):

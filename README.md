@@ -49,7 +49,7 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
  
  * Note that you might have to adapt your root folder's name to `ooh_code`
  
- * Note that `hygese.py` requires a slight change when running with `--load_data=True`, this change is indicated in the code
+ * Note that `hygese.py` requires a slight change to one source file when running with `--load_data=True`, this change is indicated when running the code
  
 ## License
 * [MIT license](https://opensource.org/license/mit/)

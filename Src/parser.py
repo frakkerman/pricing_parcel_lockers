@@ -22,7 +22,7 @@ class Parser(object):
         parser.add_argument("--folder_suffix", default='default', help="folder name suffix")
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
         
-        parser.add_argument("--algo_name", default='Baseline', help="Policy/algorithm used",choices=['ML_Foresight','Heuristic','Baseline'])
+        parser.add_argument("--algo_name", default='Heuristic', help="Policy/algorithm used",choices=['ML_Foresight','Heuristic','Baseline'])
         parser.add_argument("--gpu", default=1, help="GPU BUS ID ", type=int)
         
         # Environment parameters
@@ -43,16 +43,16 @@ class Parser(object):
         parser.add_argument("--max_steps_p", default=0.5, help="maximum steps per episode p of gamma dist. [0,1]", type=float)
         
         parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data", type=self.str2bool)
-        parser.add_argument("--city", default='Austin', help="which city to load",choices=['Austin','Seattle'])
+        parser.add_argument("--city", default='Seattle', help="which city to load",choices=['Austin','Seattle'])
         parser.add_argument("--data_seed", default=0, help="which dataset to load",choices=[0,1,2,3], type=int)
         
-        parser.add_argument("--pricing", default=False, help="if we use pricing or offering decision space", type=self.str2bool)
+        parser.add_argument("--pricing", default=True, help="if we use pricing or offering decision space", type=self.str2bool)
         parser.add_argument("--max_price", default=3.0, help="max delivery charge >0", type=float)
         parser.add_argument("--min_price", default=-3.0, help="max discount <0", type=float)
         
-        parser.add_argument("--k", default=15, help="Number of parcelpoints to offer to customer", type=int)
+        parser.add_argument("--k", default=0, help="Number of parcelpoints to offer to customer", type=int)
         
-        parser.add_argument("--n_vehicles", default=2, help="number of vehicles", type=int)
+        parser.add_argument("--n_vehicles", default=2, help="number of vehicles", type=int)#Austin=20, Seattle=25
         parser.add_argument("--veh_capacity", default=60, help="capacity per vehicle per day", type=int)
         parser.add_argument("--parcelpoint_capacity", default=100000, help="parcel point capacity per day", type=int)
         
@@ -60,11 +60,14 @@ class Parser(object):
         parser.add_argument("--base_util", default=-2.0, help="base utility across all alternativesy", type=float)
         parser.add_argument("--home_util", default=3.55, help="utility given to home delivery", type=float)
         
-        parser.add_argument("--revenue", default=90, help="revenue per customer", type=float)
-        parser.add_argument("--fuel_cost", default=0.05, help="costs of fuel per distance unit", type=float)
-        parser.add_argument("--truck_speed", default=50, help="distance travelled per hour", type=float)
-        parser.add_argument("--del_time", default=2.0, help="time in minutes to drop off parcel", type=float)
-        parser.add_argument("--driver_wage", default=8, help="salary of driver per hour", type=float)
+        parser.add_argument("--revenue", default=45, help="revenue per customer", type=float)#not used in statistics, only for pricing model
+        parser.add_argument("--fuel_cost", default=0.3, help="costs of fuel per distance unit", type=float)
+        parser.add_argument("--truck_speed", default=30, help="distance travelled per hour", type=float)
+        parser.add_argument("--del_time", default=5.0, help="time in minutes to drop off parcel", type=float)
+        parser.add_argument("--driver_wage", default=25, help="salary of driver per hour", type=float)
+        
+        parser.add_argument("--home_failure", default=0.1, help="the probability of delivery failure for home delivery", type=float)
+        parser.add_argument("--failure_cost", default=10.0, help="the monetary costs of a delivery failure", type=float)
         
         parser.add_argument("--reopt", default=10000000, help="re-opt frequency of cheapest insertion route using HGS", type=int)
         parser.add_argument("--hgs_reopt_time", default=2.1, help="re-opt HGS time limit", type=float)
@@ -91,12 +94,12 @@ class Parser(object):
        
     def Heuristic_parameters(self, parser):
         parser.add_argument("--init_theta", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
-        parser.add_argument("--cool_theta", default=(1/700), help="weight reduction for cheapest insertion", type=float)
+        parser.add_argument("--cool_theta", default=1/700, help="weight reduction for cheapest insertion", type=float)
     
     def Baseline_parameters(self, parser):
         parser.add_argument("--save_routes", default=False, help="Used to save routes for use inside Heuristic", type=self.str2bool)#could consider to make this an updating loop
-        parser.add_argument("--price_pp", default=-0.0, help="fixed fee price to offer for all parcelpoints", type=float)
-        parser.add_argument("--price_home", default=0.0, help="fixed fee price to offer for home delivery", type=float)
+        parser.add_argument("--price_pp", default=0.0, help="fixed fee price to offer for all parcelpoints", type=float)
+        parser.add_argument("--price_home", default=-0.0, help="fixed fee price to offer for home delivery", type=float)
         
     def str2bool(self, text):
         if text == 'True':

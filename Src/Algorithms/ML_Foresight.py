@@ -74,7 +74,7 @@ class ML_Foresight(Agent):
         
         #mnl parameters
         self.base_util = config.base_util
-        self.cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / config.truck_speed
+        self.cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
         self.added_costs_home = config.driver_wage*(config.del_time/60)
         self.revenue = config.revenue/100.0
         

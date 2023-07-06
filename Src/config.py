@@ -60,7 +60,7 @@ class Config(object):
             self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = [],[],6,np.ones(6)
 
         # Get the domain and algorithm
-        self.env, self.gym_env, self.cont_actions = self.get_domain(args.env_name, args=args, debug=args.debug,
+        self.env, self.gym_env = self.get_domain(args.env_name, args=args, debug=args.debug,
                                                                path=path.join(self.paths['root'], 'Environments'))
         self.env.seed(seed)
 
@@ -102,7 +102,7 @@ class Config(object):
                       veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
                       home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,
                       n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency,hgs_time=args.hgs_reopt_time)
-            return env, False, env.action_space.dtype == np.float32
+            return env, False
 
 if __name__ == '__main__':
     pass
