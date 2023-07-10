@@ -86,13 +86,13 @@ class Solver:
 
             if episode%checkpoint == 0 or episode == self.config.max_episodes-1:
                 print('time required for '+str(checkpoint)+' episodes :' +str(time()-t0))
-                test_reward, step_time, _ = self.eval(1)   
-                avg_test_reward = np.average(test_reward)
-                std_test_reward = np.std(test_reward)
-                avg_step_time.append(np.average(step_time))
-                test_std.append(std_test_reward)
-                test_returns.append(avg_test_reward)
-                Utils.save_plots_test_runs(test_returns,test_std,avg_step_time,config=self.config)
+                # test_reward, step_time, _ = self.eval(1)   
+                # avg_test_reward = np.average(test_reward)
+                # std_test_reward = np.std(test_reward)
+                # avg_step_time.append(np.average(step_time))
+                # test_std.append(std_test_reward)
+                # test_returns.append(avg_test_reward)
+                # Utils.save_plots_test_runs(test_returns,test_std,avg_step_time,config=self.config)
                 run_time.append((time()-t_init))
                 Utils.save_plots_stats(run_info,costs,run_time,actions=actions,config=self.config,episode=episode)
                

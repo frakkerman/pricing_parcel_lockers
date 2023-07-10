@@ -34,18 +34,18 @@ class Heuristic(Agent):
         self.load_data = config.load_data
         if self.load_data:
             self.addedcosts = self.addedcosts_distmat
-            self.dist_scaler = np.amax(self.dist_matrix)
+            self.dist_scaler = 1#np.amax(self.dist_matrix)
             self.mnl = self.mnl_distmat
         else:
             self.addedcosts = self.addedcosts_euclid
-            self.dist_scaler = 10
+            self.dist_scaler = 1# 10
             self.mnl = self.mnl_euclid
         
         #mnl parameters
         self.base_util = config.base_util
         self.cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
         self.added_costs_home = config.driver_wage*(config.del_time/60)
-        self.revenue = config.revenue/100.0
+        self.revenue = config.revenue
         
         #hgs settings
         ap_final = AlgorithmParameters(timeLimit=config.hgs_final_time)  # seconds
