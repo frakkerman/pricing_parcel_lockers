@@ -76,7 +76,7 @@ class Parser(object):
         
     def ML_parameters(self, parser):
         parser.add_argument("--grid_dim", default=10, help="division of operational area in X*X clusters", type=int)
-        parser.add_argument("--n_input_layers", default=3, help="divide feature map in X time intervals", type=int)
+        parser.add_argument("--n_input_layers", default=1, help="divide feature map in X time intervals", type=int)
         parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)
         parser.add_argument("--initial_phase_epochs", default=10, help="maximum number of training epochs", type=int)
         parser.add_argument("--buffer_size", default=int(100), help="Size of memory buffer", type=int)

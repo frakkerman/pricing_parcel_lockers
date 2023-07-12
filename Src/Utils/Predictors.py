@@ -37,7 +37,6 @@ class CNN_2d(nn.Module):
         self.dropout = nn.Dropout(p=dropout)
 
     def forward(self, x):
-        batch_size = x.size(0)
 		# pass the input through our first set of CONV => RELU =>
 		# POOL layers
         x = nn.functional.relu(self.conv1(x))
