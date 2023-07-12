@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from torch import flatten
 import numpy as np
 
 class CNN_2d(nn.Module):
@@ -29,6 +28,8 @@ class CNN_2d(nn.Module):
                                out_channels=2*out_channels,kernel_size=kernel1,padding=padding)
         self.avgpool1 = nn.AvgPool2d(kernel_size=kernel2, stride=stride,padding=padding)
         
+        self.flatten = nn.Flatten(start_dim=1)
+        
         self.fc1 = nn.Linear(in_features=int(2*out_channels*h3*w3), out_features=256)
         self.fc2 = nn.Linear(256, 128)
         self.fc3 = nn.Linear(128, 1)
@@ -36,6 +37,7 @@ class CNN_2d(nn.Module):
         self.dropout = nn.Dropout(p=dropout)
 
     def forward(self, x):
+        batch_size = x.size(0)
 		# pass the input through our first set of CONV => RELU =>
 		# POOL layers
         x = nn.functional.relu(self.conv1(x))
@@ -43,7 +45,7 @@ class CNN_2d(nn.Module):
         x = self.avgpool1(x)
 		# flatten the output from the previous layer and pass it
 		# through our only set of FC => RELU layers
-        x = flatten(x)
+        x = self.flatten(x)
         x = self.dropout(nn.functional.relu(self.fc1(x)))
         x = self.dropout(nn.functional.relu(self.fc2(x)))
         output = self.fc3(x)
@@ -83,7 +85,9 @@ class CNN_3d(nn.Module):
         x = self.avgpool1(x)
 		# flatten the output from the previous layer and pass it
 		# through our only set of FC => RELU layers
-        x = flatten(x)
+       # x = flatten(x)
+        
+        #x = flatten(x)
         x = self.fc1(x)
         x = self.relu3(x)
         x = self.fc2(x)

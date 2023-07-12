@@ -22,7 +22,7 @@ class Parser(object):
         parser.add_argument("--folder_suffix", default='default', help="folder name suffix")
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
         
-        parser.add_argument("--algo_name", default='Heuristic', help="Policy/algorithm used",choices=['ML_Foresight','Heuristic','Baseline'])
+        parser.add_argument("--algo_name", default='ML_Foresight', help="Policy/algorithm used, capital sensitive",choices=['ML_Foresight','Heuristic','Baseline'])
         parser.add_argument("--gpu", default=1, help="GPU BUS ID ", type=int)
         
         # Environment parameters
@@ -78,8 +78,8 @@ class Parser(object):
         parser.add_argument("--grid_dim", default=10, help="division of operational area in X*X clusters", type=int)
         parser.add_argument("--n_input_layers", default=3, help="divide feature map in X time intervals", type=int)
         parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)
-        parser.add_argument("--initial_phase_epochs", default=11, help="maximum number of training epochs", type=int)
-        parser.add_argument("--buffer_size", default=int(1e5), help="Size of memory buffer", type=int)
+        parser.add_argument("--initial_phase_epochs", default=10, help="maximum number of training epochs", type=int)
+        parser.add_argument("--buffer_size", default=int(100), help="Size of memory buffer", type=int)
         parser.add_argument("--batch_size", default=8, help="Batch size", type=int)
         parser.add_argument("--learning_rate", default=1e-3, help="learning rate", type=float)
         

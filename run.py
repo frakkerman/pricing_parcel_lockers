@@ -55,6 +55,7 @@ class Solver:
         run_info = []
         actions = []
         costs = []
+        num_cust = []
 
         avg_step_time = []
         checkpoint = self.config.save_after
@@ -83,7 +84,8 @@ class Solver:
                     costs.append(self.model.update(data,state,True))#do full update when episode is done
                     break
             steps += step
-
+            num_cust.append(steps)
+            
             if episode%checkpoint == 0 or episode == self.config.max_episodes-1:
                 print('time required for '+str(checkpoint)+' episodes :' +str(time()-t0))
                 # test_reward, step_time, _ = self.eval(1)   
@@ -94,7 +96,7 @@ class Solver:
                 # test_returns.append(avg_test_reward)
                 # Utils.save_plots_test_runs(test_returns,test_std,avg_step_time,config=self.config)
                 run_time.append((time()-t_init))
-                Utils.save_plots_stats(run_info,costs,run_time,actions=actions,config=self.config,episode=episode)
+                Utils.save_plots_stats(num_cust,run_info,costs,run_time,actions=actions,config=self.config,episode=episode)
                
                 t0 = time()
                 steps = 0

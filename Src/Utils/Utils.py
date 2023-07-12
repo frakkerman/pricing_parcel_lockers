@@ -73,7 +73,7 @@ def save_plots_test_runs(test_returns,test_std,step_time,config):
     plt.savefig(config.paths['results'] + "box_eval_step_time.png")
     plt.close()
 
-def save_plots_stats(stats,costs,run_time,actions,config,episode):
+def save_plots_stats(num_cust,stats,costs,run_time,actions,config,episode):
     info = np.array(stats)
     np.save(config.paths['results'] + "run_time", run_time)
     
