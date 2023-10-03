@@ -55,7 +55,7 @@ class Config(object):
 
         #load data
         if args.load_data:
-            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed)
+            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency,self.service_times = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed)
         else:
             self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.generate_demand_data(100),[],6,np.ones(6)
 
@@ -101,7 +101,7 @@ class Config(object):
             env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
                       veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
                       home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,
-                      n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency,hgs_time=args.hgs_reopt_time)
+                      n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency,service_times=self.service_times,hgs_time=args.hgs_reopt_time)
             return env, False
 
 if __name__ == '__main__':

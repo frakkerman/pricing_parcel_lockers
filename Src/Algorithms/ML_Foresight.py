@@ -57,6 +57,7 @@ class ML_Foresight(Agent):
         if self.load_data:
             self.customer_cell = get_matrix(config.coords,self.grid_dim,config.hexa)
             self.dist_matrix = config.dist_matrix
+            self.service_times = config.service_times
             self.adjacency = config.adjacency
             self.first_parcelpoint_id = len(self.dist_matrix[0])-config.n_parcelpoints-1
             self.addedcosts = self.addedcosts_distmat
@@ -70,7 +71,8 @@ class ML_Foresight(Agent):
         #mnl parameters
         self.base_util = config.base_util
         self.cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
-        self.added_costs_home = config.driver_wage*(config.del_time/60)
+        self.wage = config.driver_wage
+        #self.added_costs_home = config.driver_wage*(config.del_time/60)
         self.revenue = config.revenue
         
         #hgs settings
@@ -137,7 +139,7 @@ class ML_Foresight(Agent):
             theta = self.init_theta - (state[3] *  self.cool_theta)
             mltplr = self.cost_multiplier
             
-            homeCosts = self.added_costs_home+mltplr*((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*( costs[1]-costs[0] ))
+            homeCosts = state[0].service_time/60*self.wage+mltplr*((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*( costs[1]-costs[0] ))
             sum_mnl = exp(self.base_util+state[0].home_util+(state[0].incentiveSensitivity*(homeCosts-self.revenue)))
             
 
@@ -321,7 +323,7 @@ class ML_Foresight(Agent):
     
     def get_per_customer_costs(self,fleet):
         mltplr = self.cost_multiplier
-        addedcosts_home = self.added_costs_home
+       # addedcosts_home = self.added_costs_home
         costs = []
         for v in fleet["fleet"]:
             for i in range(0,len(v["routePlan"])):
@@ -333,7 +335,7 @@ class ML_Foresight(Agent):
                 else:
                     costs.append( [v["routePlan"][i].time,mltplr * (0.5*self.dist_matrix[v["routePlan"][i-1].id_num][v["routePlan"][i].id_num] + 0.5*self.dist_matrix[v["routePlan"][i].id_num][v["routePlan"][i+1].id_num])] )
                 
-                if v["routePlan"][i].id_num < self.first_parcelpoint_id:
-                    costs[-1][0] += addedcosts_home
+                if v["routePlan"][i].id_num < self.first_parcelpoint_id:#customer chose home delivery
+                    costs[-1][0] += self.service_times[v["routePlan"][i].id_num]
         
         return costs

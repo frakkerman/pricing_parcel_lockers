@@ -136,6 +136,7 @@ def save_plots_stats(num_cust,stats,costs,run_time,actions,config,episode):
     np.save(config.paths['results'] + "num_active_parcelpoints", count_pps)
     
     #6 bar times
+    #TODO: add the actua; servcie tie (already adaded to stats, only need to abstract it)
     added_costs_home = (config.del_time/60)
     drive_time = np.mean(costs)
     service_time = added_costs_home*count_home
@@ -303,6 +304,32 @@ def readCVRPLIB(pathh,v_cap,n_veh):
     else:
         raise ValueError("Failed to load the historic routes: " + str(v_cap*n_veh)+'_'+str(n_veh) )
 
+def sixhump_func(x,y):
+    """
+    for documentation and visualisation of the sixhump camelback function, see: https://www.sfu.ca/~ssurjano/camel6.html
+    """
+    return (4-2.1*x**2+(x**4/3))*x**2+x*y+(-4+4*y**2)*x**2+6
+
+def calculate_service_time(coords):
+    max_xcoord = max(coords, key=lambda x: x.x).x
+    max_ycoord = max(coords, key=lambda y: y.y).y
+    min_xcoord = min(coords, key=lambda x: x.x).x
+    min_ycoord = min(coords, key=lambda y: y.y).y
+    diff_x = max_xcoord-min_xcoord
+    diff_y = max_ycoord-min_ycoord
+    
+    mult_x = 6
+    mult_y = 4
+    #standardize x-min_x/diff, we use domain: x-[-3,3] y-[-2,2]
+    service_times = np.zeros([0])
+    for coord in coords:
+        x1 = (((coord.x-min_xcoord)/diff_x)*mult_x)-3
+        y1 = (((coord.y-min_ycoord)/diff_y)*mult_y)-2
+        sixhump = np.around(np.clip(sixhump_func(x1,y1),1,10),decimals=2)
+        service_times = np.append(service_times,sixhump)
+        
+    return service_times
+
 def load_demand_data(pathh,instance,data_seed):
     if name == 'nt':#windows
         sepa= '\\'
@@ -346,7 +373,10 @@ def load_demand_data(pathh,instance,data_seed):
     
     adjacency = np.load(pathh+"_adjacency20.npy")#20 closest parcelpoints to each customers
     
-    return coords,dist_matrix,n_parcelpoints,adjacency
+    #service times drawn from 6-hump camelback
+    service_times = calculate_service_time(coords)
+    
+    return coords,dist_matrix,n_parcelpoints,adjacency,service_times
 
 def generate_demand_data(dim):
     coords = np.zeros([0])
@@ -400,7 +430,7 @@ def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,instance,data_seed)
 
 def get_matrix(coords,dim,hexa=False):
     """
-    For hexa calculation, see: https://stackoverflow.com/a/7714148
+    For hexagon calculation, see: https://stackoverflow.com/a/7714148
     """
     max_xcoord = max(coords, key=lambda x: x.x).x
     max_ycoord = max(coords, key=lambda y: y.y).y
@@ -414,10 +444,11 @@ def get_matrix(coords,dim,hexa=False):
     diff_y = max_ycoord-min_ycoord
     
     #hexa params
-    gridwidth = diff_x/dim
-    gridheight = diff_y/dim
-    c = gridwidth / 4#approximation of c
-    m = c / gridwidth / 2
+    if hexa:
+        gridwidth = diff_x/dim
+        gridheight = diff_y/dim
+        c = gridwidth / 4#TODO: approximation of c, we should calculate this exactly 
+        m = c / gridwidth / 2
     
     for i in coords:
         row = trunc(dim* ((i.y - min_y) / diff_y)-1e-5)     
@@ -436,7 +467,7 @@ def get_matrix(coords,dim,hexa=False):
                 row -=1
                 if not rowIsOdd:
                     column -=1 
-            elif relative_y < (-m * relative_x) - c:#righ edge
+            elif relative_y < (-m * relative_x) - c:#rigt edge
                 row -=1
                 if rowIsOdd:
                     column +=1 

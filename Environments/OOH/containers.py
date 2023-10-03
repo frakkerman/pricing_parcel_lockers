@@ -41,4 +41,5 @@ class Customer:
     home: Location
     incentiveSensitivity: float
     home_util: float
+    service_time: float
     id_num: int

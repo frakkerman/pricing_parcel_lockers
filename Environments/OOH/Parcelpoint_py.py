@@ -25,6 +25,7 @@ class Parcelpoint_py(object):
                  dist_matrix=[],
                  n_parcelpoints=6,
                  adjacency=[],
+                 service_times=[],
                  hgs_time=3.0):
         
         #episode length params
@@ -43,6 +44,7 @@ class Parcelpoint_py(object):
         self.dist_matrix = dist_matrix
         self.n_parcelpoints = n_parcelpoints
         self.adjacency = adjacency
+        self.service_times = service_times
         
         #load data or generate data
         self.load_data = load_data
@@ -115,13 +117,15 @@ class Parcelpoint_py(object):
         idx = np.random.randint(1, self.num_cust_loc)
         home = self.coords[idx]#depot = 0
         home.time=self.steps
-        return Customer(home,self.incentive_sens,self.home_util,idx)
+        service_time = self.service_times[idx]
+        return Customer(home,self.incentive_sens,self.home_util,service_time,idx)
 
     def generate_new_customer(self):
         idx = np.random.randint(0, 100*100)
         home = self.coords[idx]#depot = 0
         home.time=self.steps
-        return Customer(home,self.incentive_sens,self.home_util,idx)
+        service_time = self.service_times[idx]
+        return Customer(home,self.incentive_sens,self.home_util,service_time,idx)
 
     def make_state(self):
         self.newCustomer = self.get_customer()
@@ -162,9 +166,12 @@ class Parcelpoint_py(object):
         #reduce parcelpoint capacity, if chosen
         if accepted:
             self.parcelPoints["parcelpoints"][idx-self.n_unique_customer_locs].remainingCapacity -= 1
+            service_time=0
+        else:
+            service_time=self.service_times[idx]
         
-        #info for plots and statistic
-        info = self.steps,self.newCustomer.home.x,self.newCustomer.home.y,loc.x,loc.y,price
+        #info for plots and statistics
+        info = self.steps,self.newCustomer.home.x,self.newCustomer.home.y,loc.x,loc.y,price,service_time
         
         #construct intermittent route kept in memory during booking horizon
         insertVeh,idx,costs = self.utils.cheapestInsertionRoute(loc,self.fleet)

@@ -44,7 +44,8 @@ class Heuristic(Agent):
         #mnl parameters
         self.base_util = config.base_util
         self.cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
-        self.added_costs_home = config.driver_wage*(config.del_time/60)
+        self.wage = config.driver_wage
+       # self.added_costs_home = config.driver_wage*(config.del_time/60)
         self.revenue = config.revenue
         
         #hgs settings
@@ -78,7 +79,7 @@ class Heuristic(Agent):
         theta = self.init_theta - (state[3] *  self.cool_theta)
         mltplr = self.cost_multiplier
         
-        homeCosts = self.added_costs_home+mltplr*((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*(self.historicCosts(state[0].home,self.historicRoutes) ))
+        homeCosts = state[0].service_time/60*self.wage+mltplr*((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*(self.historicCosts(state[0].home,self.historicRoutes) ))
         sum_mnl = exp(self.base_util+state[0].home_util+(state[0].incentiveSensitivity*(homeCosts-self.revenue)))
         
         mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
@@ -115,7 +116,7 @@ class Heuristic(Agent):
                     
     def cheapestInsertionCosts(self,loc,fleet):
         cheapestCosts = float("inf")
-        for v in fleet["fleet"]:#note we do not check feasibility of insertion here, let this to HGS
+        for v in fleet["fleet"]:#note we do not check feasibility of insertion here, leave this to HGS
             for i in range(1,len(v["routePlan"])):
                addedCosts = self.addedcosts(v["routePlan"],i,loc)
                if addedCosts < cheapestCosts:
