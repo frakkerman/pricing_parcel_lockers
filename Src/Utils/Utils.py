@@ -303,14 +303,21 @@ def readCVRPLIB(pathh,v_cap,n_veh):
     else:
         raise ValueError("Failed to load the historic routes: " + str(v_cap*n_veh)+'_'+str(n_veh) )
 
-def load_demand_data(pathh,city,data_seed):
+def load_demand_data(pathh,instance,data_seed):
     if name == 'nt':#windows
         sepa= '\\'
     else:
         sepa='/'
-    pathh = pathh+sepa+'Environments'+sepa+'OOH'+sepa+'Amazon_data'+sepa+city+sepa
+    if instance=='Austin' or instance=='Seattle':
+        instance_folder = 'Amazon_data'
+        instance_size = '_700_'
+    else:
+        instance_folder = 'HombergerGehring'
+        instance_size = '_100_'
+    
+    pathh = pathh+sepa+'Environments'+sepa+'OOH'+sepa+instance_folder+sepa+instance+sepa
     if path.exists(pathh):
-        pathh = pathh+city+'_700_'+str(data_seed)
+        pathh = pathh+instance+instance_size+str(data_seed)
         f = pathh+"_coords.txt"
         if path.isfile(f):
             file = open(f, "r")
@@ -329,12 +336,12 @@ def load_demand_data(pathh,city,data_seed):
                     loc = i.strip().split('\t')
                     dist_matrix = np.vstack([dist_matrix,np.array(list(map(int, loc)))])
     else:
-         raise ValueError("Failed to load the demand data: " + +city+'_700_'+data_seed  )
+         raise ValueError("Failed to load the demand data: " + +instance+instance_size+data_seed  )
     
     n_parcelpoints = 0
-    if city=='Austin':
+    if instance=='Austin':
         n_parcelpoints=278
-    if city=='Seattle':
+    if instance=='Seattle':
         n_parcelpoints=299
     
     adjacency = np.load(pathh+"_adjacency20.npy")#20 closest parcelpoints to each customers
@@ -373,9 +380,9 @@ def extract_route_HGS(route,data):
         veh+=1
     return fleet
 
-def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,city,data_seed):
+def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,instance,data_seed):
     """
-    This function is used to generate the adjacency matrix, we stored them so we do not call this function
+    This function is used to generate the adjacency matrix, we stored them so we do not call this function online
     """
     if name == 'nt':#windows
         sepa= '\\'
@@ -387,8 +394,8 @@ def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,city,data_seed):
         closest = np.argsort(dist_matrix[i][-len(parcelpoints["parcelpoints"]):])[:20]#find 20 closest parcelpoints
         for j in closest:
             adjacency[i][j]=1
-    pathh = pathh+sepa+'Environments'+sepa+'OOH'+sepa+'Amazon_data'+sepa+city+sepa
-    np.save(pathh+city+"_700_"+str(data_seed)+"_adjacency20", adjacency)
+    pathh = pathh+sepa+'Environments'+sepa+'OOH'+sepa+'Amazon_data'+sepa+instance+sepa
+    np.save(pathh+instance+"_700_"+str(data_seed)+"_adjacency20", adjacency)
 
 
 def get_matrix(coords,dim,hexa=False):

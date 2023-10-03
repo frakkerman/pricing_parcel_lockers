@@ -42,11 +42,9 @@ class Parser(object):
         parser.add_argument("--max_steps_r", default=700, help="maximum steps per episode r of gamma dist.", type=int)
         parser.add_argument("--max_steps_p", default=0.5, help="maximum steps per episode p of gamma dist. [0,1]", type=float)
         
-        parser.add_argument("--load_data", default=False, help="whether to load location data from file or to generate data", type=self.str2bool)
-        parser.add_argument("--city", default='Austin', help="which city to load",choices=['Austin','Seattle'])
+        parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data", type=self.str2bool)
+        parser.add_argument("--instance", default='Austin', help="which instance to load",choices=['Austin','Seattle','C101','R101','RC101'])
         parser.add_argument("--data_seed", default=0, help="which city-dataset to load",choices=[0,1,2,3], type=int)
-        
-        parser.add_argument("--clustered", default = False, help="use clustered instance for generated insytances", type=self.str2bool)
         
         parser.add_argument("--pricing", default=True, help="if we use pricing or offering decision space", type=self.str2bool)
         parser.add_argument("--max_price", default=3.0, help="max delivery charge >0", type=float)

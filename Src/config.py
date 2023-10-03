@@ -55,7 +55,7 @@ class Config(object):
 
         #load data
         if args.load_data:
-            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.load_demand_data(self.paths['root'],args.city,args.data_seed)
+            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed)
         else:
             self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.generate_demand_data(100),[],6,np.ones(6)
 
