@@ -59,6 +59,7 @@ class Parser(object):
         parser.add_argument("--incentive_sens", default=-0.25, help="sensitivty of customer to incentives", type=float)
         parser.add_argument("--base_util", default=-2.0, help="base utility across all alternativesy", type=float)
         parser.add_argument("--home_util", default=3.55, help="utility given to home delivery", type=float)
+        parser.add_argument("--walkaway", default=False, help="whether customers can walk-away due to too high prices", type=self.str2bool)
         
         parser.add_argument("--revenue", default=90, help="revenue per customer", type=float)#not used in statistics, only for pricing model
         parser.add_argument("--fuel_cost", default=0.3, help="costs of fuel per distance unit", type=float)
