@@ -118,8 +118,10 @@ class Parcelpoint_py(object):
         return Customer(home,self.incentive_sens,self.home_util,idx)
 
     def generate_new_customer(self):
-        home = Location(np.random.randint(0,500),np.random.randint(0,500),0,self.steps)
-        return Customer(home,self.incentive_sens,self.home_util,0)
+        idx = np.random.randint(0, 100*100)
+        home = self.coords[idx]#depot = 0
+        home.time=self.steps
+        return Customer(home,self.incentive_sens,self.home_util,idx)
 
     def make_state(self):
         self.newCustomer = self.get_customer()

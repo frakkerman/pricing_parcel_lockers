@@ -57,7 +57,7 @@ class Config(object):
         if args.load_data:
             self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.load_demand_data(self.paths['root'],args.city,args.data_seed)
         else:
-            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = [],[],6,np.ones(6)
+            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.generate_demand_data(100),[],6,np.ones(6)
 
         # Get the domain and algorithm
         self.env, self.gym_env = self.get_domain(args.env_name, args=args, debug=args.debug,

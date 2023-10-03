@@ -42,9 +42,11 @@ class Parser(object):
         parser.add_argument("--max_steps_r", default=700, help="maximum steps per episode r of gamma dist.", type=int)
         parser.add_argument("--max_steps_p", default=0.5, help="maximum steps per episode p of gamma dist. [0,1]", type=float)
         
-        parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data", type=self.str2bool)
+        parser.add_argument("--load_data", default=False, help="whether to load location data from file or to generate data", type=self.str2bool)
         parser.add_argument("--city", default='Austin', help="which city to load",choices=['Austin','Seattle'])
         parser.add_argument("--data_seed", default=0, help="which city-dataset to load",choices=[0,1,2,3], type=int)
+        
+        parser.add_argument("--clustered", default = False, help="use clustered instance for generated insytances", type=self.str2bool)
         
         parser.add_argument("--pricing", default=True, help="if we use pricing or offering decision space", type=self.str2bool)
         parser.add_argument("--max_price", default=3.0, help="max delivery charge >0", type=float)
@@ -76,6 +78,7 @@ class Parser(object):
         
     def ML_parameters(self, parser):
         parser.add_argument("--grid_dim", default=10, help="division of operational area in X*X clusters", type=int)
+        parser.add_argument("--hexa", default=False, help="division of operational area in hexagional grid", type=self.str2bool)
         parser.add_argument("--n_input_layers", default=1, help="divide feature map in X time intervals", type=int)
         parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)
         parser.add_argument("--initial_phase_epochs", default=10, help="maximum number of training epochs", type=int)

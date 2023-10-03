@@ -17,7 +17,7 @@ class ML_Foresight(Agent):
     def __init__(self, config):
         super(ML_Foresight, self).__init__(config)
                
-        
+        self.load_data = config.load_data
         # heuristic parameters
         self.k = config.k
         self.init_theta = config.init_theta_cnn
@@ -31,11 +31,6 @@ class ML_Foresight(Agent):
         else:
             self.get_action = self.get_action_offer
         
-        self.dist_matrix = config.dist_matrix
-        self.adjacency = config.adjacency
-        self.first_parcelpoint_id = len(self.dist_matrix[0])-config.n_parcelpoints-1
-        
-        
         self.grid_dim = config.grid_dim
         self.initial_phase = True
         
@@ -48,9 +43,6 @@ class ML_Foresight(Agent):
         else:
             self.supervised_ml = CNN_2d(self.grid_dim,self.n_layers,config.n_filters,config.dropout)
         self.features = np.empty((0,self.n_layers*self.grid_dim*self.grid_dim))
-        
-        
-        self.customer_cell = get_matrix(config.coords,self.grid_dim)
 
         self.interval = int(config.max_steps_r/config.n_input_layers)
         
@@ -62,8 +54,11 @@ class ML_Foresight(Agent):
         self.init()#write module to device
         self.device = config.device
         
-        self.load_data = config.load_data
         if self.load_data:
+            self.customer_cell = get_matrix(config.coords,self.grid_dim,config.hexa)
+            self.dist_matrix = config.dist_matrix
+            self.adjacency = config.adjacency
+            self.first_parcelpoint_id = len(self.dist_matrix[0])-config.n_parcelpoints-1
             self.addedcosts = self.addedcosts_distmat
             self.dist_scaler = 1#np.amax(self.dist_matrix)
             self.mnl = self.mnl_distmat
@@ -95,8 +90,11 @@ class ML_Foresight(Agent):
             mltplr = self.cost_multiplier
             
             #cheapest insertion costs of every PP in current and historic routes
-            mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
-            pps = mask[mask.mask].data
+            if self.load_data:
+                mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
+                pps = mask[mask.mask].data
+            else:
+                pps = state[2]["parcelpoints"]
             pp_costs = np.full(len(pps),1000000000.0)
             
             #ML preds
@@ -115,14 +113,20 @@ class ML_Foresight(Agent):
 
     def get_action_pricing(self,state,training):
         if self.initial_phase:
-            mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
-            pps = mask[mask.mask].data
+            if self.load_data:
+                mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
+                pps = mask[mask.mask].data
+            else:
+                pps = state[2]["parcelpoints"]
             a_hat = np.zeros(len(pps)+1)
             return np.around(a_hat,decimals=2)
         else:
             
-            mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
-            pps = mask[mask.mask].data
+            if self.load_data:
+                mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
+                pps = mask[mask.mask].data
+            else:
+                pps = state[2]["parcelpoints"]
             pp_costs= np.full((len(pps),1),1000000000.0)
             
             #ML preds
@@ -160,8 +164,11 @@ class ML_Foresight(Agent):
     
     def get_action_offerall(self,state,training):   
         #check if pp is feasible
-        mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
-        pps = mask[mask.mask].data
+        if self.load_data:
+            mask = ma.masked_array(state[2]["parcelpoints"], mask=self.adjacency[state[0].id_num])#only offer 20 closest
+            pps = mask[mask.mask].data
+        else:
+            pps = state[2]["parcelpoints"]
         action = np.empty(0,dtype=int)
         for idx,pp in enumerate(pps):
             if pp.remainingCapacity > 0:

@@ -341,6 +341,17 @@ def load_demand_data(pathh,city,data_seed):
     
     return coords,dist_matrix,n_parcelpoints,adjacency
 
+def generate_demand_data(dim):
+    coords = np.zeros([0])
+    count = 1
+    for i in range(dim):
+        for j in range(dim):
+            loc = Location(float(i),float(j),count,0)
+            coords = np.append(coords,loc)
+            count+=1
+    
+    return coords
+
 def get_dist_mat_HGS(dist_matrix,loc_ids):        
     dist_mat = dist_matrix[loc_ids]
     return dist_mat[:,loc_ids]
@@ -380,23 +391,55 @@ def find_closest_parcelpoints(pathh,parcelpoints,dist_matrix,city,data_seed):
     np.save(pathh+city+"_700_"+str(data_seed)+"_adjacency20", adjacency)
 
 
-def get_matrix(coords,dim):
+def get_matrix(coords,dim,hexa=False):
+    """
+    For hexa calculation, see: https://stackoverflow.com/a/7714148
+    """
     max_xcoord = max(coords, key=lambda x: x.x).x
     max_ycoord = max(coords, key=lambda y: y.y).y
     min_xcoord = min(coords, key=lambda x: x.x).x
     min_ycoord = min(coords, key=lambda y: y.y).y
-    
+
     customer_cells = np.empty((0,2),dtype=int)
     min_x = min_xcoord
     diff_x = max_xcoord-min_xcoord
     min_y = min_ycoord
     diff_y = max_ycoord-min_ycoord
     
+    #hexa params
+    gridwidth = diff_x/dim
+    gridheight = diff_y/dim
+    c = gridwidth / 4#approximation of c
+    m = c / gridwidth / 2
+    
     for i in coords:
-        column = trunc(dim* ((i.x - min_x) / diff_x)-1e-5)
-        row = trunc(dim* ((i.y - min_y) / diff_y)-1e-5)
+        row = trunc(dim* ((i.y - min_y) / diff_y)-1e-5)     
+        
+        if hexa:
+            rowIsOdd = row % 2 == 1   
+            if rowIsOdd:#if row is odd number calculte indent of hexa grid
+                column = trunc(dim* ((i.x - (gridwidth/2) - min_x) / diff_x)-1e-5)
+            relative_y = i.y - (row*gridheight)
+            if rowIsOdd:
+                relative_x = (i.x - (column*gridwidth)) - (gridwidth/2)
+            else:
+                relative_x = i.x - (column*gridwidth)
+            
+            if relative_y < (m * relative_x) + c:#left edge
+                row -=1
+                if not rowIsOdd:
+                    column -=1 
+            elif relative_y < (-m * relative_x) - c:#righ edge
+                row -=1
+                if rowIsOdd:
+                    column +=1 
+        else:
+            column = trunc(dim* ((i.x - min_x) / diff_x)-1e-5)
+            
+        
         customer_cells = np.vstack((customer_cells,[column,row]))
     return customer_cells
+    
 
 class MemoryBuffer:
     """
