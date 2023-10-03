@@ -26,6 +26,7 @@ class Parcelpoint_py(object):
                  n_parcelpoints=6,
                  adjacency=[],
                  service_times=[],
+                 walkaway=False,
                  hgs_time=3.0):
         
         #episode length params
@@ -67,6 +68,7 @@ class Parcelpoint_py(object):
         #customers
         self.home_util = home_util
         self.incentive_sens = incentive_sens
+        self.customer_walkaway = walkaway
        
         self.newCustomer = Customer
         self.fleet = get_fleet([self.depot,self.depot],self.n_vehicles,self.veh_capacity)
@@ -109,6 +111,8 @@ class Parcelpoint_py(object):
         self.data['time'] = 0
         self.data['vehicle_capacity'] = self.veh_capacity
         self.data['num_vehicles'] = self.n_vehicles
+        
+        self.count_walkaways = 0
         
         self.curr_state = self.make_state()
         return self.curr_state
@@ -167,11 +171,15 @@ class Parcelpoint_py(object):
         if accepted:
             self.parcelPoints["parcelpoints"][idx-self.n_unique_customer_locs].remainingCapacity -= 1
             service_time=0
-        else:
+        else:#home delivery
             service_time=self.service_times[idx]
-        
+            
+        if self.customer_walkaway:
+            if np.mean(action)>2.75 and np.std(action)<1.0:
+                self.count_walkaways+=1
+            
         #info for plots and statistics
-        info = self.steps,self.newCustomer.home.x,self.newCustomer.home.y,loc.x,loc.y,price,service_time
+        info = self.steps,self.newCustomer.home.x,self.newCustomer.home.y,loc.x,loc.y,price,service_time,self.count_walkaways
         
         #construct intermittent route kept in memory during booking horizon
         insertVeh,idx,costs = self.utils.cheapestInsertionRoute(loc,self.fleet)

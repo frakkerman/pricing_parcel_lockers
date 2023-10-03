@@ -148,6 +148,8 @@ def save_plots_stats(num_cust,stats,costs,run_time,actions,config,episode):
     plt.savefig(config.paths['results'] + "bar_drive_del_time.png")
     plt.close()
     
+    #TODO: add walkawy count and costs
+    
     #7cost and revenue
     cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
     revenue = (len(info)/(episode+1))*config.revenue
