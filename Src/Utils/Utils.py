@@ -9,7 +9,7 @@ import importlib
 from time import time
 import sys
 from Environments.OOH.containers import Location,Vehicle,Fleet
-from math import trunc
+from math import trunc, sqrt
 import hygese
 
 np.random.seed(0)
@@ -313,6 +313,9 @@ def sixhump_func(x,y):
     return (4-2.1*x**2+(x**4/3))*x**2+x*y+(-4+4*y**2)*x**2+6
 
 def calculate_service_time(coords):
+    """
+    We project the coordinates onto the domain [-3,3]x[-2,2] and next calculate service times using the 6-hump camel function
+    """
     max_xcoord = max(coords, key=lambda x: x.x).x
     max_ycoord = max(coords, key=lambda y: y.y).y
     min_xcoord = min(coords, key=lambda x: x.x).x
@@ -332,6 +335,9 @@ def calculate_service_time(coords):
         
     return service_times
 
+def getdistance_euclidean(a,b):
+    return sqrt((a.x-b.x)**2 + (a.y-b.y)**2)
+
 def load_demand_data(pathh,instance,data_seed):
     if name == 'nt':#windows
         sepa= '\\'
@@ -342,7 +348,7 @@ def load_demand_data(pathh,instance,data_seed):
         instance_size = '_700_'
     else:
         instance_folder = 'HombergerGehring'
-        instance_size = '_100_'
+        instance_size = '_90_'
     
     pathh = pathh+sepa+'Environments'+sepa+'OOH'+sepa+instance_folder+sepa+instance+sepa
     if path.exists(pathh):
@@ -356,14 +362,21 @@ def load_demand_data(pathh,instance,data_seed):
                     loc = i.strip().split('\t')
                     loc = Location(float(loc[1]),float(loc[2]),j-1,0)
                     coords = np.append(coords,loc)
-        f = pathh+"_dist_matrix.txt"
         dist_matrix = np.empty(shape=(0,len(coords)),dtype=int)
-        if path.isfile(f):
-            file = open(f, "r")
-            for i in file:
-                if not i.startswith('EDGE'):
-                    loc = i.strip().split('\t')
-                    dist_matrix = np.vstack([dist_matrix,np.array(list(map(int, loc)))])
+        if instance_folder=='Amazon_data':
+            f = pathh+"_dist_matrix.txt"
+            if path.isfile(f):
+                file = open(f, "r")
+                for i in file:
+                    if not i.startswith('EDGE'):
+                        loc = i.strip().split('\t')
+                        dist_matrix = np.vstack([dist_matrix,np.array(list(map(int, loc)))])
+        else:
+            for i in coords:
+                for j in coords:
+                    dist = getdistance_euclidean(i,j)
+                    dist_matrix = np.vstack([dist_matrix,dist])
+                    
     else:
          raise ValueError("Failed to load the demand data: " + +instance+instance_size+data_seed  )
     

@@ -42,9 +42,9 @@ class Parser(object):
         parser.add_argument("--max_steps_r", default=700, help="maximum steps per episode r of gamma dist.", type=int)
         parser.add_argument("--max_steps_p", default=0.5, help="maximum steps per episode p of gamma dist. [0,1]", type=float)
         
-        parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data", type=self.str2bool)
-        parser.add_argument("--instance", default='Austin', help="which instance to load",choices=['Austin','Seattle','C101','R101','RC101'])
-        parser.add_argument("--data_seed", default=0, help="which city-dataset to load",choices=[0,1,2,3], type=int)
+        parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data (only used for debug)", type=self.str2bool)
+        parser.add_argument("--instance", default='Austin', help="which instance to load",choices=['Austin','Seattle','C1','R1','RC1'])
+        parser.add_argument("--data_seed", default=0, help="which-dataset seed to load",choices=[0,1,2,3], type=int)
         
         parser.add_argument("--pricing", default=True, help="if we use pricing or offering decision space", type=self.str2bool)
         parser.add_argument("--max_price", default=3.0, help="max delivery charge >0", type=float)
@@ -64,7 +64,7 @@ class Parser(object):
         parser.add_argument("--revenue", default=90, help="revenue per customer", type=float)#not used in statistics, only for pricing model
         parser.add_argument("--fuel_cost", default=0.3, help="costs of fuel per distance unit", type=float)
         parser.add_argument("--truck_speed", default=30, help="distance travelled per hour", type=float)
-        parser.add_argument("--del_time", default=5.0, help="time in minutes to drop off parcel", type=float)
+        #parser.add_argument("--del_time", default=5.0, help="time in minutes to drop off parcel", type=float)
         parser.add_argument("--driver_wage", default=25, help="salary of driver per hour", type=float)
         
         parser.add_argument("--home_failure", default=0.1, help="the probability of delivery failure for home delivery", type=float)
