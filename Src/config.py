@@ -75,9 +75,9 @@ class Config(object):
         if args.gpu:
             self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         else:
-            self.device = 'cpu'
+            self.device = torch.device("cpu")
         self.cuda = 0
-        if self.device.type=='cuda':
+        if self.device.type=="cuda":
             print('Number of GPUs available: ',torch.cuda.device_count())
             self.cuda = 1
 
@@ -101,7 +101,7 @@ class Config(object):
             env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
                       veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
                       home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,
-                      n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency,service_times=self.service_times,walkaway=self.walkaway,hgs_time=args.hgs_reopt_time)
+                      n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency,service_times=self.service_times,dissatisfaction=self.dissatisfaction,hgs_time=args.hgs_reopt_time)
             return env, False
 
 if __name__ == '__main__':

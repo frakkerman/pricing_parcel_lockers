@@ -23,7 +23,7 @@ class Parser(object):
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
         
         parser.add_argument("--algo_name", default='ML_Foresight', help="Policy/algorithm used, capital sensitive",choices=['ML_Foresight','Heuristic','Baseline'])
-        parser.add_argument("--gpu", default=1, help="GPU BUS ID ", type=int)
+        parser.add_argument("--gpu", default=0, help="GPU BUS ID ", type=int)
         
         # Environment parameters
         self.environment_parameters(parser)  
@@ -43,8 +43,8 @@ class Parser(object):
         parser.add_argument("--max_steps_p", default=0.5, help="maximum steps per episode p of gamma dist. [0,1]", type=float)
         
         parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data (only used for debug)", type=self.str2bool)
-        parser.add_argument("--instance", default='Austin', help="which instance to load",choices=['Austin','Seattle','C1','R1','RC1'])
-        parser.add_argument("--data_seed", default=0, help="which-dataset seed to load",choices=[0,1,2,3], type=int)
+        parser.add_argument("--instance", default='C', help="which instance to load",choices=['Austin','Seattle','C','R','RC'])
+        parser.add_argument("--data_seed", default=0, help="which dataset seed to load",choices=[0,1,2,3], type=int)
         
         parser.add_argument("--pricing", default=True, help="if we use pricing or offering decision space", type=self.str2bool)
         parser.add_argument("--max_price", default=3.0, help="max delivery charge >0", type=float)
@@ -59,7 +59,7 @@ class Parser(object):
         parser.add_argument("--incentive_sens", default=-0.25, help="sensitivty of customer to incentives", type=float)
         parser.add_argument("--base_util", default=-2.0, help="base utility across all alternativesy", type=float)
         parser.add_argument("--home_util", default=3.55, help="utility given to home delivery", type=float)
-        parser.add_argument("--walkaway", default=False, help="whether customers can walk-away due to too high prices", type=self.str2bool)
+        parser.add_argument("--dissatisfaction", default=False, help="customer dissatisfaction penalty when all delivery options have too high prices", type=self.str2bool)
         
         parser.add_argument("--revenue", default=90, help="revenue per customer", type=float)#not used in statistics, only for pricing model
         parser.add_argument("--fuel_cost", default=0.3, help="costs of fuel per distance unit", type=float)
@@ -77,7 +77,7 @@ class Parser(object):
         
     def ML_parameters(self, parser):
         parser.add_argument("--grid_dim", default=10, help="division of operational area in X*X clusters", type=int)
-        parser.add_argument("--hexa", default=False, help="division of operational area in hexagional grid instead of squares", type=self.str2bool)
+        parser.add_argument("--hexa", default=False, help="division of operational area in hexagional grid instead of squares (beta)", type=self.str2bool)
         parser.add_argument("--n_input_layers", default=1, help="divide feature map in X time intervals", type=int)
         parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)
         parser.add_argument("--initial_phase_epochs", default=10, help="maximum number of training epochs", type=int)
@@ -99,7 +99,7 @@ class Parser(object):
         parser.add_argument("--cool_theta", default=1/700, help="weight reduction for cheapest insertion", type=float)
     
     def Baseline_parameters(self, parser):
-        parser.add_argument("--save_routes", default=False, help="Used to save routes for use inside Heuristic", type=self.str2bool)#could consider to make this an updating loop
+        parser.add_argument("--save_routes", default=False, help="Used to generate and save routes for use inside Heuristic", type=self.str2bool)#could consider to make this an updating loop
         parser.add_argument("--price_pp", default=0.0, help="fixed fee price to offer for all parcelpoints", type=float)
         parser.add_argument("--price_home", default=0.0, help="fixed fee price to offer for home delivery", type=float)
         

@@ -347,7 +347,7 @@ def load_demand_data(pathh,instance,data_seed):
         instance_folder = 'Amazon_data'
         instance_size = '_700_'
     else:
-        instance_folder = 'HombergerGehring'
+        instance_folder = 'HombergerGehring_data'
         instance_size = '_90_'
     
     pathh = pathh+sepa+'Environments'+sepa+'OOH'+sepa+instance_folder+sepa+instance+sepa
@@ -373,20 +373,26 @@ def load_demand_data(pathh,instance,data_seed):
                         dist_matrix = np.vstack([dist_matrix,np.array(list(map(int, loc)))])
         else:
             for i in coords:
+                dist = []
                 for j in coords:
-                    dist = getdistance_euclidean(i,j)
-                    dist_matrix = np.vstack([dist_matrix,dist])
+                    dist.append( int(getdistance_euclidean(i,j)))
+                dist_matrix = np.vstack([dist_matrix,np.array(dist)])
                     
     else:
          raise ValueError("Failed to load the demand data: " + +instance+instance_size+data_seed  )
-    
+   
+    #the number of parcelpoints contained in the dataset
     n_parcelpoints = 0
     if instance=='Austin':
         n_parcelpoints=278
+        adjacency = np.load(pathh+"_adjacency20.npy")#20 closest parcelpoints to each customer
     if instance=='Seattle':
         n_parcelpoints=299
-    
-    adjacency = np.load(pathh+"_adjacency20.npy")#20 closest parcelpoints to each customers
+        adjacency = np.load(pathh+"_adjacency20.npy")#20 closest parcelpoints to each customer
+    else:
+        n_parcelpoints=10
+        adjacency = np.ones(shape=(90,n_parcelpoints))
+        
     
     #service times drawn from 6-hump camelback
     service_times = calculate_service_time(coords)
