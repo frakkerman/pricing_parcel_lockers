@@ -50,21 +50,40 @@ class Logger(object):
         # WARNING: Time consuming process, Makes the code slow if too many writes
         self.log.flush()
         fsync(self.log.fileno())
-   
 
-def save_plots_test_runs(test_returns,test_std,step_time,config):
-    np.save(config.paths['results'] + "eval_dist_mean", test_returns)
-    np.save(config.paths['results'] + "eval_dist_std", test_std)
-    np.save(config.paths['results'] + "eval_step_time", step_time)
-    x = config.save_after * np.arange(0, len(test_returns))
+
+def total_costs(count_home,service_times,travel_time,discount_costs,config):
+    cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
+    total_costs = (service_times+travel_time)*cost_multiplier
+    total_costs += count_home*config.home_failure*config.failure_cost#costs of failed delivery
+    
+    return total_costs, discount_costs
+
+def plot_training_curves(rewards,config):
     plt.figure()
-    plt.ylabel("Total HGS time")
+    plt.ylabel("Monetary unit")
     plt.xlabel("Episode")
-    plt.title("Performance")
-    plt.plot(x,test_returns,color='#CC4F1B')
-    plt.fill_between(x,np.array(test_returns)+np.array(test_std),np.array(test_returns)-np.array(test_std),alpha=0.5, edgecolor='#CC4F1B', facecolor='#FF9848')
-    plt.savefig(config.paths['results'] + "hgs_time_eval_runs.png")
+    plt.title("Performance (operational costs and pricing revenue/costs)")
+    plt.plot(rewards)
+    plt.savefig(config.paths['results'] + "training_curve.png")
     plt.close()
+    
+    np.save(config.paths['results'] + "training_curve", rewards)
+
+def save_eval_stats(travel_time,total_cost,actions,accepted_price,count_home_delivery,service_time,
+                      parcel_lockers_remaining_capacity,home_delivery_loc,step_time,config):
+    
+    np.save(config.paths['results'] + "travel_time", travel_time)
+    np.save(config.paths['results'] + "total_cost", total_cost)
+    np.save(config.paths['results'] + "actions", actions)
+    np.save(config.paths['results'] + "accepted_price", accepted_price)
+    np.save(config.paths['results'] + "count_home_delivery", count_home_delivery)
+    np.save(config.paths['results'] + "service_time", service_time)
+    np.save(config.paths['results'] + "parcel_lockers_remaining_capacity", parcel_lockers_remaining_capacity)
+    np.save(config.paths['results'] + "home_delivery_loc", home_delivery_loc)
+    np.save(config.paths['results'] + "step_time", step_time)
+
+def plot_test_boxplot(rewards,prices,step_time,config):
     
     plt.figure()
     plt.ylabel("Step time")
@@ -72,109 +91,28 @@ def save_plots_test_runs(test_returns,test_std,step_time,config):
     plt.boxplot(step_time)
     plt.savefig(config.paths['results'] + "box_eval_step_time.png")
     plt.close()
-
-def save_plots_stats(num_cust,stats,costs,run_time,actions,config,episode):
-    info = np.array(stats)
-    np.save(config.paths['results'] + "run_time", run_time)
     
-    pricing_revenue = 0
-    if config.pricing:
-        #1 line chart of discounts over time
-        given_price = np.split(info[:,-1],episode+1,axis=0)
-        mean_price = np.mean(given_price, axis=0)
-        std_price = np.std(given_price, axis=0)
-        x = np.arange(0, len(mean_price))
-        plt.figure()
-        plt.ylabel("Given price")
-        plt.xlabel("Customer arrival")
-        plt.title("Given price")
-        plt.plot(x,mean_price,color='#CC4F1B')
-        plt.fill_between(x,mean_price+std_price,mean_price-std_price,alpha=0.5, edgecolor='#CC4F1B', facecolor='#FF9848')
-        plt.savefig(config.paths['results'] + "accepted_price.png")
-        plt.close()
-        
-        #2 boxplot of price discounts
-        all_prices = np.concatenate( actions, axis=0 ) 
-        given_price = np.concatenate( given_price, axis=0 )
-        pricing_revenue = sum(given_price)/(episode+1)
-        plt.figure()
-        plt.ylabel("Price")
-        plt.title("Performance")
-        plt.boxplot([all_prices,given_price])
-        plt.xticks([1, 2], ['Given price', 'Accepted price'])
-        plt.savefig(config.paths['results'] + "box_prices.png")
-        plt.close()
-        
-        #save data
-        np.save(config.paths['results'] + "given_price", all_prices)
-        np.save(config.paths['results'] + "accepted_price", given_price)
+    sum_rewards=[]
+    sum_prices=[]
+    for i in rewards:
+        sum_rewards.append(i[0])
+    for i in prices:
+        sum_prices.append(i[0])
     
-    #3 barchart home/pp deliveries
-    count_home = np.count_nonzero(np.logical_and(info[:,1]==info[:,3], info[:,2]==info[:,4]))
-    plt.figure()
-    plt.ylabel("Percentage")
-    plt.title("Performance")
-    plt.bar([1,2],[count_home/len(info),1-(count_home/len(info))])
-    plt.xticks([1, 2], ['Home deliveries', 'Parcel point deliveries'])
-    plt.ylim((0.0,1.0))
-    plt.savefig(config.paths['results'] + "bar_deliveries.png")
-    plt.close()
-    
-    print(count_home/len(info))
-    
-    #4 boxplot final hgs distance
-    costs =  np.array([i for i in costs if i != 0])
-    plt.figure()
-    plt.ylabel("Total time")
-    plt.title("Performance")
-    plt.boxplot(costs)
-    plt.savefig(config.paths['results'] + "box_hgs_time.png")
-    plt.close()
-    
-    #5 count number of unique parcelpoints
-    count_pps = len(np.unique(info[np.logical_or(info[:,1]!=info[:,3], info[:,2]!=info[:,4])][:,3]))
-    np.save(config.paths['results'] + "num_active_parcelpoints", count_pps)
-    
-    #6 bar times
-    #TODO: add the actua; servcie tie (already adaded to stats, only need to abstract it)
-    added_costs_home = (config.del_time/60)
-    drive_time = np.mean(costs)
-    service_time = added_costs_home*count_home
-    plt.figure()
-    plt.ylabel("Hours")
-    plt.title("Performance")
-    plt.bar([1,2],[drive_time,service_time])
-    plt.xticks([1, 2], ['Driving time', 'Service time'])
-    plt.savefig(config.paths['results'] + "bar_drive_del_time.png")
-    plt.close()
-    
-    #TODO: add walkawy count and costs
-    
-    #7cost and revenue
-    cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
-    revenue = (len(info)/(episode+1))*config.revenue
-    total_costs = added_costs_home*count_home+(np.mean(costs)*cost_multiplier)
-    total_costs += count_home*config.home_failure*config.failure_cost#costs of failed delivery
     plt.figure()
     plt.ylabel("Monetary unit")
     plt.title("Performance")
-    plt.bar([1,2,3],[revenue,pricing_revenue,total_costs])
-    plt.xticks([1, 2,3], ['Revenue', 'Pricing', 'Total costs'])
-    plt.savefig(config.paths['results'] + "bar_revenue_cost.png")
+    plt.boxplot(sum_rewards)
+    plt.savefig(config.paths['results'] + "box_eval_costs.png")
     plt.close()
-       
-    #maybe add stats later considering OOH capacity
     
-    #save data
-    np.save(config.paths['results'] + "drive_time", drive_time)
-    np.save(config.paths['results'] + "service_time", service_time)
-    np.save(config.paths['results'] + "pricing_revenue", pricing_revenue)
-    np.save(config.paths['results'] + "revenues", revenue)
-    np.save(config.paths['results'] + "total_costs", total_costs)
-    np.save(config.paths['results'] + "hgs_times", costs)
-    np.save(config.paths['results'] + "percent_home_deliveries", count_home/len(info))
-
-
+    plt.figure()
+    plt.ylabel("Monetary unit")
+    plt.title("Performance")
+    plt.boxplot(sum_prices)
+    plt.savefig(config.paths['results'] + "box_eval_discounts.png")
+    plt.close()
+    
 def save_training_checkpoint(state, is_best, episode_count):
     """
     Saves the models, with all training parameters intact
@@ -312,7 +250,7 @@ def sixhump_func(x,y):
     """
     return (4-2.1*x**2+(x**4/3))*x**2+x*y+(-4+4*y**2)*x**2+6
 
-def calculate_service_time(coords):
+def calculate_service_time(coords,clip_service_time):
     """
     We project the coordinates onto the domain [-3,3]x[-2,2] and next calculate service times using the 6-hump camel function
     """
@@ -330,7 +268,7 @@ def calculate_service_time(coords):
     for coord in coords:
         x1 = (((coord.x-min_xcoord)/diff_x)*mult_x)-3
         y1 = (((coord.y-min_ycoord)/diff_y)*mult_y)-2
-        sixhump = np.around(np.clip(sixhump_func(x1,y1),1,10),decimals=2)
+        sixhump = np.around(np.clip(sixhump_func(x1,y1),1,clip_service_time),decimals=2)*60#times 60 to convert from minutes to seconds
         service_times = np.append(service_times,sixhump)
         
     return service_times
@@ -338,7 +276,7 @@ def calculate_service_time(coords):
 def getdistance_euclidean(a,b):
     return sqrt((a.x-b.x)**2 + (a.y-b.y)**2)
 
-def load_demand_data(pathh,instance,data_seed):
+def load_demand_data(pathh,instance,data_seed,clip_service_time):
     if name == 'nt':#windows
         sepa= '\\'
     else:
@@ -395,7 +333,7 @@ def load_demand_data(pathh,instance,data_seed):
         
     
     #service times drawn from 6-hump camelback
-    service_times = calculate_service_time(coords)
+    service_times = calculate_service_time(coords,clip_service_time)
     
     return coords,dist_matrix,n_parcelpoints,adjacency,service_times
 

@@ -104,6 +104,9 @@ class Parcelpoint_py(object):
         self.parcelPoints = self.utils.reset_parcelpoints(self.parcelPoints)
             
         self.steps = 0
+        self.service_time = 0
+        self.count_home_delivery = 0
+        self.total_prices = 0
         
         self.data['x_coordinates'] = self.depot.x
         self.data['y_coordinates'] =  self.depot.y
@@ -156,30 +159,29 @@ class Parcelpoint_py(object):
         _,cost = self.utils.reopt_HGS(data)
         return cost
     
-    def step(self,action,training=True):
+    def step(self,action):
         done=False
         self.steps += 1
         
         #get the customer's choice of delivery location
-        loc,accepted,idx,price = self.get_delivery_loc(action)
+        loc,accepted_pp,idx,price = self.get_delivery_loc(action)
+        self.total_prices += price
         self.data['x_coordinates']= np.append(self.data['x_coordinates'],loc.x)
         self.data['y_coordinates'] = np.append(self.data['y_coordinates'],loc.y)
         self.data['id'] = np.append(self.data['id'],loc.id_num)
         self.data['time'] = np.append(self.data['time'],self.steps)
         
         #reduce parcelpoint capacity, if chosen
-        if accepted:
+        if accepted_pp:
             self.parcelPoints["parcelpoints"][idx-self.n_unique_customer_locs].remainingCapacity -= 1
-            service_time=0
+            self.service_time+=0
         else:#home delivery
-            service_time=self.service_times[idx]
+            self.service_time+=self.service_times[idx]
+            self.count_home_delivery+=1
             
-        if self.dissatisfaction:
+        if self.dissatisfaction:#perhaps remove, not used so far
             if np.mean(action)>2.75 and np.std(action)<1.0:
                 self.count_dissatisfaction+=1
-            
-        #info for plots and statistics
-        info = self.steps,self.newCustomer.home.x,self.newCustomer.home.y,loc.x,loc.y,price,service_time,self.count_dissatisfaction
         
         #construct intermittent route kept in memory during booking horizon
         insertVeh,idx,costs = self.utils.cheapestInsertionRoute(loc,self.fleet)
@@ -191,7 +193,10 @@ class Parcelpoint_py(object):
                 self.data["distance_matrix"] = get_dist_mat_HGS(self.dist_matrix,self.data['id'])
             self.fleet,_ = self.utils.reopt_HGS(self.data)
         
+        #info for plots and statistics
+        stats = self.steps,self.count_home_delivery,self.service_time,self.total_prices,self.parcelPoints["parcelpoints"],self.newCustomer.home.x,self.newCustomer.home.y,loc.x,loc.y
+        
         #generate new customer arrival and return state info
         self.curr_state = self.make_state()
         
-        return self.curr_state.copy(), done, info, self.data
+        return self.curr_state.copy(), done, stats, self.data

@@ -55,18 +55,18 @@ class Config(object):
 
         #load data
         if args.load_data:
-            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency,self.service_times = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed)
-        else:
-            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.generate_demand_data(100),[],6,np.ones(6)
+            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency,self.service_times = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed,args.clip_service_time)
+            self.coords_test,self.dist_matrix_test,self.n_parcelpoints_test,self.adjacency_test,self.service_times_test = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed_test,args.clip_service_time)
+        else:#only used for debug purpose
+            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.generate_demand_data(100),[],6,np.ones(6),np.ones(100)
+            self.coords_test,self.dist_matrix_test,self.n_parcelpoints_test,self.adjacency_test,self.service_times_test = Utils.generate_demand_data(100),[],6,np.ones(6),np.ones(100)
 
         # Get the domain and algorithm
-        self.env, self.gym_env = self.get_domain(args.env_name, args=args, debug=args.debug,
-                                                               path=path.join(self.paths['root'], 'Environments'))
+        self.env = self.get_domain(args.env_name, args=args,path=path.join(self.paths['root'], 'Environments'))
         self.env.seed(seed)
-
-
-        # Hiddenlayer size
-       # self.hiddenLayerSize = args.hiddenLayerSize
+        
+        self.test_env = self.get_domain(args.env_name, args=args,path=path.join(self.paths['root'], 'Environments'),test_env=True)
+        self.test_env.seed(seed)
 
         # Set Model
         self.algo = Utils.dynamic_load(path.join(self.paths['root'], 'Src', 'Algorithms'), args.algo_name, load_class=True)
@@ -95,14 +95,20 @@ class Config(object):
         print("=====Configurations=====\n", args)
 
     # Load the domain
-    def get_domain(self, tag, args, path, debug=True):
+    def get_domain(self, tag, args, path,test_env=False):
         if tag[:11] == 'Parcelpoint':
             obj = Utils.dynamic_load(path, tag, load_class=True)
-            env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
+            if test_env:
+                env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
+                      veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
+                      home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords_test,dist_matrix=self.dist_matrix_test,
+                      n_parcelpoints=self.n_parcelpoints_test,adjacency=self.adjacency_test,service_times=self.service_times_test,dissatisfaction=self.dissatisfaction,hgs_time=args.hgs_reopt_time)
+            else:
+                env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
                       veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
                       home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,
                       n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency,service_times=self.service_times,dissatisfaction=self.dissatisfaction,hgs_time=args.hgs_reopt_time)
-            return env, False
+            return env
 
 if __name__ == '__main__':
     pass
