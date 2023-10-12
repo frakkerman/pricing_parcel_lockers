@@ -4,15 +4,6 @@ from Src.parser import Parser
 from Src.config import Config
 from time import time
 
-"""
-TODO: perhaps add VRPTW later (would require use of pyvrp lib), would make 3d conv interesting
-checkin all methods (clustering gog okay?)
-check settings of MNL model
-implement Lin reg, MLP, and ablation option
-Implement PPO
-robustness option experiment?
-"""
-
 class Solver:
     def __init__(self, config):
         # Initialize the required variables
@@ -32,40 +23,64 @@ class Solver:
     # Main training/simulation loop
     def train(self):
         # Learn the model on the environment
-        rewards = []
+        returns = []
+        total_loss_actor_history = []
+        total_loss_critic_history = []
+        total_loss_actor = 0
+        total_loss_critic = 0
 
         checkpoint = self.config.save_after
-        start_ep = 0
+        rm, start_ep = [], 0, 0
 
-        steps = 0
         t0 = time()
+        self.episode = 0
         for episode in range(start_ep, self.config.max_episodes):
+
+            episode_loss_actor = []
+            episode_loss_critic = []
+
             # Reset both environment and model before a new episode
             state = self.env.reset()
             self.model.reset()
 
-            step = 0
+            step, total_r = 0, 0
             done = False
-
             while not done:
-                action = self.model.get_action(state, training=True)
-                new_state, done, stats,route_data = self.env.step(action=action)
+                action, a_hat = self.model.get_action(state, training=True)
+               # new_state, reward, done, info = self.env.step(action=action)
+                new_state, done, stats,route_data  = self.env.step(action=action)
+                reward=0.01#reward during run = 0.001 
+                state_ppo = self.env.abstract_state_ppo(state)
+                new_state_ppo = self.env.abstract_state_ppo(new_state)
+                loss_actor,loss_critic=self.model.update(state_ppo, action, a_hat, reward, new_state_ppo, done)
+                episode_loss_actor.append(loss_actor)
+                episode_loss_critic.append(loss_critic)
                 state = new_state
+                total_r += reward
                 step += 1
-                _ = self.model.update(route_data,state,done)
                 if step >= self.max_steps or done:
                     travel_time = self.model.update(route_data,state,True)#do full update when episode is done
-                    rewards.append(Utils.total_costs(stats[1],stats[2],travel_time,stats[3],stats[6],self.config))
+                    reward = -Utils.total_costs(stats[1],stats[2],travel_time,stats[3],stats[6],self.config)
+                    loss_actor,loss_critic=self.model.update(state_ppo, action, a_hat, reward, new_state_ppo, done)
+                    episode_loss_actor.append(loss_actor)
+                    episode_loss_critic.append(loss_critic)
+                    total_r += reward
                     break
-            steps += step
-            
+
+            # Track actor and critic loss with smoothing
+            total_loss_actor = total_loss_actor*0.99+0.01*np.average(episode_loss_actor)
+            total_loss_actor_history.append(total_loss_actor)
+            total_loss_critic=total_loss_critic*0.99+0.01*np.average(episode_loss_critic)
+            total_loss_critic_history.append(total_loss_critic)
+            rm = 0.99*rm + 0.01*total_r
+
             if episode%checkpoint == 0 or episode == self.config.max_episodes-1:
-                print('time required for '+str(checkpoint)+' episodes :' +str(time()-t0))
-                Utils.plot_training_curves(rewards,self.config)
-                #Utils.save_plots_stats(run_stats,travel_time,run_time,actions=actions,config=self.config,episode=episode)
-               
+                print('time required for '+str(checkpoint)+' :' +str(time()-t0))
+                print('Episode '+str(episode)+' / current actor loss: ' + str(total_loss_actor))
+                print('Episode '+str(episode)+' / current critic loss: ' + str(total_loss_critic))
+                returns.append(rm)
+                Utils.plot_training_curves(returns,config=self.config)
                 t0 = time()
-                steps = 0
     
 
     def eval(self, episodes=1):

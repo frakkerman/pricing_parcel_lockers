@@ -106,7 +106,8 @@ class Parcelpoint_py(object):
         self.steps = 0
         self.service_time = 0
         self.count_home_delivery = 0
-        self.total_prices = 0
+        self.total_prices = []
+        self.total_discounts = []
         
         self.data['x_coordinates'] = self.depot.x
         self.data['y_coordinates'] =  self.depot.y
@@ -138,6 +139,12 @@ class Parcelpoint_py(object):
         self.newCustomer = self.get_customer()
         state = [self.newCustomer,self.fleet,self.parcelPoints,self.steps]
         return state
+    
+    def abstract_state_ppo(self,state):
+        newcust_x = state[0].home.x
+        newcust_y = state[0].home.y
+        
+        return [newcust_x,newcust_y]
         
     def is_terminal(self):
         if self.steps > self.max_steps:
@@ -160,12 +167,14 @@ class Parcelpoint_py(object):
         return cost
     
     def step(self,action):
-        done=False
         self.steps += 1
         
         #get the customer's choice of delivery location
         loc,accepted_pp,idx,price = self.get_delivery_loc(action)
-        self.total_prices += price
+        if price>0:
+            self.total_prices.append(price)
+        else:
+            self.total_discounts.append(price)
         self.data['x_coordinates']= np.append(self.data['x_coordinates'],loc.x)
         self.data['y_coordinates'] = np.append(self.data['y_coordinates'],loc.y)
         self.data['id'] = np.append(self.data['id'],loc.id_num)
@@ -194,9 +203,9 @@ class Parcelpoint_py(object):
             self.fleet,_ = self.utils.reopt_HGS(self.data)
         
         #info for plots and statistics
-        stats = self.steps,self.count_home_delivery,self.service_time,self.total_prices,self.parcelPoints["parcelpoints"],self.newCustomer.home.x,self.newCustomer.home.y,loc.x,loc.y
+        stats = self.steps,self.count_home_delivery,self.service_time,self.total_prices,self.parcelPoints["parcelpoints"],self.dist_matrix[self.newCustomer.home.id_num][loc.id_num],self.total_discounts
         
         #generate new customer arrival and return state info
         self.curr_state = self.make_state()
         
-        return self.curr_state.copy(), done, stats, self.data
+        return self.curr_state.copy(), self.is_terminal(), stats, self.data

@@ -1,6 +1,7 @@
 from __future__ import print_function
 import numpy as np
 import torch
+import torch.nn as nn
 from torch import float32
 import shutil
 import matplotlib.pyplot as plt
@@ -52,18 +53,18 @@ class Logger(object):
         fsync(self.log.fileno())
 
 
-def total_costs(count_home,service_times,travel_time,discount_costs,config):
-    cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
-    total_costs = (service_times+travel_time)*cost_multiplier
+def total_costs(count_home,service_times,travel_time,discount_costs,charge_revenue,config):
+    cost_multiplier = (config.driver_wage+config.fuel_cost) / 3600
+    total_costs = (service_times+travel_time)*cost_multiplier + sum(discount_costs) - sum(charge_revenue)
     total_costs += count_home*config.home_failure*config.failure_cost#costs of failed delivery
     
-    return total_costs, discount_costs
+    return total_costs
 
 def plot_training_curves(rewards,config):
     plt.figure()
     plt.ylabel("Monetary unit")
     plt.xlabel("Episode")
-    plt.title("Performance (operational costs and pricing revenue/costs)")
+    plt.title("Performance (operational costs including pricing revenue/costs)")
     plt.plot(rewards)
     plt.savefig(config.paths['results'] + "training_curve.png")
     plt.close()
@@ -276,7 +277,7 @@ def calculate_service_time(coords,clip_service_time):
 def getdistance_euclidean(a,b):
     return sqrt((a.x-b.x)**2 + (a.y-b.y)**2)
 
-def load_demand_data(pathh,instance,data_seed,clip_service_time):
+def load_demand_data(pathh,instance,data_seed,clip_service_time,truck_speed):
     if name == 'nt':#windows
         sepa= '\\'
     else:
@@ -313,7 +314,7 @@ def load_demand_data(pathh,instance,data_seed,clip_service_time):
             for i in coords:
                 dist = []
                 for j in coords:
-                    dist.append( int(getdistance_euclidean(i,j)))
+                    dist.append( int(getdistance_euclidean(i,j)) / truck_speed * 3600)
                 dist_matrix = np.vstack([dist_matrix,np.array(dist)])
                     
     else:
@@ -329,7 +330,7 @@ def load_demand_data(pathh,instance,data_seed,clip_service_time):
         adjacency = np.load(pathh+"_adjacency20.npy")#20 closest parcelpoints to each customer
     else:
         n_parcelpoints=10
-        adjacency = np.ones(shape=(90,n_parcelpoints))
+        adjacency = np.ones(shape=(100-n_parcelpoints,n_parcelpoints))
         
     
     #service times drawn from 6-hump camelback
@@ -496,3 +497,109 @@ class MemoryBuffer:
     def save(self, filename):
         torch.save(self.features, filename + 'feat.pt')
         torch.save(self.target, filename + 'target.pt')
+        
+        
+##for PPO  actor and critic    
+class NeuralNet(nn.Module):
+    def __init__(self):
+        super(NeuralNet, self).__init__()
+        self.ctr = 0
+        self.nan_check_fequency = 10000
+
+    def update(self, loss, retain_graph=False, clip_norm=False):
+        self.optim.zero_grad()  # Reset the gradients
+        loss.backward(retain_graph=retain_graph)
+        self.step(clip_norm)
+
+    def step(self, clip_norm):
+        if clip_norm:
+            torch.nn.utils.clip_grad_norm_(self.parameters(), clip_norm)
+        self.optim.step()
+        self.check_nan()
+
+    def save(self, filename):
+        torch.save(self.state_dict(), filename)
+
+    def load(self, filename):
+        self.load_state_dict(torch.load(filename))
+
+    def check_nan(self):
+        # Check for nan periodically
+        self.ctr += 1
+        if self.ctr == self.nan_check_fequency:
+            self.ctr = 0
+            # Note: nan != nan  #https://github.com/pytorch/pytorch/issues/4767
+            for name, param in self.named_parameters():
+                if (param != param).any():
+                    raise ValueError(name + ": Weights have become nan... Exiting.")
+
+    def reset(self):
+        return
+
+#for PPO
+class Trajectory:
+    """
+    Pre-allocated memory interface for storing and using on-policy trajectories
+
+    Note: slight abuse of notation.
+          sometimes Code treats 'dist' as extra variable and uses it to store other things, like: prob, etc.
+    """
+    def __init__(self, max_len, state_dim, action_dim, atype, config, dist_dim=1, stype=float32):
+
+        self.s1 = torch.zeros((max_len, state_dim), dtype=stype, requires_grad=False)
+        self.a1 = torch.zeros((max_len, action_dim), dtype=atype, requires_grad=False)
+        self.r1 = torch.zeros((max_len, 1), dtype=float32, requires_grad=False)
+        self.s2 = torch.zeros((max_len, state_dim), dtype=stype, requires_grad=False)
+        self.done = torch.zeros((max_len, 1), dtype=float32, requires_grad=False)
+        self.dist = torch.zeros((max_len, dist_dim), dtype=float32, requires_grad=False)
+
+        self.ctr = 0
+        self.max_len = max_len
+        self.atype = atype
+        self.stype= stype
+        self.config = config
+
+    def add(self, s1, a1, dist, r1, s2, done):
+        if self.ctr == self.max_len:
+            raise OverflowError
+
+        self.s1[self.ctr] = torch.tensor(s1, dtype=self.stype)
+        self.a1[self.ctr] = torch.tensor(a1, dtype=self.atype)
+        self.dist[self.ctr] = torch.tensor(dist)
+        self.r1[self.ctr] = torch.tensor(r1)
+        self.s2[self.ctr] = torch.tensor(s2, dtype=self.stype)
+        self.done[self.ctr] = torch.tensor(done)
+
+        self.ctr += 1
+
+    def reset(self):
+        self.ctr = 0
+
+    @property
+    def size(self):
+        return self.ctr
+
+    def _get(self, ids):
+        return self.s1[ids], self.a1[ids], self.dist[ids], self.r1[ids], self.s2[ids], self.done[ids]
+
+    def get_current_transitions(self):
+        pos = self.ctr
+        return self.s1[:pos], self.a1[:pos], self.dist[:pos], self.r1[:pos], self.s2[:pos], self.done[:pos]
+
+    def get_all(self):
+        return self.s1, self.a1, self.dist, self.r1, self.s2, self.done
+
+    def get_latest(self):
+        return self._get([-1])
+
+    def batch_sample(self, batch_size, nth_return):
+        # Compute the estimated n-step gamma return
+        R = nth_return
+        for idx in range(self.ctr-1, -1, -1):
+            R = self.r1[idx] + self.config.gamma * R
+            self.r1[idx] = R
+
+        # Genreate random sub-samples from the trajectory
+        perm_indices = np.random.permutation(self.ctr)
+        for ids in [perm_indices[i:i + batch_size] for i in range(0, self.ctr, batch_size)]:
+            yield self._get(ids)

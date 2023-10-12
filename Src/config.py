@@ -55,8 +55,8 @@ class Config(object):
 
         #load data
         if args.load_data:
-            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency,self.service_times = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed,args.clip_service_time)
-            self.coords_test,self.dist_matrix_test,self.n_parcelpoints_test,self.adjacency_test,self.service_times_test = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed_test,args.clip_service_time)
+            self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency,self.service_times = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed,args.clip_service_time,args.truck_speed)
+            self.coords_test,self.dist_matrix_test,self.n_parcelpoints_test,self.adjacency_test,self.service_times_test = Utils.load_demand_data(self.paths['root'],args.instance,args.data_seed_test,args.clip_service_time,args.truck_speed)
         else:#only used for debug purpose
             self.coords,self.dist_matrix,self.n_parcelpoints,self.adjacency = Utils.generate_demand_data(100),[],6,np.ones(6),np.ones(100)
             self.coords_test,self.dist_matrix_test,self.n_parcelpoints_test,self.adjacency_test,self.service_times_test = Utils.generate_demand_data(100),[],6,np.ones(6),np.ones(100)

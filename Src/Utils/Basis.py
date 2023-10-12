@@ -19,8 +19,19 @@ class Basis(NeuralNet):
         self.config = config
 
         # Variables for normalizing state features
-        self.state_low = tensor(config.env.observation_space.low, dtype=float32, requires_grad=False)
-        self.state_high = tensor(config.env.observation_space.high, dtype=float32, requires_grad=False)
+        
+        l_dim = 0
+        h_dim = 150
+        if config.instance=='Austin':
+            l_dim = -98
+            h_dim = 31
+        if config.instance=='Seattle':
+            l_dim = -123
+            h_dim = 48
+        
+        observation_space = Space(low=np.full(2, l_dim, dtype=np.float32), high=np.full(2, h_dim, dtype=np.float32), dtype=np.float32)
+        self.state_low = tensor(observation_space.low, dtype=float32, requires_grad=False)
+        self.state_high = tensor(observation_space.high, dtype=float32, requires_grad=False)
         self.state_diff = self.state_high - self.state_low
         self.state_dim = len(self.state_low)
         self.feature_dim = self.state_dim
@@ -89,17 +100,13 @@ class Fourier_Basis(Basis):
         x = self.preprocess(state)
         return x
 
-class NN_Basis(Basis):
-    def __init__(self, config):
-        super(NN_Basis, self).__init__(config)
-
-        self.feature_dim = self.config.feature_dim[-1]
-        layers = []
-        dims = [self.state_dim]
-        dims.extend(self.config.feature_dim)
-
-    def forward(self, state):
-        return
-
-
-
+class Space:
+    def __init__(self, low=[0], high=[1], dtype=np.uint8, size=-1):
+        if size == -1:
+            self.shape = np.shape(low)
+        else:
+            self.shape = (size, )
+        self.low = np.array(low)
+        self.high = np.array(high)
+        self.dtype = dtype
+        self.n = len(self.low)
