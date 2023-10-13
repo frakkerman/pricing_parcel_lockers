@@ -30,7 +30,7 @@ class Solver:
         total_loss_critic = 0
 
         checkpoint = self.config.save_after
-        rm, start_ep = [], 0, 0
+        rm, start_ep = 0, 0
 
         t0 = time()
         self.episode = 0
@@ -46,22 +46,20 @@ class Solver:
             step, total_r = 0, 0
             done = False
             while not done:
-                action, a_hat = self.model.get_action(state, training=True)
+                action, a_hat = self.model.get_action(self.env.abstract_state_ppo(state), training=True)
                # new_state, reward, done, info = self.env.step(action=action)
                 new_state, done, stats,route_data  = self.env.step(action=action)
                 reward=0.01#reward during run = 0.001 
-                state_ppo = self.env.abstract_state_ppo(state)
-                new_state_ppo = self.env.abstract_state_ppo(new_state)
-                loss_actor,loss_critic=self.model.update(state_ppo, action, a_hat, reward, new_state_ppo, done)
+                loss_actor,loss_critic=self.model.update(self.env.abstract_state_ppo(state), action, a_hat, reward, self.env.abstract_state_ppo(new_state), done)
                 episode_loss_actor.append(loss_actor)
                 episode_loss_critic.append(loss_critic)
                 state = new_state
                 total_r += reward
                 step += 1
                 if step >= self.max_steps or done:
-                    travel_time = self.model.update(route_data,state,True)#do full update when episode is done
+                    travel_time = self.model.update_route(route_data,state,True)#do full update when episode is done
                     reward = -Utils.total_costs(stats[1],stats[2],travel_time,stats[3],stats[6],self.config)
-                    loss_actor,loss_critic=self.model.update(state_ppo, action, a_hat, reward, new_state_ppo, done)
+                    loss_actor,loss_critic=self.model.update(self.env.abstract_state_ppo(state), action, a_hat, reward, self.env.abstract_state_ppo(new_state), done)
                     episode_loss_actor.append(loss_actor)
                     episode_loss_critic.append(loss_critic)
                     total_r += reward
@@ -72,13 +70,13 @@ class Solver:
             total_loss_actor_history.append(total_loss_actor)
             total_loss_critic=total_loss_critic*0.99+0.01*np.average(episode_loss_critic)
             total_loss_critic_history.append(total_loss_critic)
-            rm = 0.99*rm + 0.01*total_r
+            rm = 0.9*rm + 0.1*total_r
 
             if episode%checkpoint == 0 or episode == self.config.max_episodes-1:
                 print('time required for '+str(checkpoint)+' :' +str(time()-t0))
                 print('Episode '+str(episode)+' / current actor loss: ' + str(total_loss_actor))
                 print('Episode '+str(episode)+' / current critic loss: ' + str(total_loss_critic))
-                returns.append(rm)
+                returns.append(total_r)
                 Utils.plot_training_curves(returns,config=self.config)
                 t0 = time()
     
@@ -101,8 +99,8 @@ class Solver:
              done = False
              while not done:
                  t1 = time()
-                 action = self.model.get_action(state, training=False)
-                 new_state, done, stats,route_data = self.test_env.step(action=action)
+                 action, a_hat = self.model.get_action(self.test_env.abstract_state_ppo(state), training=True)
+                 new_state, done, stats,route_data  = self.test_env.step(action=action)
                  actions.append([*action,step,episode])
                  # accepted_price.append([stats[3],step,episode])
                  home_delivery_loc.append([stats[5],step,episode])

@@ -29,9 +29,9 @@ class Basis(NeuralNet):
             l_dim = -123
             h_dim = 48
         
-        observation_space = Space(low=np.full(2, l_dim, dtype=np.float32), high=np.full(2, h_dim, dtype=np.float32), dtype=np.float32)
-        self.state_low = tensor(observation_space.low, dtype=float32, requires_grad=False)
-        self.state_high = tensor(observation_space.high, dtype=float32, requires_grad=False)
+        self.observation_space = Space(low=np.full(2, l_dim, dtype=np.float32), high=np.full(2, h_dim, dtype=np.float32), dtype=np.float32)
+        self.state_low = tensor(self.observation_space.low, dtype=float32, requires_grad=False)
+        self.state_high = tensor(self.observation_space.high, dtype=float32, requires_grad=False)
         self.state_diff = self.state_high - self.state_low
         self.state_dim = len(self.state_low)
         self.feature_dim = self.state_dim
@@ -91,14 +91,6 @@ class Fourier_Basis(Basis):
     def forward_wo_state_trafo(self, state):
         x = self.preprocess(state)
         return self.get_basis(x)
-    def forward_w_state_trafo(self, state):
-        if state.numpy().shape[0] > 1:
-            state = torch.tensor(self.tf_idf_matrix[state.numpy()[:,0].astype(int), :], dtype=torch.float32)
-        else:
-            state = torch.tensor(self.tf_idf_matrix[int(state.numpy()[0][0]),:],dtype=torch.float32)
-            state = state[None]
-        x = self.preprocess(state)
-        return x
 
 class Space:
     def __init__(self, low=[0], high=[1], dtype=np.uint8, size=-1):

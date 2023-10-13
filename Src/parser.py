@@ -10,7 +10,7 @@ class Parser(object):
         parser.add_argument("--seed", default=1234, help="seed for variance testing",type=int)
 
         # General parameters
-        parser.add_argument("--save_count", default=20, help="Number of checkpoints for saving results and model", type=int)
+        parser.add_argument("--save_count", default=50, help="Number of checkpoints for saving results and model", type=int)
         parser.add_argument("--log_output", default='term_file', help="Log all the print outputs",choices=['term_file', 'term', 'file'])
         parser.add_argument("--debug", default=True, type=self.str2bool, help="Debug mode on/off")
         parser.add_argument("--save_model", default=True, type=self.str2bool, help="flag to save model checkpoints")
@@ -38,7 +38,7 @@ class Parser(object):
 
     def environment_parameters(self, parser):
         parser.add_argument("--env_name", default='Parcelpoint_py', help="Environment to run the code")
-        parser.add_argument("--max_episodes", default=int(0), help="maximum number of episodes", type=int)
+        parser.add_argument("--max_episodes", default=int(2500), help="maximum number of training episodes", type=int)
         
         parser.add_argument("--max_steps_r", default=90, help="maximum customers per episode r of gamma dist.", type=int)#700
         parser.add_argument("--max_steps_p", default=0.5, help="maximum customers per episode p of gamma dist. [0,1]", type=float)
@@ -66,7 +66,7 @@ class Parser(object):
         parser.add_argument("--revenue", default=90, help="revenue per customer", type=float)#90
         parser.add_argument("--fuel_cost", default=0.6, help="costs of fuel per distance unit", type=float)#0.3/0.6
         parser.add_argument("--truck_speed", default=30, help="distance travelled per hour", type=float)#30
-        parser.add_argument("--clip_service_time", default=20, help="maximum service time in minutes", type=float)#10
+        parser.add_argument("--clip_service_time", default=10, help="maximum service time in minutes", type=float)#10
         parser.add_argument("--driver_wage", default=30, help="salary of driver per hour", type=float)#30
         
         parser.add_argument("--home_failure", default=0.1, help="the probability of delivery failure for home delivery", type=float)#0.1
@@ -106,19 +106,20 @@ class Parser(object):
         parser.add_argument("--price_home", default=0.0, help="fixed fee price to offer for home delivery", type=float)
         
     def PPO_parameters(self,parser):
-        parser.add_argument("--actor_lr", default=5e-4, help="(1e-2) Learning rate of actor", type=float)
-        parser.add_argument("--critic_lr", default=5e-4, help="(1e-2) Learning rate of critic", type=float)
-        parser.add_argument("--state_lr", default=1e-3, help="Learning rate of state features", type=float)
+        parser.add_argument("--actor_lr", default=1e-4, help="(1e-2) Learning rate of actor", type=float)
+        parser.add_argument("--critic_lr", default=1e-2, help="(1e-2) Learning rate of critic", type=float)
+        parser.add_argument("--state_lr", default=1e-1, help="Learning rate of state features", type=float)
+        parser.add_argument("--batch_size_ppo", default=100, help="Batch size", type=int)
         parser.add_argument("--fourier_coupled", default=True, help="Coupled or uncoupled fourier basis", type=self.str2bool)
         parser.add_argument("--fourier_order", default=3, help="Order of fourier basis, " + "(if > 0, it overrides neural nets)", type=int)
-        parser.add_argument("--hiddenLayerSize", default=32, help="size of hiddenlayer of critic", type=int)
-        parser.add_argument("--hiddenActorLayerSize", default=16, help="size of hiddenlayer", type=int)
+        parser.add_argument("--hiddenLayerSize", default=16, help="size of hiddenlayer of critic", type=int)
+        parser.add_argument("--hiddenActorLayerSize", default=8, help="size of hiddenlayer", type=int)
         parser.add_argument("--gamma", default=0.999, help="Discounting factor", type=float)
-        parser.add_argument("--gauss_variance", default=1, help="Variance for gaussian policy", type=float) # 1 original setting
+        parser.add_argument("--gauss_variance", default=2, help="Variance for gaussian policy", type=float) # 1 original setting
         parser.add_argument("--clipping_factor",default=0.2, help = "PPO clipping factor",type = float)
         parser.add_argument("--td_lambda", default=0.95, help="lambda factor for calculating advantages", type=float)
-        parser.add_argument("--policy_update_epochs", default=80,help="number of epochs with which we perform policy updates in PPO", type=int)
-        parser.add_argument("--critic_update_epochs", default=80,help="number of epochs with which we perform critic updates in PPO", type=int)
+        parser.add_argument("--policy_update_epochs", default=25,help="number of epochs with which we perform policy updates in PPO", type=int)
+        parser.add_argument("--critic_update_epochs", default=25,help="number of epochs with which we perform critic updates in PPO", type=int)
         
         
     def str2bool(self, text):

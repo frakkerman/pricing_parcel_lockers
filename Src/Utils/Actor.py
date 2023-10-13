@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 import torch.nn as nn
 from torch.distributions import Normal
@@ -38,8 +39,13 @@ class Gaussian(Actor):
         self.fc3 = nn.Linear(config.hiddenActorLayerSize, self.action_dim)
         self.relu = nn.ReLU()
 
-        self.output_layer = torch.tanh
-
+        self.output_layer = torch.sigmoid
+        
+        self.gauss_variance = config.gauss_variance
+        
+        self.action_multiplier = np.full(action_dim, config.min_price )
+        self.action_multiplier[0] = config.max_price
+        self.action_multiplier = torch.tensor(self.action_multiplier,requires_grad=False)
        
         self.init(config)
 
@@ -50,9 +56,9 @@ class Gaussian(Actor):
         mean = self.relu(mean)
         mean = self.fc3(mean)
 
-        mean = self.output_layer(mean)
+        mean = self.output_layer(mean) * self.action_multiplier 
 
-        var = torch.ones_like(mean, requires_grad=False) * self.config.gauss_variance
+        var = torch.ones_like(mean, requires_grad=False) * self.gauss_variance
         return mean, var
 
 
