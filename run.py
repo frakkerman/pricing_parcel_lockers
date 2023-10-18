@@ -37,7 +37,6 @@ class Solver:
         checkpoint = self.config.save_after
         start_ep = 0
 
-        steps = 0
         t0 = time()
         for episode in range(start_ep, self.config.max_episodes):
             # Reset both environment and model before a new episode
@@ -52,12 +51,11 @@ class Solver:
                 new_state, done, stats,route_data = self.env.step(action=action)
                 state = new_state
                 step += 1
-                _ = self.model.update(route_data,state,done)
+                _ = self.model.update(route_data,state,False)
                 if step >= self.max_steps or done:
                     travel_time = self.model.update(route_data,state,True)#do full update when episode is done
                     rewards.append(Utils.total_costs(stats[1],stats[2],travel_time,stats[3],stats[6],self.config))
                     break
-            steps += step
             
             if episode%checkpoint == 0 or episode == self.config.max_episodes-1:
                 print('time required for '+str(checkpoint)+' episodes :' +str(time()-t0))
@@ -65,7 +63,6 @@ class Solver:
                 #Utils.save_plots_stats(run_stats,travel_time,run_time,actions=actions,config=self.config,episode=episode)
                
                 t0 = time()
-                steps = 0
     
 
     def eval(self, episodes=1):
@@ -147,8 +144,8 @@ class Solver:
             
          
         #directly save statistics
-         # Utils.save_eval_stats(travel_time,total_cost,actions,accepted_price,count_home_delivery,service_time,
-         #                       parcel_lockers_remaining_capacity,home_delivery_loc,step_time,self.config)
+         Utils.save_eval_stats(travel_time,total_cost,actions,accepted_price,count_home_delivery,service_time,
+                                parcel_lockers_remaining_capacity,home_delivery_loc,step_time,self.config)
              
          return total_cost, accepted_price,step_time
 
@@ -165,7 +162,7 @@ def main(train=True):
         solver.train()
     
     #evaluate model
-    rewards,prices,step_time = solver.eval(30)  
+    rewards,prices,step_time = solver.eval(1)  
   #  Utils.plot_test_boxplot(rewards,prices,step_time,config)
     
     print('total timing: ', time()-t)

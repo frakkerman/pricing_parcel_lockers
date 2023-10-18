@@ -28,6 +28,7 @@ class PPO(Agent):
         if config.instance=='Seattle':
             adim = 299+1
             
+        self.adjacency = config.adjacency
         self.dist_matrix = config.dist_matrix
         self.load_data = config.load_data
         #hgs settings
@@ -53,7 +54,7 @@ class PPO(Agent):
         self.weights_changed = True
 
 
-    def get_action_pricing(self, state,training,training2=True):
+    def get_action_pricing(self, state,state2,training):
         state = tensor(state, dtype=float32, requires_grad=False)
         state = self.state_features.forward( state.view(1,-1))#.view(1, -1)
         a_hat, _ = self.actor.get_action(state, training=True)
@@ -62,7 +63,8 @@ class PPO(Agent):
     
     
         a_hat_clip = np.clip(a_hat,self.min_p,self.max_p)
-        return np.around(a_hat_clip,decimals=2),a_hat
+
+        return np.around(a_hat_clip,decimals=2),a_hat_clip
     
     def update(self, s1, a1, a_hat_1, r1, s2, done):
         loss_actor = 0

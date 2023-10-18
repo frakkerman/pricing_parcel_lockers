@@ -22,14 +22,14 @@ class Parser(object):
         parser.add_argument("--folder_suffix", default='default', help="folder name suffix")
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
         
-        parser.add_argument("--algo_name", default='PPO', help="Policy/algorithm used, capital sensitive",choices=['ML_Foresight','Heuristic','Baseline','PPO'])
+        parser.add_argument("--algo_name", default='DSPO', help="Policy/algorithm used, capital sensitive",choices=['DSPO','Heuristic','Baseline','PPO'])
         parser.add_argument("--gpu", default=0, help="GPU BUS ID ", type=int)
         
         # Environment parameters
         self.environment_parameters(parser)  
         
         # General settings for algorithms
-        self.ML_parameters(parser)
+        self.DSPO_parameters(parser)
         self.Heuristic_parameters(parser)
         self.Baseline_parameters(parser)
         self.PPO_parameters(parser)
@@ -38,13 +38,13 @@ class Parser(object):
 
     def environment_parameters(self, parser):
         parser.add_argument("--env_name", default='Parcelpoint_py', help="Environment to run the code")
-        parser.add_argument("--max_episodes", default=int(2500), help="maximum number of training episodes", type=int)
+        parser.add_argument("--max_episodes", default=int(20), help="maximum number of training episodes", type=int)
         
-        parser.add_argument("--max_steps_r", default=90, help="maximum customers per episode r of gamma dist.", type=int)#700
-        parser.add_argument("--max_steps_p", default=0.5, help="maximum customers per episode p of gamma dist. [0,1]", type=float)
+        parser.add_argument("--max_steps_r", default=700, help="maximum customers per episode r of gamma dist.", type=int)#700
+        parser.add_argument("--max_steps_p", default=0.45, help="maximum customers per episode p of gamma dist. [0,1]", type=float)#RC=0.5, Seattle=0.45
         
         parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data (only used for debug)", type=self.str2bool)
-        parser.add_argument("--instance", default='RC', help="which instance to load",choices=['Austin','Seattle','C','R','RC'])
+        parser.add_argument("--instance", default='Seattle', help="which instance to load",choices=['Austin','Seattle','C','R','RC'])
         parser.add_argument("--data_seed", default=0, help="which dataset seed to load for training",choices=[0,1,2,3], type=int)#0-3 for Amazon, 0-1 for Homberger
         parser.add_argument("--data_seed_test", default=1, help="which dataset seed to load for testing",choices=[0,1,2,3], type=int)#0-3 for Amazon, 0-1 for Homberger
         
@@ -54,16 +54,16 @@ class Parser(object):
         
         parser.add_argument("--k", default=19, help="Number of parcelpoints to offer to customer", type=int)
         
-        parser.add_argument("--n_vehicles", default=10, help="number of vehicles", type=int)#Austin=20, Seattle=25
-        parser.add_argument("--veh_capacity", default=9, help="capacity per vehicle per day", type=int)
+        parser.add_argument("--n_vehicles", default=12, help="number of vehicles", type=int)#Austin=20, Seattle=25
+        parser.add_argument("--veh_capacity", default=100, help="capacity per vehicle per day", type=int)
         parser.add_argument("--parcelpoint_capacity", default=100000, help="parcel point capacity per day", type=int)
         
         parser.add_argument("--incentive_sens", default=-0.175, help="sensitivty of customer to incentives", type=float)#-0.25
         parser.add_argument("--base_util", default=-2.0, help="base utility across all alternativesy", type=float)#-2.0
-        parser.add_argument("--home_util", default=3.2, help="utility given to home delivery", type=float)#3.55 amazon, 3.1 homberger
+        parser.add_argument("--home_util", default=3.55, help="utility given to home delivery", type=float)#3.55 amazon, 3.2 homberger
         parser.add_argument("--dissatisfaction", default=False, help="customer dissatisfaction penalty when all delivery options have too high prices", type=self.str2bool)
         
-        parser.add_argument("--revenue", default=90, help="revenue per customer", type=float)#90
+        parser.add_argument("--revenue", default=50, help="revenue per customer, only used for pricing decision", type=float)#90
         parser.add_argument("--fuel_cost", default=0.6, help="costs of fuel per distance unit", type=float)#0.3/0.6
         parser.add_argument("--truck_speed", default=30, help="distance travelled per hour", type=float)#30
         parser.add_argument("--clip_service_time", default=10, help="maximum service time in minutes", type=float)#10
@@ -72,33 +72,34 @@ class Parser(object):
         parser.add_argument("--home_failure", default=0.1, help="the probability of delivery failure for home delivery", type=float)#0.1
         parser.add_argument("--failure_cost", default=10.0, help="the monetary costs of a delivery failure", type=float)#10
         
-        parser.add_argument("--reopt", default=100000, help="re-opt frequency of cheapest insertion route using HGS", type=int)
+        parser.add_argument("--reopt", default=10000000, help="re-opt frequency of cheapest insertion route using HGS", type=int)
         parser.add_argument("--hgs_reopt_time", default=1.1, help="re-opt HGS time limit", type=float)
         
-        parser.add_argument("--hgs_final_time", default=1.1, help="HGS time limit for obtaining final routing schedule", type=float)
+        parser.add_argument("--hgs_final_time", default=1.5, help="HGS time limit for obtaining final routing schedule", type=float)
         
-    def ML_parameters(self, parser):
+    def DSPO_parameters(self, parser):
         parser.add_argument("--grid_dim", default=10, help="division of operational area in X*X clusters", type=int)
         parser.add_argument("--hexa", default=False, help="division of operational area in hexagional grid instead of squares (beta)", type=self.str2bool)
-        parser.add_argument("--n_input_layers", default=3, help="divide feature map in X time intervals", type=int)
+        parser.add_argument("--n_input_layers", default=2, help="divide feature map in X time intervals", type=int)
         parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)
-        parser.add_argument("--initial_phase_epochs", default=30, help="maximum number of training epochs", type=int)
-        parser.add_argument("--buffer_size", default=int(1000), help="Size of memory buffer", type=int)
-        parser.add_argument("--batch_size", default=8, help="Batch size", type=int)
+        parser.add_argument("--initial_phase_epochs", default=20, help="maximum number of training epochs", type=int)
+        parser.add_argument("--buffer_size", default=int(10000), help="Size of memory buffer", type=int)
+        parser.add_argument("--batch_size", default=128, help="Batch size", type=int)
         parser.add_argument("--learning_rate", default=1e-3, help="learning rate", type=float)
         
         parser.add_argument("--init_theta_cnn", default=1.0, help="initial weight for cheapest insertion in historic route, [0,1]", type=float)
-        parser.add_argument("--cool_theta_cnn", default=(1/100), help="weight reduction for cheapest insertion", type=float)
+        parser.add_argument("--cool_theta_cnn", default=(1/850), help="weight reduction for cheapest insertion", type=float)
         
-        #parser.add_argument("--load_embed", default=False, type=self.str2bool, help="Retrain flag, if True we do not retrain but try to load a stored model")
+       #parser.add_argument("--load", default=True, type=self.str2bool, help="If True we do not retrain but try to load a stored model")
+        parser.add_argument("--linearModel", default=False, type=self.str2bool, help="To use a linear regression model instead of a CNN/MLP")
         parser.add_argument("--optim", default='adam', help="Optimizer type", choices=['adam', 'sgd', 'rmsprop'])
         parser.add_argument("--use3d_conv", default=False, type=self.str2bool, help="Use 3D convolution instead of 2D")
-        parser.add_argument("--n_filters", default=16, help="number of filters in first convolutional layer (2nd is 2*X)", type=int)
-        parser.add_argument("--dropout", default=0.1, help="dropout rate of the FC layers", type=float)
+        parser.add_argument("--n_filters", default=8, help="number of filters in first convolutional layer (2nd is 2*X)", type=int)
+        parser.add_argument("--dropout", default=0.05, help="dropout rate of the FC layers", type=float)
        
     def Heuristic_parameters(self, parser):
-        parser.add_argument("--init_theta", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
-        parser.add_argument("--cool_theta", default=1/90, help="weight reduction for cheapest insertion", type=float)
+        parser.add_argument("--init_theta", default=0.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
+        parser.add_argument("--cool_theta", default=0, help="weight reduction for cheapest insertion", type=float)
     
     def Baseline_parameters(self, parser):
         parser.add_argument("--save_routes", default=False, help="Used to generate and save routes for use inside Heuristic", type=self.str2bool)#could consider to make an updating loop for routes

@@ -233,13 +233,17 @@ def readCVRPLIB(pathh,v_cap,n_veh):
                 for i in file:
                     if not i.startswith('Route'):
                         loc = i.strip().split('\t')
-                        loc = Location(float(loc[0]),float(loc[1]),int(loc[2]),0)#we do not care about time here
+                        try:
+                            loc = Location(float(loc[0]),float(loc[1]),int(loc[2]),0)#we do not care about time here
+                        except:
+                            break#fewer vehicles than maximum, so we break
                         routeplans[idx].append(loc)
                     else:
                         idx +=1
                 vehicles=[]
                 for v in range(n_veh):
-                    vehicles.append(Vehicle(routeplans[v],v_cap,v))
+                    if len(routeplans[v]) > 0:
+                        vehicles.append(Vehicle(routeplans[v],v_cap,v))
                 historicRoutes = np.append(historicRoutes,Fleet(vehicles))
         return historicRoutes
     else:

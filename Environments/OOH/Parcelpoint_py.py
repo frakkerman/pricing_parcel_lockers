@@ -86,7 +86,7 @@ class Parcelpoint_py(object):
             self.get_delivery_loc = self.get_delivery_loc_offer
         
         self.steps = 0
-        self.max_steps = (self.n_vehicles*self.veh_capacity)-1
+       # self.max_steps = (self.n_vehicles*self.veh_capacity)
         self.reopt_freq = reopt
         
         self.reset()

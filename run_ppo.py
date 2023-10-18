@@ -1,4 +1,5 @@
 import numpy as np
+import numpy.ma as ma
 import Src.Utils.Utils as Utils
 from Src.parser import Parser
 from Src.config import Config
@@ -9,6 +10,7 @@ class Solver:
         # Initialize the required variables
 
         self.config = config
+        self.adjacency = config.adjacency
         self.env = self.config.env#env used for training
         self.test_env = self.config.test_env#seperate env used for testing only
         self.state_dim = np.shape(self.env.reset())[0]
@@ -46,9 +48,14 @@ class Solver:
             step, total_r = 0, 0
             done = False
             while not done:
-                action, a_hat = self.model.get_action(self.env.abstract_state_ppo(state), training=True)
+                action, a_hat = self.model.get_action(self.env.abstract_state_ppo(state),state, training=True)
                # new_state, reward, done, info = self.env.step(action=action)
-                new_state, done, stats,route_data  = self.env.step(action=action)
+                if self.config.instance=='Seattle' or self.config.instance=='Austin':
+                    mask = ma.masked_array(action[1:], mask=self.adjacency[state[0].id_num]) #only offer 20 closest
+                    masked_action = np.append(action[0],mask[mask.mask].data)
+                else:
+                    masked_action=action
+                new_state, done, stats,route_data  = self.env.step(action=masked_action)
                 reward=0.01#reward during run = 0.001 
                 loss_actor,loss_critic=self.model.update(self.env.abstract_state_ppo(state), action, a_hat, reward, self.env.abstract_state_ppo(new_state), done)
                 episode_loss_actor.append(loss_actor)
@@ -99,8 +106,13 @@ class Solver:
              done = False
              while not done:
                  t1 = time()
-                 action, a_hat = self.model.get_action(self.test_env.abstract_state_ppo(state), training=True)
-                 new_state, done, stats,route_data  = self.test_env.step(action=action)
+                 action, a_hat = self.model.get_action(self.test_env.abstract_state_ppo(state),state, training=True)
+                 if self.config.instance=='Seattle' or self.config.instance=='Austin':
+                     mask = ma.masked_array(action[1:], mask=self.adjacency[state[0].id_num]) #only offer 20 closest
+                     masked_action = np.append(action[0],mask[mask.mask].data)
+                 else:
+                     masked_action=action
+                 new_state, done, stats,route_data  = self.test_env.step(action=masked_action)
                  actions.append([*action,step,episode])
                  # accepted_price.append([stats[3],step,episode])
                  home_delivery_loc.append([stats[5],step,episode])
@@ -178,7 +190,7 @@ def main(train=True):
         solver.train()
     
     #evaluate model
-    rewards,prices,step_time = solver.eval(30)  
+    rewards,prices,step_time = solver.eval(20)  
   #  Utils.plot_test_boxplot(rewards,prices,step_time,config)
     
     print('total timing: ', time()-t)

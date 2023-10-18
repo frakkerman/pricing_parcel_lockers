@@ -5,7 +5,7 @@ import torch.nn as nn
 from torch import float32
 from math import sqrt
 from Src.Utils.Utils import MemoryBuffer,get_dist_mat_HGS,extract_route_HGS, get_matrix
-from Src.Utils.Predictors import CNN_2d, CNN_3d
+from Src.Utils.Predictors import CNN_2d, CNN_3d,LinReg
 from Src.Algorithms.Agent import Agent
 from scipy.special import lambertw
 from math import exp, e
@@ -13,9 +13,9 @@ from hygese import AlgorithmParameters, Solver
 from operator import itemgetter
 
 # This function implements the foresight modle employing supervised ML
-class ML_Foresight(Agent):
+class DSPO(Agent):
     def __init__(self, config):
-        super(ML_Foresight, self).__init__(config)
+        super(DSPO, self).__init__(config)
                
         self.load_data = config.load_data
         # heuristic parameters
@@ -40,6 +40,8 @@ class ML_Foresight(Agent):
         
         if config.use3d_conv:
             self.supervised_ml = CNN_3d(self.grid_dim,self.n_layers,config.n_filters,config.dropout)
+        elif config.linearModel:
+            self.supervised_ml = LinReg(self.grid_dim*self.grid_dim*self.n_layers)
         else:
             self.supervised_ml = CNN_2d(self.grid_dim,self.n_layers,config.n_filters,config.dropout)
         self.features = np.empty((0,self.n_layers*self.grid_dim*self.grid_dim))
@@ -70,7 +72,7 @@ class ML_Foresight(Agent):
         
         #mnl parameters
         self.base_util = config.base_util
-        self.cost_multiplier = (config.driver_wage+config.fuel_cost*config.truck_speed) / 3600
+        self.cost_multiplier =  (config.driver_wage+config.fuel_cost) / 3600
         self.wage = config.driver_wage
         #self.added_costs_home = config.driver_wage*(config.del_time/60)
         self.revenue = config.revenue
@@ -82,6 +84,8 @@ class ML_Foresight(Agent):
         #lambdas
         id_num = lambda x: x.id_num
         self.get_id = np.vectorize(id_num)
+                
+        
 
     def get_action_offer(self,state,training):
         if self.initial_phase:
@@ -139,7 +143,7 @@ class ML_Foresight(Agent):
             theta = self.init_theta - (state[3] *  self.cool_theta)
             mltplr = self.cost_multiplier
             
-            homeCosts = state[0].service_time/60*self.wage+mltplr*((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*( costs[1]-costs[0] ))
+            homeCosts = state[0].service_time*mltplr+((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*( costs[1]-costs[0] ))
             sum_mnl = exp(self.base_util+state[0].home_util+(state[0].incentiveSensitivity*(homeCosts-self.revenue)))
             
 
@@ -254,7 +258,8 @@ class ML_Foresight(Agent):
     def optimize(self):
         # Take one supervised step
         feat,target = self.memory.sample(batch_size=self.config.batch_size)
-        self.self_supervised_update(feat,target)
+        loss = self.self_supervised_update(feat,target)
+        print("Huber loss: ", loss)
     
     
     def self_supervised_update(self, feat,target):
@@ -326,16 +331,19 @@ class ML_Foresight(Agent):
        # addedcosts_home = self.added_costs_home
         costs = []
         for v in fleet["fleet"]:
-            for i in range(0,len(v["routePlan"])):
-                #costs is composed of distance*mltplr
-                if i==0:
-                    costs.append( [v["routePlan"][i].time,mltplr * (0.5*self.dist_matrix[0][v["routePlan"][i].id_num] + 0.5*self.dist_matrix[v["routePlan"][i].id_num][v["routePlan"][i+1].id_num])] )
-                elif i==len(v["routePlan"])-1:
-                    costs.append( [v["routePlan"][i].time,mltplr * (0.5*self.dist_matrix[v["routePlan"][i-1].id_num][v["routePlan"][i].id_num] + 0.5*self.dist_matrix[v["routePlan"][i].id_num][0])] )
-                else:
-                    costs.append( [v["routePlan"][i].time,mltplr * (0.5*self.dist_matrix[v["routePlan"][i-1].id_num][v["routePlan"][i].id_num] + 0.5*self.dist_matrix[v["routePlan"][i].id_num][v["routePlan"][i+1].id_num])] )
-                
-                if v["routePlan"][i].id_num < self.first_parcelpoint_id:#customer chose home delivery
-                    costs[-1][0] += self.service_times[v["routePlan"][i].id_num]
+            if len(v["routePlan"])==1:#when only 1 customer is visited
+                costs.append( [v["routePlan"][0].time,mltplr * (self.dist_matrix[0][v["routePlan"][0].id_num])] )
+            else:
+                for i in range(0,len(v["routePlan"])):
+                    #costs is composed of distance*mltplr
+                    if i==0:
+                        costs.append( [v["routePlan"][i].time,mltplr * (0.5*self.dist_matrix[0][v["routePlan"][i].id_num] + 0.5*self.dist_matrix[v["routePlan"][i].id_num][v["routePlan"][i+1].id_num])] )
+                    elif i==len(v["routePlan"])-1:
+                        costs.append( [v["routePlan"][i].time,mltplr * (0.5*self.dist_matrix[v["routePlan"][i-1].id_num][v["routePlan"][i].id_num] + 0.5*self.dist_matrix[v["routePlan"][i].id_num][0])] )
+                    else:
+                        costs.append( [v["routePlan"][i].time,mltplr * (0.5*self.dist_matrix[v["routePlan"][i-1].id_num][v["routePlan"][i].id_num] + 0.5*self.dist_matrix[v["routePlan"][i].id_num][v["routePlan"][i+1].id_num])] )
+                    
+                    # if v["routePlan"][i].id_num < self.first_parcelpoint_id:#customer chose home delivery
+                    #     costs[-1][0] += mltplr*self.service_times[v["routePlan"][i].id_num]
         
         return costs
