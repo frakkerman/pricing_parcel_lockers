@@ -66,8 +66,8 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
  
 ## Contributing
 
-If you have proposed extensions to this codebase, feel free to do a pull request! If you experience issues, feel free to send us an email or open an issue in GitHub.
- 
+If you have proposed extensions to this codebase, feel free to do a pull request! If you experience issues, feel free to send us an email.
+
 ## License
 * [MIT license](https://opensource.org/license/mit/)
 * Copyright 2023 © [Fabian Akkerman](https://people.utwente.nl/f.r.akkerman), [Peter Dieter](https://en.wiwi.uni-paderborn.de/dep3/schryen/team/dieter/88592), [Martijn Mes](https://www.utwente.nl/en/bms/iebis/staff/mes/)
