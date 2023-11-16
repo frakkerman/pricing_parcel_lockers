@@ -1,4 +1,4 @@
-# Pricing and Offering of Out-of-Home Delivery
+# Learning Dynamic Selection and Pricing of Out-of-Home Deliveries
 
 This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries". Contact us if you are interested in the working paper (under review). 
 
