@@ -78,7 +78,7 @@ class Parser(object):
         parser.add_argument("--hgs_final_time", default=1.5, help="HGS time limit for obtaining final routing schedule", type=float)
         
     def DSPO_parameters(self, parser):
-        parser.add_argument("--grid_dim", default=10, help="division of operational area in X*X clusters", type=int)
+        parser.add_argument("--grid_dim", default=11, help="division of operational area in X*X clusters", type=int)
         parser.add_argument("--hexa", default=False, help="division of operational area in hexagional grid instead of squares (beta)", type=self.str2bool)#not used in paper
         parser.add_argument("--n_input_layers", default=2, help="divide feature map in X time intervals", type=int)
         parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)

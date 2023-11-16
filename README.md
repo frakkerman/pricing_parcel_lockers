@@ -70,27 +70,19 @@ If you have proposed extensions to this codebase, feel free to do a pull request
 
 ## License
 * [MIT license](https://opensource.org/license/mit/)
-* Copyright 2023 © [Fabian Akkerman](https://people.utwente.nl/f.r.akkerman), [Peter Dieter](https://en.wiwi.uni-paderborn.de/dep3/schryen/team/dieter/88592), [Martijn Mes](https://www.utwente.nl/en/bms/iebis/staff/mes/)
+* Copyright 2023 © [Fabian Akkerman](https://people.utwente.nl/f.r.akkerman), [Peter Dieter](https://en.wiwi.uni-paderborn.de/dep3/schryen/team/dieter), [Martijn Mes](https://www.utwente.nl/en/bms/iebis/staff/mes/)
 
 ## Bibliography
 
 ### Data sets used
 
-Parallelization of a Two-Phase Metaheuristic for Routing Problems with Time Windows
-Hermann Gehring and Jörg Homberger
-Journal of Heuristics 2002
+Gehring, H., Homberger, J. (2002). Parallelization of a Two-Phase Metaheuristic for Routing Problems with Time Windows. Journal of Heuristics 8, 251–276.
 
-2021 Amazon last mile routing research challenge: Data set
-Daniel Merchan, Jatin Arora, Julian Pachon, Karthik Konduri, Matthias Winkenbach, Steven Parks and Joseph Noszek
-Transportation Science 2022
+Daniel Merchan, Jatin Arora, Julian Pachon, Karthik Konduri, Matthias Winkenbach, Steven Parks, & Joseph Noszek (2022). 2021 Amazon last mile routing research challenge: Data set. Transportation Science.  
 
 ### Benchmarks
 
-Proximal Policy Optimization Algorithms
-John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford and Oleg Klimov
-ArXiv preprint 2017
+Schulman, J., Wolski, F., Dhariwal, P., Radford, A. & Klimov, O. (2017). Proximal Policy Optimization Algorithms.
 
-Choice-Based Demand Management and Vehicle Routing in E-Fulfillment
-Xinan Yang, Arne K. Strauss, Christine S. M. Currie, and Richard Eglese
-Transportation Science 2016 50:2, 473-488 
+Yang, X., Strauss, A., Currie, C., & Eglese, R. (2016). Choice-Based Demand Management and Vehicle Routing in E-Fulfillment. Transportation Science, 50(2), 473-488.
 
