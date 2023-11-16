@@ -64,6 +64,10 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
  
  * Note that `hygese.py` requires a slight change to one source file when running with `--load_data=True`, this change is indicated when running the code
  
+## Contributing
+
+If you have proposed extensions to this codebase, feel free to do a pull request! If you experience issues, feel free to send us an email or open an issue in GitHub.
+ 
 ## License
 * [MIT license](https://opensource.org/license/mit/)
 * Copyright 2023 © [Fabian Akkerman](https://people.utwente.nl/f.r.akkerman), [Peter Dieter](https://en.wiwi.uni-paderborn.de/dep3/schryen/team/dieter/88592), [Martijn Mes](https://www.utwente.nl/en/bms/iebis/staff/mes/)
@@ -73,28 +77,20 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
 ### Data sets used
 
 Parallelization of a Two-Phase Metaheuristic for Routing Problems with Time Windows
-
 Hermann Gehring and Jörg Homberger
-
 Journal of Heuristics 2002
 
 2021 Amazon last mile routing research challenge: Data set
-
 Daniel Merchan, Jatin Arora, Julian Pachon, Karthik Konduri, Matthias Winkenbach, Steven Parks and Joseph Noszek
-
 Transportation Science 2022
 
 ### Benchmarks
 
 Proximal Policy Optimization Algorithms
-
 John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford and Oleg Klimov
-
 ArXiv preprint 2017
 
 Choice-Based Demand Management and Vehicle Routing in E-Fulfillment
-
 Xinan Yang, Arne K. Strauss, Christine S. M. Currie, and Richard Eglese
-
 Transportation Science 2016 50:2, 473-488 
 

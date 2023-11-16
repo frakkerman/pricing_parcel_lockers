@@ -1,0 +1,4 @@
+# any change inside the `/src` directory
+# will require approval from @frakkerman
+# adding multiple usernames will require one approval still, but multiple people have the rights
+* @frakkerman
