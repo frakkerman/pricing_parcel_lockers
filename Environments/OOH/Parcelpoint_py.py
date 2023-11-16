@@ -166,6 +166,7 @@ class Parcelpoint_py(object):
         _,cost = self.utils.reopt_HGS(data)
         return cost
     
+    #ToDo: cleanup saving statistics, not efficient right now
     def step(self,action):
         self.steps += 1
         
@@ -196,14 +197,14 @@ class Parcelpoint_py(object):
         insertVeh,idx,costs = self.utils.cheapestInsertionRoute(loc,self.fleet)
         self.fleet["fleet"][insertVeh]["routePlan"].insert(idx,loc)
         
-        #re-optimize the intermeittent route after X steps
+        #re-optimize the intermeittent route after X steps, we did not do this for the paper
         if self.steps % self.reopt_freq == 0:#do re-opt using HGS
             if self.load_data:
                 self.data["distance_matrix"] = get_dist_mat_HGS(self.dist_matrix,self.data['id'])
             self.fleet,_ = self.utils.reopt_HGS(self.data)
         
         #info for plots and statistics
-        stats = self.steps,self.count_home_delivery,self.service_time,self.total_prices,self.parcelPoints["parcelpoints"],self.dist_matrix[self.newCustomer.home.id_num][loc.id_num],self.total_discounts
+        stats = self.steps,self.count_home_delivery,self.service_time,self.total_prices,self.parcelPoints["parcelpoints"],self.dist_matrix[self.newCustomer.home.id_num][loc.id_num],self.total_discounts,price
         
         #generate new customer arrival and return state info
         self.curr_state = self.make_state()

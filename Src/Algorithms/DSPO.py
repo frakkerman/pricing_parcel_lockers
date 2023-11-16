@@ -12,7 +12,7 @@ from math import exp, e
 from hygese import AlgorithmParameters, Solver
 from operator import itemgetter
 
-# This function implements the foresight modle employing supervised ML
+# This function implements DSPO
 class DSPO(Agent):
     def __init__(self, config):
         super(DSPO, self).__init__(config)
@@ -146,11 +146,10 @@ class DSPO(Agent):
             homeCosts = state[0].service_time*mltplr+((1-theta)*(self.cheapestInsertionCosts(state[0].home, state[1]) ) + theta*( costs[1]-costs[0] ))
             sum_mnl = exp(self.base_util+state[0].home_util+(state[0].incentiveSensitivity*(homeCosts-self.revenue)))
             
-
+            #Slight change compared to paper, to support faster training, without relying on the CVRP solver every time,
+            #See bottom of this file for details.
             for idx,pp in enumerate(pps):
-                if pp.remainingCapacity > 0:
-                 #   ml_prediction = get feats do inferebce
-                    
+                if pp.remainingCapacity > 0:                    
                     util = self.mnl(state[0],pp)
                     pp_costs[idx] = mltplr * ((1-theta)* ( self.cheapestInsertionCosts(pp.location, state[1]) )+ theta*(costs[idx+2]-costs[0]) )
                     sum_mnl += exp(util+(state[0].incentiveSensitivity*(pp_costs[idx]-self.revenue)))
@@ -317,7 +316,9 @@ class DSPO(Agent):
         return torch.tensor(feature,dtype=float32,requires_grad=False).unsqueeze(0)
     
 
-    
+    #NOTE: this implementation slightly differs from the one in the paper, reaosn for this is that this implementation is way more efficient, so we believe it will be more friendly for public use
+    #For our experiments, we did not see a signficant performance loss for using this calculation method, instead of re-running the CVRP solver every time.
+    #We clal this method "Half-edge partitioning (HEP)", see the paper Dynamic Time Slot Pricing Using Delivery Costs Approximations by Akkerman et al. (2022)
     def reopt_HGS_final(self,data):
         data["demands"] = np.ones(len(data['x_coordinates']))
         data["demands"][0] = 0#depot demand=0

@@ -85,6 +85,7 @@ class CNN_2d(nn.Module):
     def load(self, filename):
         self.load_state_dict(torch.load(filename))
 
+#Not used in paper, usage will throw an error
 class CNN_3d(nn.Module):
     def __init__(self,dim,n_layers,n_filters,dropout):
         super().__init__()

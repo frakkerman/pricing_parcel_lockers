@@ -9,7 +9,7 @@ from Src.Algorithms.Agent import Agent
 from hygese import AlgorithmParameters, Solver
 
 
-# This function integrates PPO
+# This function integrates Gaussian PPO, as proposed in Schulman et al. (2017)
 # contains the updates of actor and critic
 class PPO(Agent):
     def __init__(self, config):

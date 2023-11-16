@@ -20,6 +20,7 @@ class Basis(NeuralNet):
 
         # Variables for normalizing state features
         
+        #TODO: cleanup
         l_dim = 0
         h_dim = 150
         if config.instance=='Austin':
@@ -50,7 +51,8 @@ class Basis(NeuralNet):
         else:
             return (state - self.state_low)/self.state_diff
 
-
+#this implementation is based on the implementation from the paper:
+#Learning action representations for reinforcement learning, by Chandak et al. (2019)
 class Fourier_Basis(Basis):
     def __init__(self,  config):
         super(Fourier_Basis, self).__init__(config)

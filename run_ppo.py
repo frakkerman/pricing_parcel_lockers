@@ -90,6 +90,7 @@ class Solver:
 
     def eval(self, episodes=1):
          # Evaluate the model
+         #Todo: cleanup, looks a bit messy
          travel_time = []
          total_cost = []
          actions = []
@@ -164,14 +165,7 @@ class Solver:
          print('total costs: ', (trvl+srvc+fail-np.sum(d_list)-np.sum(r_list))/episodes)
          print('average travelled by customers: ', distance/count_pp)
          
-         # print(trvl_list)
-         
-            
-         
-         
-            
-         
-        #directly save statistics
+         #directly save statistics
          # Utils.save_eval_stats(travel_time,total_cost,actions,accepted_price,count_home_delivery,service_time,
          #                       parcel_lockers_remaining_capacity,home_delivery_loc,step_time,self.config)
              
@@ -190,8 +184,8 @@ def main(train=True):
         solver.train()
     
     #evaluate model
-    rewards,prices,step_time = solver.eval(20)  
-  #  Utils.plot_test_boxplot(rewards,prices,step_time,config)
+    #rewards,prices,step_time = solver.eval(20)  
+    #Utils.plot_test_boxplot(rewards,prices,step_time,config)
     
     print('total timing: ', time()-t)
 

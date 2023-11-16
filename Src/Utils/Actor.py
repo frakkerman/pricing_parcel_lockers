@@ -4,7 +4,6 @@ import torch.nn as nn
 from torch.distributions import Normal
 from Src.Utils.Utils import NeuralNet
 
-
 # This file implements all neural network functions required to construct the actor
 class Actor(NeuralNet):
     def __init__(self, state_dim, config, action_dim):
@@ -27,7 +26,8 @@ class Actor(NeuralNet):
 
         print("Actor: ", temp)
 
-
+#this implementation is based on the implementation from the paper:
+#Dynamic Neighborhood Construction for Structured Large Discrete Action Spaces, by Akkerman et al. (2023)
 class Gaussian(Actor):
     def __init__(self, state_dim, action_dim, config):
         super(Gaussian, self).__init__(action_dim,state_dim, config)

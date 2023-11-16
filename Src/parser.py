@@ -22,7 +22,7 @@ class Parser(object):
         parser.add_argument("--folder_suffix", default='default', help="folder name suffix")
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
         
-        parser.add_argument("--algo_name", default='DSPO', help="Policy/algorithm used, capital sensitive",choices=['DSPO','Heuristic','Baseline','PPO'])
+        parser.add_argument("--algo_name", default='Baseline', help="Policy/algorithm used, capital sensitive",choices=['DSPO','Heuristic','Baseline','PPO'])
         parser.add_argument("--gpu", default=0, help="GPU BUS ID ", type=int)
         
         # Environment parameters
@@ -38,10 +38,10 @@ class Parser(object):
 
     def environment_parameters(self, parser):
         parser.add_argument("--env_name", default='Parcelpoint_py', help="Environment to run the code")
-        parser.add_argument("--max_episodes", default=int(20), help="maximum number of training episodes", type=int)
+        parser.add_argument("--max_episodes", default=int(10), help="maximum number of training episodes", type=int)
         
         parser.add_argument("--max_steps_r", default=700, help="maximum customers per episode r of gamma dist.", type=int)#700
-        parser.add_argument("--max_steps_p", default=0.45, help="maximum customers per episode p of gamma dist. [0,1]", type=float)#RC=0.5, Seattle=0.45
+        parser.add_argument("--max_steps_p", default=0.5, help="maximum customers per episode p of gamma dist. [0,1]", type=float)#RC=0.5, Seattle=0.45
         
         parser.add_argument("--load_data", default=True, help="whether to load location data from file or to generate data (only used for debug)", type=self.str2bool)
         parser.add_argument("--instance", default='Seattle', help="which instance to load",choices=['Austin','Seattle','C','R','RC'])
@@ -79,11 +79,11 @@ class Parser(object):
         
     def DSPO_parameters(self, parser):
         parser.add_argument("--grid_dim", default=10, help="division of operational area in X*X clusters", type=int)
-        parser.add_argument("--hexa", default=False, help="division of operational area in hexagional grid instead of squares (beta)", type=self.str2bool)
+        parser.add_argument("--hexa", default=False, help="division of operational area in hexagional grid instead of squares (beta)", type=self.str2bool)#not used in paper
         parser.add_argument("--n_input_layers", default=2, help="divide feature map in X time intervals", type=int)
         parser.add_argument("--only_phase_one", default=False, help="when True, we stop learning after an initial data collection phase", type=self.str2bool)
-        parser.add_argument("--initial_phase_epochs", default=20, help="maximum number of training epochs", type=int)
-        parser.add_argument("--buffer_size", default=int(10000), help="Size of memory buffer", type=int)
+        parser.add_argument("--initial_phase_epochs", default=1000, help="maximum number of training epochs", type=int)
+        parser.add_argument("--buffer_size", default=int(500), help="Size of memory buffer", type=int)
         parser.add_argument("--batch_size", default=128, help="Batch size", type=int)
         parser.add_argument("--learning_rate", default=1e-3, help="learning rate", type=float)
         
@@ -91,15 +91,15 @@ class Parser(object):
         parser.add_argument("--cool_theta_cnn", default=(1/850), help="weight reduction for cheapest insertion", type=float)
         
        #parser.add_argument("--load", default=True, type=self.str2bool, help="If True we do not retrain but try to load a stored model")
-        parser.add_argument("--linearModel", default=False, type=self.str2bool, help="To use a linear regression model instead of a CNN/MLP")
+        parser.add_argument("--linearModel", default=True, type=self.str2bool, help="To use a linear regression model instead of a CNN/MLP")
         parser.add_argument("--optim", default='adam', help="Optimizer type", choices=['adam', 'sgd', 'rmsprop'])
-        parser.add_argument("--use3d_conv", default=False, type=self.str2bool, help="Use 3D convolution instead of 2D")
+        parser.add_argument("--use3d_conv", default=False, type=self.str2bool, help="Use 3D convolution instead of 2D")#not used in paper
         parser.add_argument("--n_filters", default=8, help="number of filters in first convolutional layer (2nd is 2*X)", type=int)
         parser.add_argument("--dropout", default=0.05, help="dropout rate of the FC layers", type=float)
        
     def Heuristic_parameters(self, parser):
-        parser.add_argument("--init_theta", default=0.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
-        parser.add_argument("--cool_theta", default=0, help="weight reduction for cheapest insertion", type=float)
+        parser.add_argument("--init_theta", default=1.0, help="weight for cheapest insertion in historic route, [0,1]", type=float)
+        parser.add_argument("--cool_theta", default=1/850, help="weight reduction for cheapest insertion", type=float)
     
     def Baseline_parameters(self, parser):
         parser.add_argument("--save_routes", default=False, help="Used to generate and save routes for use inside Heuristic", type=self.str2bool)#could consider to make an updating loop for routes
@@ -116,7 +116,7 @@ class Parser(object):
         parser.add_argument("--hiddenLayerSize", default=16, help="size of hiddenlayer of critic", type=int)
         parser.add_argument("--hiddenActorLayerSize", default=8, help="size of hiddenlayer", type=int)
         parser.add_argument("--gamma", default=0.999, help="Discounting factor", type=float)
-        parser.add_argument("--gauss_variance", default=2, help="Variance for gaussian policy", type=float) # 1 original setting
+        parser.add_argument("--gauss_variance", default=2, help="Variance for gaussian policy", type=float)
         parser.add_argument("--clipping_factor",default=0.2, help = "PPO clipping factor",type = float)
         parser.add_argument("--td_lambda", default=0.95, help="lambda factor for calculating advantages", type=float)
         parser.add_argument("--policy_update_epochs", default=25,help="number of epochs with which we perform policy updates in PPO", type=int)

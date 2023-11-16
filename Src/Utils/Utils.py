@@ -72,8 +72,9 @@ def plot_training_curves(rewards,config):
     np.save(config.paths['results'] + "training_curve", rewards)
 
 def save_eval_stats(travel_time,total_cost,actions,accepted_price,count_home_delivery,service_time,
-                      parcel_lockers_remaining_capacity,home_delivery_loc,step_time,config):
+                      parcel_lockers_remaining_capacity,home_delivery_loc,step_time,price_time,config):
     
+    np.save(config.paths['results'] + "price_time", price_time)
     np.save(config.paths['results'] + "travel_time", travel_time)
     np.save(config.paths['results'] + "total_cost", total_cost)
     np.save(config.paths['results'] + "actions", actions)
@@ -407,7 +408,7 @@ def get_matrix(coords,dim,hexa=False):
     min_y = min_ycoord
     diff_y = max_ycoord-min_ycoord
     
-    #hexa params
+    #hexa params (not used in paper)
     if hexa:
         gridwidth = diff_x/dim
         gridheight = diff_y/dim
@@ -544,9 +545,6 @@ class NeuralNet(nn.Module):
 class Trajectory:
     """
     Pre-allocated memory interface for storing and using on-policy trajectories
-
-    Note: slight abuse of notation.
-          sometimes Code treats 'dist' as extra variable and uses it to store other things, like: prob, etc.
     """
     def __init__(self, max_len, state_dim, action_dim, atype, config, dist_dim=1, stype=float32):
 
