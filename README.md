@@ -41,7 +41,11 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
 * Utils.py: Contains several helper functions such as plotting.
 
 ### Environments
-* `OOH`: Contains the implementation of the OOH environments and the used data.
+* `OOH`: Contains the implementation of the OOH environment and the used data (Amazon_data and HombergerGehring_data).
+* containers.py: container @dataclasses for storing during simulation.
+* customerchoice.py: the MNL choice model.
+* env_utils.py: some utility functions related to the environment.
+* Parcelpoint_py.py:the main problem implementation, following Gymnasium implementation structure mainly.
 
 
 ## To the make the code work
@@ -54,7 +58,7 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
 
  * `Src/parser.py` Set your study's hyperparameters in this file, e.g., which environment to use or setting learning rates
  
- * `run.py` Execute this file using the command line `python3 run.py`.
+ * `run.py` Execute this file using the command line `python3 run.py`. Run the PPO algorithm with `run_ppo.py`
  
  * Note that you might have to adapt your root folder's name to `ooh_code`
  
@@ -69,20 +73,28 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
 ### Data sets used
 
 Parallelization of a Two-Phase Metaheuristic for Routing Problems with Time Windows
+
 Hermann Gehring and Jörg Homberger
+
 Journal of Heuristics 2002
 
 2021 Amazon last mile routing research challenge: Data set
+
 Daniel Merchan, Jatin Arora, Julian Pachon, Karthik Konduri, Matthias Winkenbach, Steven Parks and Joseph Noszek
+
 Transportation Science 2022
 
 ### Benchmarks
 
 Proximal Policy Optimization Algorithms
+
 John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford and Oleg Klimov
+
 ArXiv preprint 2017
 
 Choice-Based Demand Management and Vehicle Routing in E-Fulfillment
+
 Xinan Yang, Arne K. Strauss, Christine S. M. Currie, and Richard Eglese
+
 Transportation Science 2016 50:2, 473-488 
 
