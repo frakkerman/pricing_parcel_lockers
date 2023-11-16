@@ -70,7 +70,7 @@ If you have proposed extensions to this codebase, feel free to do a pull request
 
 ## License
 * [MIT license](https://opensource.org/license/mit/)
-* Copyright 2023 © [Fabian Akkerman](https://people.utwente.nl/f.r.akkerman), [Peter Dieter](https://en.wiwi.uni-paderborn.de/dep3/schryen/team/dieter/88592), [Martijn Mes](https://www.utwente.nl/en/bms/iebis/staff/mes/)
+* Copyright 2023 © [Fabian Akkerman](https://people.utwente.nl/f.r.akkerman), [Peter Dieter](https://en.wiwi.uni-paderborn.de/dep3/schryen/team/dieter), [Martijn Mes](https://www.utwente.nl/en/bms/iebis/staff/mes/)
 
 ## Bibliography
 
