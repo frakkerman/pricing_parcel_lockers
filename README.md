@@ -1,6 +1,6 @@
-# Learning Dynamic Selection and Pricing of Out-of-Home Deliveries
+![OOH logo](Src/Utils/ooh_logo.png)
 
-This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries". Contact us if you are interested in the working paper (under review). 
+This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries" by Fabian Akkerman, Peter Dieter, and Martijn Mes. Contact us if you are interested in the working paper (under review). 
 
 ## Citation
 
@@ -41,7 +41,7 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
 * Utils.py: Contains several helper functions such as plotting.
 
 ### Environments
-* `OOH`: Contains the implementation of the OOH environment and the used data (Amazon_data and HombergerGehring_data).
+`OOH` Contains the implementation of the OOH environment and the used data (Amazon_data and HombergerGehring_data).
 * containers.py: container @dataclasses for storing during simulation.
 * customerchoice.py: the MNL choice model.
 * env_utils.py: some utility functions related to the environment.
