@@ -144,6 +144,12 @@ class Parcelpoint_py(object):
         newcust_x = state[0].home.x
         newcust_y = state[0].home.y
         
+        #for user friendliness, we commented out the state route variables
+        # closest_locations = []
+        # for v in range(self.n_vehicles):
+        #     for loc in sorted(state[1][v]["routePlan"], key=distance_to_home)[:20]:
+        #         closest_locations.append(loc)
+        
         return [newcust_x,newcust_y]
         
     def is_terminal(self):
