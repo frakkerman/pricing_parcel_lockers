@@ -22,7 +22,7 @@ class Parser(object):
         parser.add_argument("--folder_suffix", default='default', help="folder name suffix")
         parser.add_argument("--experiment", default='run', help="Name of the experiment")
         
-        parser.add_argument("--algo_name", default='PPO', help="Policy/algorithm used, capital sensitive",choices=['DSPO','Heuristic','Baseline','PPO'])
+        parser.add_argument("--algo_name", default='Baseline', help="Policy/algorithm used, capital sensitive",choices=['DSPO','Heuristic','Baseline','PPO'])
         parser.add_argument("--gpu", default=0, help="GPU BUS ID ", type=int)
         
         # Environment parameters
