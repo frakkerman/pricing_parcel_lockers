@@ -49,7 +49,7 @@ class PPO(Agent):
                                      action_dim=adim, atype=long, config=config,
                                      dist_dim=adim)  # on-policy
 
-        # Define learning modules -- in LAR we have 3 learning modules as we have to additionally train the SL predictor
+        # Define learning modules 
         self.modules = [('actor', self.actor), ('critic', self.critic)]
         self.weights_changed = True
 

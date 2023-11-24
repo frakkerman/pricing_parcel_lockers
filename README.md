@@ -1,6 +1,6 @@
 ![OOH logo](Src/Utils/ooh_logo.png)
 
-This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries" by Fabian Akkerman, Peter Dieter, and Martijn Mes. Contact us if you are interested in the working paper (under review). 
+This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries" by Fabian Akkerman, Peter Dieter, and Martijn Mes, see: 
 
 ## Citation
 
@@ -30,14 +30,14 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
 `Algorithms`: 
 * Agent.py: Groups several high-level agent functionalities
 * Baseline.py: Contains the baseline, StaticPricing.
-* DSPO.py: Contains our proposed contribtuoon, Dynamic Selection and Pricing of OOH (DSPO)
+* DSPO.py: Contains our proposed contribution, Dynamic Selection and Pricing of OOH (DSPO)
 * Heuristic.py: Conntains the benchmark heuristics by Yang et al. (2016).
 * PPO.py: Contains the Gaussian PPO policy, as proposed in Schulman et al. (2017)
 
 `Utils`: 
 * Actor.py and Critic.py: Contain the neural network architectures for actor and critic respectively.
 * Basis.py: Contains the state representation module.
-* Predictors.py: Contains the prediction models used for DSPO and the linera benchmark.
+* Predictors.py: Contains the prediction models used for DSPO and the linear benchmark.
 * Utils.py: Contains several helper functions such as plotting.
 
 ### Environments
@@ -56,9 +56,9 @@ On the first level you can see a parser.py, wherein we set hyperparameters and e
 	* `python -m pip install -r requirements.txt`
 	* `deactivate`
 
- * `Src/parser.py` Set your study's hyperparameters in this file, e.g., which environment to use or setting learning rates
+ * `Src/parser.py` Set your study's hyperparameters in this file.
  
- * `run.py` Execute this file using the command line `python3 run.py`. Run the PPO algorithm with `run_ppo.py`
+ * `run.py` Execute this file using the command line `python3 run.py`. Run the PPO algorithm with `python3 run_ppo.py`
  
  * Note that you might have to adapt your root folder's name to `ooh_code`
  

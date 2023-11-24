@@ -6,7 +6,7 @@ from Src.config import Config
 from time import time
 
 """
-If running PPO, ensure that PPO is set as the used algo_name in parser.py
+If running PPO, ensure that PPO is set as the used --algo_name in parser.py
 """
 
 class Solver:
