@@ -8,19 +8,12 @@ Bibtex:
 ``
 
 @misc{akkerman2023learning,
-
       title={Learning Dynamic Selection and Pricing of Out-of-Home Deliveries}, 
-      
       author={Fabian Akkerman and Peter Dieter and Martijn Mes},
-      
       year={2023},
-      
       eprint={2311.13983},
-      
       archivePrefix={arXiv},
-      
       primaryClass={cs.LG}
-      
 }
 
 ``
