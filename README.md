@@ -4,9 +4,9 @@ This project contains code for the paper titled "Learning Dynamic Selection and 
 
 ## Citation
 
-Bibtex:
+When using the code or data in this repo, please cite the following work:
 
-``
+```
 @misc{akkerman2023learning,
       title={Learning Dynamic Selection and Pricing of Out-of-Home Deliveries}, 
       author={Fabian Akkerman and Peter Dieter and Martijn Mes},
@@ -15,7 +15,9 @@ Bibtex:
       archivePrefix={arXiv},
       primaryClass={cs.LG}
 }
-``
+```
+
+When using the Amazon or Gehring and Homberger instances, ensure to also cite the respective works from which we abstracted the data, see the citation at the bottom of this README.
 
 ## Environment
 
