@@ -7,7 +7,6 @@ This project contains code for the paper titled "Learning Dynamic Selection and 
 Bibtex:
 
 ``
-
 @misc{akkerman2023learning,
       title={Learning Dynamic Selection and Pricing of Out-of-Home Deliveries}, 
       author={Fabian Akkerman and Peter Dieter and Martijn Mes},
@@ -16,7 +15,6 @@ Bibtex:
       archivePrefix={arXiv},
       primaryClass={cs.LG}
 }
-
 ``
 
 ## Environment
