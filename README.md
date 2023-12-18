@@ -1,10 +1,20 @@
 ![OOH logo](Src/Utils/ooh_logo.png)
 
-This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries" by Fabian Akkerman, Peter Dieter, and Martijn Mes, see: 
+This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries" by Fabian Akkerman, Peter Dieter, and Martijn Mes, see: https://arxiv.org/abs/2311.13983
 
 ## Citation
 
-We still need to add a reference to our paper.
+Bibtex:
+``
+@misc{akkerman2023learning,
+      title={Learning Dynamic Selection and Pricing of Out-of-Home Deliveries}, 
+      author={Fabian Akkerman and Peter Dieter and Martijn Mes},
+      year={2023},
+      eprint={2311.13983},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+``
 
 ## Environment
 
