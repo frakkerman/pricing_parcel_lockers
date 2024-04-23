@@ -13,6 +13,8 @@ class utils_env(object):
                  vehicleCapacity,
                  num_vehicles,
                  pp_capacity,
+                 fraction_capacitated,
+                 num_pps,
                  data,
                  dist_matrix,
                  hgs_time):
@@ -26,7 +28,10 @@ class utils_env(object):
         self.num_vehicles = num_vehicles
         self.vehicleCapacity = vehicleCapacity
         self.pp_capacity = pp_capacity
-        
+        self.fraction_capacitated = fraction_capacitated
+
+        self.capacitated_pps = self.generate_fixed_list(num_pps, self.fraction_capacitated)
+
         self.dist_matrix = dist_matrix
         if len(dist_matrix)>0:
             self.addedcosts = self.addedcosts_distmat
@@ -64,6 +69,26 @@ class utils_env(object):
                    bestVehicle = v.id_num
         
         return bestVehicle,bestLoc,cheapestCosts
+
+
+    def generate_fixed_list(self, length, fraction_of_ones):
+        # Set a fixed seed based on length and fraction to ensure consistency
+        seed = hash((length, fraction_of_ones)) % (2**32)
+        np.random.seed(seed)
+
+        # Calculate number of ones
+        number_of_ones = int(length * fraction_of_ones)
+
+        # Create an array of zeros
+        array = np.zeros(length, dtype=int)
+
+        # Place ones at the first number_of_ones positions
+        array[:number_of_ones] = 1
+
+        # Shuffle the array to distribute ones randomly
+        np.random.shuffle(array)
+
+        return array.tolist()
     
     def reopt_HGS(self,data):
         data["demands"] = np.ones(len(data['x_coordinates']))
@@ -81,7 +106,8 @@ class utils_env(object):
     
     def get_parcelpoints(self):
         pps = np.empty(shape=(0,6))
-        pp_locs = [self.Location(25,25,0,0),self.Location(25,75,1,0),self.Location(50,25,2,0),self.Location(50,75,3,0),self.Location(75,25,4,0),self.Location(75,75,5,0)]
+        pp_locs = [self.Location(25,25,0,0),self.Location(25,75,1,0),self.Location(50,25,2,0),self.Location(50,75,3,0),
+        self.Location(75,25,4,0),self.Location(75,75,5,0)]
         for p in range(len(pp_locs)):
             pps = np.append(pps,self.ParcelPoint(pp_locs[p],self.pp_capacity,p))
         return self.ParcelPoints(pps)
@@ -90,11 +116,17 @@ class utils_env(object):
         pps = np.empty(shape=(0,len(data)))
         start_id=start_id
         for p in range(len(data)):
-            pps = np.append(pps,self.ParcelPoint(data[p],self.pp_capacity,start_id))
-            start_id+=1
+            if self.capacitated_pps[p] == 1:
+                pps = np.append(pps,self.ParcelPoint(data[p], self.pp_capacity, start_id))
+            else:
+                pps = np.append(pps,self.ParcelPoint(data[p], 1000000, start_id))
+            start_id += 1
         return self.ParcelPoints(pps)
     
     def reset_parcelpoints(self,parcelpoints):
-        for p in parcelpoints["parcelpoints"]:
-            p.remainingCapacity = self.pp_capacity
+        for i, p in enumerate(parcelpoints["parcelpoints"]):
+            if self.capacitated_pps[i] == 1:
+                p.remainingCapacity = self.pp_capacity
+            else:
+                p.remainingCapacity = 1000000
         return parcelpoints

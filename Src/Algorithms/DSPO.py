@@ -35,7 +35,7 @@ class DSPO(Agent):
         self.initial_phase = True
         
         self.n_layers = config.n_input_layers
-        self.memory =   MemoryBuffer(max_len=self.config.buffer_size,time_intervals=self.n_layers, matrix_dim=self.grid_dim,
+        self.memory = MemoryBuffer(max_len=self.config.buffer_size,time_intervals=self.n_layers, matrix_dim=self.grid_dim,
                                      target_dim=1, atype=float32, config=config)  
         
         if config.use3d_conv:
@@ -45,6 +45,7 @@ class DSPO(Agent):
         else:
             self.supervised_ml = CNN_2d(self.grid_dim,self.n_layers,config.n_filters,config.dropout)
         self.features = np.empty((0,self.n_layers*self.grid_dim*self.grid_dim))
+        self.cap_features = np.empty((0,1))
 
         self.interval = int(config.max_steps_r/config.n_input_layers)
         
@@ -207,12 +208,16 @@ class DSPO(Agent):
         time_int = min(int(home.time/self.interval),self.n_layers-1)
         new_feat = torch.cat((2+len(pps))*[cur_feat])
         new_feat[1][time_int][self.customer_cell[home.id_num][0]][self.customer_cell[home.id_num][1]]+=1
+        cap_feat = torch.zeros((2+len(pps)))
+        cap_feat[0] = 1000000
+        cap_feat[1] = 1000000
         for idx,p in enumerate(pps):
             new_feat[idx+2][time_int][self.customer_cell[p.location.id_num][0]][self.customer_cell[p.location.id_num][1]]+=1
-        
+            cap_feat[idx+2] = p.remainingCapacity-1
+
         costs = []
-        for feat  in new_feat:
-            costs.append(self.supervised_ml(feat.unsqueeze(0).to(self.device)).item())
+        for i, feat in enumerate(new_feat):
+            costs.append(self.supervised_ml(feat.unsqueeze(0).to(self.device),cap_feat[i].unsqueeze(0).to(self.device)).item())
         return costs
                                                        
 
@@ -231,6 +236,10 @@ class DSPO(Agent):
         #first obtain data      
         if not done:
             self.features = np.vstack(( self.features, self.get_feature_rep(data).flatten()))
+            try:
+                self.cap_features = np.vstack(( self.cap_features, state[2]["parcelpoints"][data["id"][-1]].remainingCapacity))
+            except:
+                self.cap_features = np.vstack(( self.cap_features, 1000000))#home delivery
             return 0.0
         else:
             #obtain final CVRP schedule after end of booking horizon
@@ -240,9 +249,12 @@ class DSPO(Agent):
             
             target = self.get_per_customer_costs(fleet)
             target = sorted(target, key=itemgetter(0))#sort in order of arrival (same as features)
-            self.memory.add(self.features,target)
+            penalties = 20 / (self.cap_features + 0.1)
+            adjusted_target = [t + p for t, p in zip(target, penalties)]
+            self.memory.add(self.features, self.cap_features, adjusted_target)
             
             self.features = np.empty((0,self.n_layers*self.grid_dim*self.grid_dim))
+            self.cap_features = np.empty((0,1))
 
             #optionally update model
             if self.initial_phase:#train model initial phase            
@@ -256,17 +268,17 @@ class DSPO(Agent):
 
     def optimize(self):
         # Take one supervised step
-        feat,target = self.memory.sample(batch_size=self.config.batch_size)
-        loss = self.self_supervised_update(feat,target)
+        feat,cap_feat,target = self.memory.sample(batch_size=self.config.batch_size)
+        loss = self.self_supervised_update(feat,cap_feat,target)
         print("Huber loss: ", loss)
     
     
-    def self_supervised_update(self, feat,target):
+    def self_supervised_update(self, feat,cap_feat,target):
         # zero the parameter gradients
         self.optimizer.zero_grad()
 
         # forward + backward + optimize
-        outputs = self.supervised_ml(feat)
+        outputs = self.supervised_ml(feat,cap_feat)
         loss = self.criterion(outputs, target)
         loss.backward()
         self.optimizer.step()
@@ -279,8 +291,8 @@ class DSPO(Agent):
         print("Inital training phase started...")
         for counter in range(max_epochs):
             losses = []
-            for feat,target in self.memory.batch_sample(batch_size=self.config.batch_size, randomize=True):
-                loss = self.self_supervised_update(feat,target)
+            for feat,cap_feat,target in self.memory.batch_sample(batch_size=self.config.batch_size, randomize=True):
+                loss = self.self_supervised_update(feat,cap_feat,target)
                 losses.append(loss)
 
             initial_losses.append(np.mean(losses))
@@ -304,7 +316,7 @@ class DSPO(Agent):
         feature = np.zeros((self.n_layers,self.grid_dim,self.grid_dim))
         for i,t in zip(data["id"],data["time"]):
             time_int = min(int(t/self.interval),self.n_layers-1)
-            feature[time_int][self.customer_cell[i][0]][self.customer_cell[i][1]]+=1
+            feature[time_int][self.customer_cell[i][0]][self.customer_cell[i][1]]+=1#actual choice of the customer during simulation
         return feature
     
     def get_feature_rep_infer(self,fleet):

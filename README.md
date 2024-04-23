@@ -1,4 +1,4 @@
-#Dynamic Selection and Pricing of Parcel Locker Delivery
+# Dynamic Selection and Pricing of Parcel Locker Delivery
 
 This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries" by Fabian Akkerman, Peter Dieter, and Martijn Mes, see: https://arxiv.org/abs/2311.13983
 

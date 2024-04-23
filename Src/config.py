@@ -100,12 +100,12 @@ class Config(object):
             obj = Utils.dynamic_load(path, tag, load_class=True)
             if test_env:
                 env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
-                      veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
+                      veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,fraction_capacitated=args.fraction_capacitated,incentive_sens=args.incentive_sens,base_util=args.base_util,
                       home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords_test,dist_matrix=self.dist_matrix_test,
                       n_parcelpoints=self.n_parcelpoints_test,adjacency=self.adjacency_test,service_times=self.service_times_test,dissatisfaction=self.dissatisfaction,hgs_time=args.hgs_reopt_time)
             else:
                 env = obj(model=args.algo_name,max_steps_r=args.max_steps_r,max_steps_p=args.max_steps_p,pricing=args.pricing,n_vehicles=args.n_vehicles,
-                      veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,incentive_sens=args.incentive_sens,base_util=args.base_util,
+                      veh_capacity=args.veh_capacity,parcelpoint_capacity=args.parcelpoint_capacity,fraction_capacitated=args.fraction_capacitated,incentive_sens=args.incentive_sens,base_util=args.base_util,
                       home_util=args.home_util,reopt=args.reopt,load_data=args.load_data,coords=self.coords,dist_matrix=self.dist_matrix,
                       n_parcelpoints=self.n_parcelpoints,adjacency=self.adjacency,service_times=self.service_times,dissatisfaction=self.dissatisfaction,hgs_time=args.hgs_reopt_time)
             return env

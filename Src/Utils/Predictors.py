@@ -7,11 +7,12 @@ class LinReg(nn.Module):
         super().__init__()
      
         self.flatten = nn.Flatten()
-        self.linearLayer = nn.Linear(dim, 1,bias=True)
+        self.linearLayer = nn.Linear(1+dim, 1,bias=True)#+1 for capacity
         
         
-    def forward(self, x):
+    def forward(self, x, capacity):
         x = self.flatten(x)
+        x = torch.cat((x, capacity.unsqueeze(1)), dim=1)#add capacity
         output = self.linearLayer(x)
 
         return output
@@ -53,7 +54,7 @@ class CNN_2d(nn.Module):
         
         self.flatten = nn.Flatten(start_dim=1)
         
-        self.fc1 = nn.Linear(in_features=int(2*out_channels*h3*w3), out_features=256)
+        self.fc1 = nn.Linear(in_features=int(1+2*out_channels*h3*w3), out_features=256)#+1 for capacity of OOH
        
         #self.fc1 = nn.Linear(in_features=200, out_features=256)
         self.fc2 = nn.Linear(256, 128)
@@ -61,7 +62,7 @@ class CNN_2d(nn.Module):
         
         self.dropout = nn.Dropout(p=dropout)
 
-    def forward(self, x):
+    def forward(self, x, capacity):
 		# pass the input through our first set of CONV => RELU =>
 		# POOL layers
         x = nn.functional.relu(self.conv1(x))
@@ -70,6 +71,7 @@ class CNN_2d(nn.Module):
 		# flatten the output from the previous layer and pass it
 		# through our only set of FC => RELU layers
         x = self.flatten(x)
+        x = torch.cat((x, capacity.unsqueeze(1)), dim=1)#add capacity
         x = self.dropout(nn.functional.relu(self.fc1(x)))
         x = self.dropout(nn.functional.relu(self.fc2(x)))
         output = self.fc3(x)

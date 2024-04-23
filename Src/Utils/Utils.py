@@ -451,6 +451,7 @@ class MemoryBuffer:
     def __init__(self, max_len, time_intervals, matrix_dim, target_dim, atype, config, stype=float32):
 
         self.features = torch.zeros((max_len, time_intervals, matrix_dim, matrix_dim), dtype=stype, requires_grad=False,device=config.device)
+        self.capacity_features = torch.zeros(max_len, dtype=stype, requires_grad=False, device=config.device)
         self.target = torch.zeros((max_len, target_dim), dtype=atype, requires_grad=False,device=config.device)
 
         self.length = 0
@@ -469,7 +470,7 @@ class MemoryBuffer:
         self.length = 0
 
     def _get(self, idx):
-        return self.features[idx], self.target[idx]
+        return self.features[idx], self.capacity_features[idx], self.target[idx]
 
     def batch_sample(self, batch_size, randomize=True):
         if randomize:
@@ -484,10 +485,10 @@ class MemoryBuffer:
         count = min(batch_size, self.length)
         return self._get(np.random.choice(self.length, count))
 
-    def add(self, features, target):
+    def add(self, features, capacity_features, target):
         mtrx_dim = self.matrix_dim
         time_intervals = self.time_intervals
-        if len(features)!=len(target):
+        if len(features)!=len(target) or len(features) != len(capacity_features):
             raise ValueError("MemoryBuffer: features and target are different length" )
         for i in range(len(features)):
             pos = self.length
@@ -497,10 +498,12 @@ class MemoryBuffer:
                 pos = np.random.randint(self.max_len)
     
             self.features[pos] = torch.tensor(features[i].reshape(time_intervals,mtrx_dim,mtrx_dim), dtype=self.stype)
+            self.capacity_features[pos] = torch.tensor(capacity_features[i], dtype=self.stype)
             self.target[pos] = torch.tensor(target[i][1], dtype=self.atype)
         
     def save(self, filename):
         torch.save(self.features, filename + 'feat.pt')
+        torch.save(self.capacity_features, filename + 'cap_feat.pt')
         torch.save(self.target, filename + 'target.pt')
         
         
