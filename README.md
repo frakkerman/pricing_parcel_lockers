@@ -1,19 +1,19 @@
 # Dynamic Selection and Pricing of Parcel Locker Delivery
 
-This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries" by Fabian Akkerman, Peter Dieter, and Martijn Mes, see: https://arxiv.org/abs/2311.13983
+This project contains code for the paper titled "Learning Dynamic Selection and Pricing of Out-of-Home Deliveries" by Fabian Akkerman, Peter Dieter, and Martijn Mes, see: [this paper](https://doi.org/10.1287/trsc.2023.0434)
+
+A preprint version of the paper can be found on ArXiv, see: [this link](https://arxiv.org/abs/2311.13983)
 
 ## Citation
 
 When using the code or data in this repo, please cite the following work:
 
 ```
-@misc{akkerman2023learning,
+@misc{akkerman2024learning,
       title={Learning Dynamic Selection and Pricing of Out-of-Home Deliveries}, 
       author={Fabian Akkerman and Peter Dieter and Martijn Mes},
-      year={2023},
-      eprint={2311.13983},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
+      year={2024},
+      journal = {Transportation Science}
 }
 ```
 
