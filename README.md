@@ -9,7 +9,7 @@ A preprint version of the paper can be found on ArXiv, see: [this link](https://
 When using the code or data in this repo, please cite the following work:
 
 ```
-@misc{akkerman2024learning,
+@article{akkerman2024learning,
       title={Learning Dynamic Selection and Pricing of Out-of-Home Deliveries}, 
       author={Fabian Akkerman and Peter Dieter and Martijn Mes},
       year={2024},
