@@ -23,6 +23,7 @@ When using the Amazon or Gehring and Homberger instances, ensure to also cite th
 
 The code is written in Python 3.10. We use PyTorch 2.0.0 to model neural network architectures and hygese 0.0.0.8, the Python HGS implementation. A requirements.txt details further requirements of our project. We tested our project on a Windows 11 environment, and a high-performance Linux cluster.
 
+Disclaimer: This code was reimplemented from scratch after the original version was lost. While it reflects the ideas from the paper, it may contain bugs or deviations. Please use with discretion.
 
 ## Folder Structure
 The repository contains the following folders:
